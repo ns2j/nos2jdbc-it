@@ -17,11 +17,13 @@ package org.seasar.extension.jdbc.it.auto.select;
 
 import java.util.List;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Department;
 import org.seasar.extension.jdbc.it.entity.Employee;
-import org.seasar.framework.unit.Seasar2;
+
+import nos2jdbc.core.it.NoS2Jdbc;
 
 import static org.junit.Assert.*;
 import static org.seasar.extension.jdbc.it.name.EmployeeNames.*;
@@ -30,7 +32,7 @@ import static org.seasar.extension.jdbc.it.name.EmployeeNames.*;
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class SingleKeyManyToOneTest {
 
     private JdbcManager jdbcManager;
@@ -39,6 +41,7 @@ public class SingleKeyManyToOneTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testLeftOuterJoin() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -56,6 +59,7 @@ public class SingleKeyManyToOneTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testLeftOuterJoin_names() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -73,6 +77,7 @@ public class SingleKeyManyToOneTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testLeftOuterJoin_noFetch() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -90,6 +95,7 @@ public class SingleKeyManyToOneTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testInnerJoin() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -107,6 +113,7 @@ public class SingleKeyManyToOneTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testInnerJoin_noFetch() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -124,6 +131,7 @@ public class SingleKeyManyToOneTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testInnerJoin_self() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -141,6 +149,7 @@ public class SingleKeyManyToOneTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testInnerJoin_oneToMany_manyToOne() throws Exception {
         Employee e =
             jdbcManager

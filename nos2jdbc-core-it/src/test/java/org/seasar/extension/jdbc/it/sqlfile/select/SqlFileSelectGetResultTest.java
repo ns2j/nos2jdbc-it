@@ -20,10 +20,12 @@ import java.util.Map;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Employee;
-import org.seasar.framework.unit.Seasar2;
+
+import nos2jdbc.core.it.NoS2Jdbc;
 
 import static org.junit.Assert.*;
 
@@ -31,7 +33,7 @@ import static org.junit.Assert.*;
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class SqlFileSelectGetResultTest {
 
     private JdbcManager jdbcManager;
@@ -40,6 +42,7 @@ public class SqlFileSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_getResultList_NoResultException() throws Exception {
         String path =
             getClass().getName().replace(".", "/")
@@ -58,6 +61,7 @@ public class SqlFileSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_getSingleResult() throws Exception {
         String path =
             getClass().getName().replace(".", "/") + "_getSingleResult.sql";
@@ -70,6 +74,7 @@ public class SqlFileSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_getSingleResult_NonUniqueResultException()
             throws Exception {
         String path =
@@ -86,6 +91,7 @@ public class SqlFileSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_getSingleResult_NoResultException() throws Exception {
         String path =
             getClass().getName().replace(".", "/")
@@ -104,6 +110,7 @@ public class SqlFileSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_getSingleResult_null() throws Exception {
         String path =
             getClass().getName().replace(".", "/")
@@ -117,6 +124,7 @@ public class SqlFileSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap_getResultList_NoResultException() throws Exception {
         String path =
             getClass().getName().replace(".", "/")
@@ -135,6 +143,7 @@ public class SqlFileSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap_getSingleResult() throws Exception {
         String path =
             getClass().getName().replace(".", "/") + "_getSingleResult.sql";
@@ -147,6 +156,7 @@ public class SqlFileSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap_getSingleResult_NonUniqueResultException()
             throws Exception {
         String path =
@@ -163,6 +173,7 @@ public class SqlFileSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap_getSingleResult_NoResultException() throws Exception {
         String path =
             getClass().getName().replace(".", "/")
@@ -181,6 +192,7 @@ public class SqlFileSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap_getSingleResult_null() throws Exception {
         String path =
             getClass().getName().replace(".", "/")
@@ -194,6 +206,7 @@ public class SqlFileSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testObject_getResultList_NoResultException() throws Exception {
         String path =
             getClass().getName().replace(".", "/")
@@ -212,6 +225,7 @@ public class SqlFileSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testObject_getSingleResult() throws Exception {
         String path =
             getClass().getName().replace(".", "/") + "_getSingleResult2.sql";
@@ -224,6 +238,7 @@ public class SqlFileSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testObject_getSingleResult_NonUniqueResultException()
             throws Exception {
         String path =
@@ -240,6 +255,7 @@ public class SqlFileSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testObject_getSingleResult_NoResultException() throws Exception {
         String path =
             getClass().getName().replace(".", "/")
@@ -258,6 +274,7 @@ public class SqlFileSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testObject_getSingleResult_null() throws Exception {
         String path =
             getClass().getName().replace(".", "/")

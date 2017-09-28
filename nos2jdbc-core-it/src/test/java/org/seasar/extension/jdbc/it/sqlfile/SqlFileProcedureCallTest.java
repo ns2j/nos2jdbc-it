@@ -23,6 +23,7 @@ import java.util.List;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.annotation.InOut;
@@ -31,10 +32,11 @@ import org.seasar.extension.jdbc.annotation.ResultSet;
 import org.seasar.extension.jdbc.it.entity.Department;
 import org.seasar.extension.jdbc.it.entity.Employee;
 import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
-import org.seasar.framework.unit.Seasar2;
-import org.seasar.framework.unit.annotation.Prerequisite;
 
-import static junit.framework.Assert.*;
+import nos2jdbc.core.it.NoS2Jdbc;
+import nos2jdbc.core.it.Prerequisite;
+
+import static org.junit.Assert.*;
 
 import static org.seasar.extension.jdbc.parameter.Parameter.*;
 
@@ -42,7 +44,7 @@ import static org.seasar.extension.jdbc.parameter.Parameter.*;
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 @Prerequisite("#ENV not in {'hsqldb', 'h2', 'standard'}")
 public class SqlFileProcedureCallTest {
 
@@ -54,6 +56,7 @@ public class SqlFileProcedureCallTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter_none() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_none" + ".sql";
         jdbcManager.callBySqlFile(path).execute();
@@ -63,6 +66,7 @@ public class SqlFileProcedureCallTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter_simpleType() throws Exception {
         String path =
             getClass().getName().replace(".", "/") + "_simpleType" + ".sql";
@@ -73,6 +77,7 @@ public class SqlFileProcedureCallTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter_simpleType_time() throws Exception {
         String path =
             getClass().getName().replace(".", "/") + "_simpleType_time"
@@ -84,6 +89,7 @@ public class SqlFileProcedureCallTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter_dto() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_dto" + ".sql";
         MyDto dto = new MyDto();
@@ -99,6 +105,7 @@ public class SqlFileProcedureCallTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter_dto_time() throws Exception {
         String path =
             getClass().getName().replace(".", "/") + "_dto_time" + ".sql";
@@ -116,6 +123,7 @@ public class SqlFileProcedureCallTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter_resultSet() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_resultSet";
         if (jdbcManagerImplementor.getDialect().needsParameterForResultSet()) {
@@ -139,6 +147,7 @@ public class SqlFileProcedureCallTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter_resultSetOut() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_resultSetOut";
         if (jdbcManagerImplementor.getDialect().needsParameterForResultSet()) {
@@ -163,6 +172,7 @@ public class SqlFileProcedureCallTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter_resultSetUpdate() throws Exception {
         String path =
             getClass().getName().replace(".", "/") + "_resultSetUpdate";
@@ -195,6 +205,7 @@ public class SqlFileProcedureCallTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter_resultSets() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_resultSets";
         if (jdbcManagerImplementor.getDialect().needsParameterForResultSet()) {
@@ -224,6 +235,7 @@ public class SqlFileProcedureCallTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter_resultSetsUpdatesOut() throws Exception {
         String path =
             getClass().getName().replace(".", "/") + "_resultSetsUpdatesOut";

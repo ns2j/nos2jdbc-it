@@ -17,10 +17,12 @@ package org.seasar.extension.jdbc.it.auto.select;
 
 import java.util.List;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.ConcreteDepartment;
-import org.seasar.framework.unit.Seasar2;
+
+import nos2jdbc.core.it.NoS2Jdbc;
 
 import static org.junit.Assert.*;
 
@@ -28,7 +30,7 @@ import static org.junit.Assert.*;
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class MappedSuperclassOneToManyTest {
 
     private JdbcManager jdbcManager;
@@ -37,6 +39,7 @@ public class MappedSuperclassOneToManyTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testLeftOuterJoin() throws Exception {
         List<ConcreteDepartment> list =
             jdbcManager.from(ConcreteDepartment.class).leftOuterJoin(
@@ -52,6 +55,7 @@ public class MappedSuperclassOneToManyTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testLeftOuterJoin_noFetch() throws Exception {
         List<ConcreteDepartment> list =
             jdbcManager.from(ConcreteDepartment.class).leftOuterJoin(
@@ -68,6 +72,7 @@ public class MappedSuperclassOneToManyTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testInnerJoin() throws Exception {
         List<ConcreteDepartment> list =
             jdbcManager
@@ -84,6 +89,7 @@ public class MappedSuperclassOneToManyTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testInnerJoin_noFetch() throws Exception {
         List<ConcreteDepartment> list =
             jdbcManager.from(ConcreteDepartment.class).innerJoin(

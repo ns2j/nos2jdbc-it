@@ -23,15 +23,16 @@ import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.exception.JoinColumnNotFoundRuntimeException;
 import org.seasar.extension.jdbc.it.entity.NoId;
 import org.seasar.extension.jdbc.it.entity.OwnerOfNoId;
-import org.seasar.framework.unit.Seasar2;
 
-import static junit.framework.Assert.*;
+import nos2jdbc.core.it.NoS2Jdbc;
+
+import static org.junit.Assert.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class AutoSelectNoIdTest {
 
     private JdbcManager jdbcManager;
@@ -40,6 +41,7 @@ public class AutoSelectNoIdTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testNoId() throws Exception {
         List<NoId> list = jdbcManager.from(NoId.class).getResultList();
         assertEquals(2, list.size());

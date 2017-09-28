@@ -21,12 +21,14 @@ import java.util.Map;
 
 import javax.persistence.TemporalType;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Tense;
 import org.seasar.extension.jdbc.it.sqlfile.select.SqlFileSelectWhereTest.Param2;
 import org.seasar.extension.jdbc.it.sqlfile.select.SqlFileSelectWhereTest.Param3;
-import org.seasar.framework.unit.Seasar2;
+
+import nos2jdbc.core.it.NoS2Jdbc;
 
 import static org.junit.Assert.*;
 
@@ -34,7 +36,7 @@ import static org.junit.Assert.*;
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class SqlFileSelectValueTypeTest {
 
     private JdbcManager jdbcManager;
@@ -43,6 +45,7 @@ public class SqlFileSelectValueTypeTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_temporalType() throws Exception {
         String path =
             getClass().getName().replace(".", "/") + "_temporalType.sql";
@@ -71,6 +74,7 @@ public class SqlFileSelectValueTypeTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_temporalType_Calendar() throws Exception {
         Param2 param = new Param2();
         param.calDate = Calendar.getInstance();
@@ -115,6 +119,7 @@ public class SqlFileSelectValueTypeTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_temporalType_Date() throws Exception {
         Param3 param = new Param3();
         param.dateDate = new SimpleDateFormat("yyyy-MM-dd").parse("2005-02-14");
@@ -152,6 +157,7 @@ public class SqlFileSelectValueTypeTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap_temporalType() throws Exception {
         String path =
             getClass().getName().replace(".", "/") + "_temporalType.sql";
@@ -173,6 +179,7 @@ public class SqlFileSelectValueTypeTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testObject_temporalType() throws Exception {
         String path =
             getClass().getName().replace(".", "/") + "_Object_temporalType.sql";

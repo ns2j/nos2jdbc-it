@@ -23,11 +23,13 @@ import java.util.Date;
 
 import javax.persistence.EntityExistsException;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Department;
 import org.seasar.extension.jdbc.it.entity.Tense;
-import org.seasar.framework.unit.Seasar2;
+
+import nos2jdbc.core.it.NoS2Jdbc;
 
 import static org.junit.Assert.*;
 
@@ -35,7 +37,7 @@ import static org.junit.Assert.*;
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class SqlFileUpdateTest {
 
     private JdbcManager jdbcManager;
@@ -44,6 +46,7 @@ public class SqlFileUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter_none() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_no.sql";
         int result = jdbcManager.updateBySqlFile(path, null).execute();
@@ -65,6 +68,7 @@ public class SqlFileUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParamter_simpleType() throws Exception {
         String path =
             getClass().getName().replace(".", "/") + "_simpleType.sql";
@@ -87,6 +91,7 @@ public class SqlFileUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParamter_dto() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_dto.sql";
         MyDto myDto = new MyDto();
@@ -111,6 +116,7 @@ public class SqlFileUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testEntityExistsException_insert() throws Exception {
         String path =
             getClass().getName().replace(".", "/")
@@ -129,6 +135,7 @@ public class SqlFileUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testEntityExistsException_update() throws Exception {
         jdbcManager
             .updateBySql(
@@ -151,6 +158,7 @@ public class SqlFileUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testTemporalType() throws Exception {
         String path =
             getClass().getName().replace(".", "/") + "_temporalType.sql";

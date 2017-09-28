@@ -20,15 +20,18 @@ import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.CompKeyEmployee;
 import org.seasar.extension.jdbc.it.entity.Department;
 import org.seasar.extension.jdbc.it.entity.NoId;
-import org.seasar.framework.unit.Seasar2;
 
-import static junit.framework.Assert.*;
+import nos2jdbc.core.it.NoS2Jdbc;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class AutoSelectGetCountTest {
 
     private JdbcManager jdbcManager;
@@ -37,6 +40,7 @@ public class AutoSelectGetCountTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testSingleKey() throws Exception {
         long count = jdbcManager.from(Department.class).getCount();
         assertEquals(4L, count);
@@ -46,6 +50,7 @@ public class AutoSelectGetCountTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testCompKey() throws Exception {
         long count = jdbcManager.from(CompKeyEmployee.class).getCount();
         assertEquals(14L, count);
@@ -55,6 +60,7 @@ public class AutoSelectGetCountTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testNoId() throws Exception {
         long count = jdbcManager.from(NoId.class).getCount();
         assertEquals(2L, count);
@@ -64,6 +70,7 @@ public class AutoSelectGetCountTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testOneToMany() throws Exception {
         long count =
             jdbcManager

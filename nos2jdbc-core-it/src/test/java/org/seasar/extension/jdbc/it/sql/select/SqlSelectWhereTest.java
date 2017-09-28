@@ -18,10 +18,12 @@ package org.seasar.extension.jdbc.it.sql.select;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Employee;
-import org.seasar.framework.unit.Seasar2;
+
+import nos2jdbc.core.it.NoS2Jdbc;
 
 import static org.junit.Assert.*;
 
@@ -29,7 +31,7 @@ import static org.junit.Assert.*;
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class SqlSelectWhereTest {
 
     private JdbcManager jdbcManager;
@@ -38,6 +40,7 @@ public class SqlSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_parameter() throws Exception {
         String sql =
             "SELECT * FROM EMPLOYEE WHERE DEPARTMENT_ID = ? AND SALARY = ?";
@@ -52,6 +55,7 @@ public class SqlSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_parameter_none() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE";
         List<Employee> list =
@@ -63,6 +67,7 @@ public class SqlSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap_parameter() throws Exception {
         String sql =
             "SELECT * FROM EMPLOYEE WHERE DEPARTMENT_ID = ? AND SALARY = ?";
@@ -76,6 +81,7 @@ public class SqlSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap_parameter_none() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE";
         @SuppressWarnings("unchecked")
@@ -88,6 +94,7 @@ public class SqlSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testObject_parameter() throws Exception {
         String sql =
             "SELECT EMPLOYEE_ID FROM EMPLOYEE WHERE DEPARTMENT_ID = ? AND SALARY = ?";
@@ -102,6 +109,7 @@ public class SqlSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testObject_parameter_none() throws Exception {
         String sql = "SELECT EMPLOYEE_ID FROM EMPLOYEE";
         List<Integer> list =

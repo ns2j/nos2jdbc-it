@@ -13,33 +13,28 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.extension.jdbc.it.sqlfile.select;
+package nos2jdbc.core.it;
 
-import static org.junit.Assert.*;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.seasar.extension.jdbc.JdbcManager;
-
-import nos2jdbc.core.it.NoS2Jdbc;
+import static java.lang.annotation.ElementType.*;
+import static java.lang.annotation.RetentionPolicy.*;
 
 /**
+ * テストの実行の事前条件を示します。
+ * 
  * @author taedium
  * 
  */
-@RunWith(NoS2Jdbc.class)
-public class SqlFileSelectGetCountTest {
-
-    private JdbcManager jdbcManager;
+@Target( { TYPE, METHOD })
+@Retention(RUNTIME)
+@Inherited
+public @interface Prerequisite {
 
     /**
-     * 
-     * @throws Exception
+     * 事前条件を表す式です。
      */
-    @Test
-    public void testGetCount() throws Exception {
-        String path = getClass().getName().replace(".", "/") + "_getCount.sql";
-        long count = jdbcManager.getCountBySqlFile(path, 9);
-        assertEquals(3L, count);
-    }
+    String value();
 }

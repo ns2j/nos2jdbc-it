@@ -23,6 +23,7 @@ import java.util.List;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.annotation.InOut;
@@ -31,10 +32,11 @@ import org.seasar.extension.jdbc.annotation.ResultSet;
 import org.seasar.extension.jdbc.it.entity.Department;
 import org.seasar.extension.jdbc.it.entity.Employee;
 import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
-import org.seasar.framework.unit.Seasar2;
-import org.seasar.framework.unit.annotation.Prerequisite;
 
-import static junit.framework.Assert.*;
+import nos2jdbc.core.it.NoS2Jdbc;
+import nos2jdbc.core.it.Prerequisite;
+
+import static org.junit.Assert.*;
 
 import static org.seasar.extension.jdbc.parameter.Parameter.*;
 
@@ -42,7 +44,7 @@ import static org.seasar.extension.jdbc.parameter.Parameter.*;
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 @Prerequisite("#ENV not in {'hsqldb','h2', 'standard'}")
 public class SqlProcedureCallTest {
 
@@ -54,6 +56,7 @@ public class SqlProcedureCallTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter_none() throws Exception {
         jdbcManager.callBySql("{call PROC_NONE_PARAM()}").execute();
     }
@@ -62,6 +65,7 @@ public class SqlProcedureCallTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter_simpleType() throws Exception {
         jdbcManager.callBySql("{call PROC_SIMPLETYPE_PARAM(?)}", 1).execute();
     }
@@ -70,6 +74,7 @@ public class SqlProcedureCallTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter_simpleType_time() throws Exception {
         jdbcManager.callBySql(
             "{call PROC_SIMPLETYPE_TIME_PARAM(?)}",
@@ -80,6 +85,7 @@ public class SqlProcedureCallTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter_dto() throws Exception {
         MyDto dto = new MyDto();
         dto.param1 = 3;
@@ -94,6 +100,7 @@ public class SqlProcedureCallTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter_dto_time() throws Exception {
         Date date = new SimpleDateFormat("HH:mm:ss").parse("12:11:10");
         MyDto2 dto = new MyDto2();
@@ -111,6 +118,7 @@ public class SqlProcedureCallTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter_resultSet() throws Exception {
         String query = null;
         if (jdbcManagerImplementor.getDialect().needsParameterForResultSet()) {
@@ -134,6 +142,7 @@ public class SqlProcedureCallTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter_resultSetOut() throws Exception {
         String query = null;
         if (jdbcManagerImplementor.getDialect().needsParameterForResultSet()) {
@@ -158,6 +167,7 @@ public class SqlProcedureCallTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter_resultSetUpdate() throws Exception {
         String query = null;
         if (jdbcManagerImplementor.getDialect().needsParameterForResultSet()) {
@@ -189,6 +199,7 @@ public class SqlProcedureCallTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter_resultSets() throws Exception {
         String query = null;
         if (jdbcManagerImplementor.getDialect().needsParameterForResultSet()) {
@@ -218,6 +229,7 @@ public class SqlProcedureCallTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter_resultSetsUpdatesOut() throws Exception {
         String query = null;
         if (jdbcManagerImplementor.getDialect().needsParameterForResultSet()) {

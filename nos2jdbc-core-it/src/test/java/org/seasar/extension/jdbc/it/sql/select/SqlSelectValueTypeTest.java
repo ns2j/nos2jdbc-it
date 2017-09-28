@@ -22,10 +22,12 @@ import java.util.Map;
 
 import javax.persistence.TemporalType;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Tense;
-import org.seasar.framework.unit.Seasar2;
+
+import nos2jdbc.core.it.NoS2Jdbc;
 
 import static org.junit.Assert.*;
 import static org.seasar.extension.jdbc.parameter.Parameter.*;
@@ -34,7 +36,7 @@ import static org.seasar.extension.jdbc.parameter.Parameter.*;
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class SqlSelectValueTypeTest {
 
     private JdbcManager jdbcManager;
@@ -43,6 +45,7 @@ public class SqlSelectValueTypeTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_temporalType() throws Exception {
         String sql = "SELECT * FROM TENSE WHERE ID = 1";
         Tense tense =
@@ -70,6 +73,7 @@ public class SqlSelectValueTypeTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_temporalType_Calendar() throws Exception {
         Calendar calendar = Calendar.getInstance();
         calendar
@@ -103,6 +107,7 @@ public class SqlSelectValueTypeTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_temporalType_Date() throws Exception {
         Date date = new SimpleDateFormat("yyyy-MM-dd").parse("2005-02-14");
         Tense tense =
@@ -135,6 +140,7 @@ public class SqlSelectValueTypeTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap_temporalType() throws Exception {
         String sql = "SELECT * FROM TENSE WHERE ID = 1";
         Map<?, ?> tense =
@@ -155,6 +161,7 @@ public class SqlSelectValueTypeTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testObject_temporalType() throws Exception {
         String sql = "SELECT CAL_TIMESTAMP FROM TENSE WHERE ID = 1";
         Calendar calTimestamp =

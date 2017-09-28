@@ -24,10 +24,12 @@ import java.util.Map;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Employee;
-import org.seasar.framework.unit.Seasar2;
+
+import nos2jdbc.core.it.NoS2Jdbc;
 
 import static org.junit.Assert.*;
 
@@ -35,7 +37,7 @@ import static org.junit.Assert.*;
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class SqlFileSelectWhereTest {
 
     private JdbcManager jdbcManager;
@@ -44,6 +46,7 @@ public class SqlFileSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_parameter_dto() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_dto.sql";
         Param param = new Param();
@@ -66,6 +69,7 @@ public class SqlFileSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_parameter_none() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_no.sql";
         List<Employee> list =
@@ -77,6 +81,7 @@ public class SqlFileSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_parameter_simpleType() throws Exception {
         String path =
             getClass().getName().replace(".", "/") + "_simpleType.sql";
@@ -97,6 +102,7 @@ public class SqlFileSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap_parameter_dto() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_dto.sql";
         Param param = new Param();
@@ -118,6 +124,7 @@ public class SqlFileSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap_parameter_none() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_no.sql";
         @SuppressWarnings("unchecked")
@@ -130,6 +137,7 @@ public class SqlFileSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap_parameter_simpleType() throws Exception {
         String path =
             getClass().getName().replace(".", "/") + "_simpleType.sql";
@@ -149,6 +157,7 @@ public class SqlFileSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testObject_parameter_dto() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_dto2.sql";
         Param param = new Param();
@@ -171,6 +180,7 @@ public class SqlFileSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testObject_parameter_none() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_no2.sql";
         List<Integer> list =
@@ -182,6 +192,7 @@ public class SqlFileSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testObject_parameter_simpleType() throws Exception {
         String path =
             getClass().getName().replace(".", "/") + "_simpleType2.sql";

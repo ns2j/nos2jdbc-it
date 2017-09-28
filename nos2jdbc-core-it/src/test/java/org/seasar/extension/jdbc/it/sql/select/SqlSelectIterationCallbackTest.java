@@ -18,12 +18,14 @@ package org.seasar.extension.jdbc.it.sql.select;
 import java.math.BigDecimal;
 import java.util.Map;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.IterationCallback;
 import org.seasar.extension.jdbc.IterationContext;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Employee;
-import org.seasar.framework.unit.Seasar2;
+
+import nos2jdbc.core.it.NoS2Jdbc;
 
 import static org.junit.Assert.*;
 
@@ -31,7 +33,7 @@ import static org.junit.Assert.*;
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class SqlSelectIterationCallbackTest {
 
     private static final String SQL =
@@ -88,6 +90,7 @@ public class SqlSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean() throws Exception {
         BigDecimal sum =
             jdbcManager.selectBySql(Employee.class, SQL).iterate(
@@ -99,6 +102,7 @@ public class SqlSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_limitOnly() throws Exception {
         BigDecimal sum =
             jdbcManager.selectBySql(Employee.class, SQL).limit(3).iterate(
@@ -110,6 +114,7 @@ public class SqlSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_offset_limit() throws Exception {
         BigDecimal sum =
             jdbcManager
@@ -124,6 +129,7 @@ public class SqlSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_offsetOnly() throws Exception {
         BigDecimal sum =
             jdbcManager.selectBySql(Employee.class, SQL).offset(3).iterate(
@@ -135,6 +141,7 @@ public class SqlSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap() throws Exception {
         BigDecimal sum =
             jdbcManager.selectBySql(Map.class, SQL).iterate(
@@ -146,6 +153,7 @@ public class SqlSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap_limitOnly() throws Exception {
         BigDecimal sum =
             jdbcManager.selectBySql(Map.class, SQL).limit(3).iterate(
@@ -157,6 +165,7 @@ public class SqlSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap_offset_limit() throws Exception {
         BigDecimal sum =
             jdbcManager.selectBySql(Map.class, SQL).offset(3).limit(5).iterate(
@@ -168,6 +177,7 @@ public class SqlSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap_offsetOnly() throws Exception {
         BigDecimal sum =
             jdbcManager.selectBySql(Map.class, SQL).offset(3).iterate(
@@ -179,6 +189,7 @@ public class SqlSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testObject() throws Exception {
         BigDecimal sum =
             jdbcManager.selectBySql(BigDecimal.class, SQL2).iterate(
@@ -190,6 +201,7 @@ public class SqlSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testObject_limitOnly() throws Exception {
         BigDecimal sum =
             jdbcManager.selectBySql(BigDecimal.class, SQL2).limit(3).iterate(
@@ -201,6 +213,7 @@ public class SqlSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testObject_offset_limit() throws Exception {
         BigDecimal sum =
             jdbcManager
@@ -215,6 +228,7 @@ public class SqlSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testObject_offsetOnly() throws Exception {
         BigDecimal sum =
             jdbcManager.selectBySql(BigDecimal.class, SQL2).offset(3).iterate(

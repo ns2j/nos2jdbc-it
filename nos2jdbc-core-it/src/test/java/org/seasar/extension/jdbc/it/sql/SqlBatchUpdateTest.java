@@ -25,14 +25,15 @@ import java.util.List;
 
 import javax.persistence.EntityExistsException;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Employee;
 import org.seasar.extension.jdbc.it.entity.Tense;
-import org.seasar.framework.unit.Seasar2;
-import org.seasar.framework.unit.annotation.Prerequisite;
 
-import static junit.framework.Assert.*;
+import nos2jdbc.core.it.NoS2Jdbc;
+
+import static org.junit.Assert.*;
 
 import static org.seasar.extension.jdbc.parameter.Parameter.*;
 
@@ -40,7 +41,7 @@ import static org.seasar.extension.jdbc.parameter.Parameter.*;
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class SqlBatchUpdateTest {
 
     private JdbcManager jdbcManager;
@@ -49,6 +50,7 @@ public class SqlBatchUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter_none() throws Exception {
         String sql =
             "UPDATE EMPLOYEE SET SALARY = SALARY * 2 WHERE EMPLOYEE_ID = 1";
@@ -61,6 +63,7 @@ public class SqlBatchUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter() throws Exception {
         String sql =
             "DELETE FROM EMPLOYEE WHERE DEPARTMENT_ID = ? AND SALARY > ?";
@@ -84,7 +87,8 @@ public class SqlBatchUpdateTest {
      * 
      * @throws Exception
      */
-    @Prerequisite("#ENV != 'hsqldb'")
+    //@Prerequisite("#ENV != 'hsqldb'")
+    @Test
     public void testEntityExistsException_insert() throws Exception {
         String sql =
             "INSERT INTO DEPARTMENT (DEPARTMENT_ID, DEPARTMENT_NO) VALUES(?, ?)";
@@ -101,7 +105,8 @@ public class SqlBatchUpdateTest {
      * 
      * @throws Exception
      */
-    @Prerequisite("#ENV != 'hsqldb'")
+    //@Prerequisite("#ENV != 'hsqldb'")
+    @Test
     public void testEntityExistsException_update() throws Exception {
         String sql =
             "UPDATE DEPARTMENT SET DEPARTMENT_ID = ? WHERE DEPARTMENT_ID = ?";
@@ -119,6 +124,7 @@ public class SqlBatchUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testTemporalType() throws Exception {
         String sql =
             "UPDATE TENSE SET DATE_DATE = ?, DATE_TIME = ?, DATE_TIMESTAMP = ?, CAL_DATE = ?, CAL_TIME = ?, CAL_TIMESTAMP = ?, SQL_DATE = ?, SQL_TIME = ?, SQL_TIMESTAMP = ? WHERE ID = ?";

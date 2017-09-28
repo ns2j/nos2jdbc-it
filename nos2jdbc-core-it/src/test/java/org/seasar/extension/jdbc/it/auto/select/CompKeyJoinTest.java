@@ -18,12 +18,14 @@ package org.seasar.extension.jdbc.it.auto.select;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.CompKeyDepartment;
 import org.seasar.extension.jdbc.it.entity.CompKeyEmployee;
 import org.seasar.extension.jdbc.where.SimpleWhere;
-import org.seasar.framework.unit.Seasar2;
+
+import nos2jdbc.core.it.NoS2Jdbc;
 
 import static org.junit.Assert.*;
 
@@ -31,7 +33,7 @@ import static org.junit.Assert.*;
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class CompKeyJoinTest {
 
     private JdbcManager jdbcManager;
@@ -40,6 +42,7 @@ public class CompKeyJoinTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testJoin_nest() throws Exception {
         List<CompKeyDepartment> list =
             jdbcManager
@@ -56,6 +59,7 @@ public class CompKeyJoinTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testJoin_star() throws Exception {
         List<CompKeyEmployee> list =
             jdbcManager
@@ -74,6 +78,7 @@ public class CompKeyJoinTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testJoin_condition() throws Exception {
         List<CompKeyEmployee> list =
             jdbcManager.from(CompKeyEmployee.class).innerJoin(
@@ -88,6 +93,7 @@ public class CompKeyJoinTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testJoin_condition_where() throws Exception {
         List<CompKeyEmployee> list =
             jdbcManager

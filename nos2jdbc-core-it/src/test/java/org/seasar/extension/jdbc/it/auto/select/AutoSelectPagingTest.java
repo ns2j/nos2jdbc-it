@@ -17,10 +17,12 @@ package org.seasar.extension.jdbc.it.auto.select;
 
 import java.util.List;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Employee;
-import org.seasar.framework.unit.Seasar2;
+
+import nos2jdbc.core.it.NoS2Jdbc;
 
 import static org.junit.Assert.*;
 
@@ -28,7 +30,7 @@ import static org.junit.Assert.*;
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class AutoSelectPagingTest {
 
     private JdbcManager jdbcManager;
@@ -37,6 +39,7 @@ public class AutoSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testPaging() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -50,6 +53,7 @@ public class AutoSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testPaging_limitOnly() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -66,6 +70,7 @@ public class AutoSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testPaging_limitOnly_leftOuterJoin() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -83,6 +88,7 @@ public class AutoSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testPaging_offset_limit() throws Exception {
         List<Employee> list =
             jdbcManager.from(Employee.class).offset(3).limit(5).orderBy(
@@ -96,6 +102,7 @@ public class AutoSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testPaging_offset_limit_leftOuterJoin() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -114,6 +121,7 @@ public class AutoSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testPaging_offset_limitZero() throws Exception {
         List<Employee> list =
             jdbcManager.from(Employee.class).offset(3).limit(0).orderBy(
@@ -127,6 +135,7 @@ public class AutoSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testPaging_offset_limitZero_leftOuterJoin() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -145,6 +154,7 @@ public class AutoSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testPaging_offsetOnly() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -161,6 +171,7 @@ public class AutoSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testPaging_offsetOnly_leftOuterJoin() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -178,6 +189,7 @@ public class AutoSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testPaging_offsetZero_limit() throws Exception {
         List<Employee> list =
             jdbcManager.from(Employee.class).offset(0).limit(3).orderBy(
@@ -191,6 +203,7 @@ public class AutoSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testPaging_offsetZero_limit_leftOuterJoin() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -209,6 +222,7 @@ public class AutoSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testPaging_offsetZero_limitZero() throws Exception {
         List<Employee> list =
             jdbcManager.from(Employee.class).offset(0).limit(0).orderBy(
@@ -220,6 +234,7 @@ public class AutoSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testPaging_offsetZero_limitZero_leftOuterJoin()
             throws Exception {
         List<Employee> list =

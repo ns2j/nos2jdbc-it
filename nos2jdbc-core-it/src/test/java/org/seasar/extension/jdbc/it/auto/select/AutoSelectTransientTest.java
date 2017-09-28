@@ -20,15 +20,18 @@ import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Department3;
 import org.seasar.extension.jdbc.it.entity.Department4;
 import org.seasar.extension.jdbc.where.SimpleWhere;
-import org.seasar.framework.unit.Seasar2;
+
+import nos2jdbc.core.it.NoS2Jdbc;
 
 import static org.junit.Assert.*;
+
+import org.junit.Test;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class AutoSelectTransientTest {
 
     private JdbcManager jdbcManager;
@@ -37,6 +40,7 @@ public class AutoSelectTransientTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testTransientAnnotation() throws Exception {
         Department3 department =
             jdbcManager.from(Department3.class).where(
@@ -48,6 +52,7 @@ public class AutoSelectTransientTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testTransientModifier() throws Exception {
         Department4 department =
             jdbcManager.from(Department4.class).where(

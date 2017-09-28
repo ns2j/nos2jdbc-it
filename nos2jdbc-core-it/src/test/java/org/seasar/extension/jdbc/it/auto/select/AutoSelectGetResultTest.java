@@ -18,12 +18,14 @@ package org.seasar.extension.jdbc.it.auto.select;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Department;
 import org.seasar.extension.jdbc.it.entity.Employee;
 import org.seasar.extension.jdbc.where.SimpleWhere;
-import org.seasar.framework.unit.Seasar2;
+
+import nos2jdbc.core.it.NoS2Jdbc;
 
 import static org.junit.Assert.*;
 
@@ -31,7 +33,7 @@ import static org.junit.Assert.*;
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class AutoSelectGetResultTest {
 
     private JdbcManager jdbcManager;
@@ -40,6 +42,7 @@ public class AutoSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testGetSingleResult() throws Exception {
         Employee employee =
             jdbcManager.from(Employee.class).where(
@@ -51,6 +54,7 @@ public class AutoSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testGetSingleResult_NonUniqueResultException() throws Exception {
         try {
             jdbcManager.from(Employee.class).where(
@@ -64,6 +68,7 @@ public class AutoSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testGetSingleResult_NoResultException() throws Exception {
         try {
             jdbcManager
@@ -80,6 +85,7 @@ public class AutoSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testGetSingleResult_null() throws Exception {
         Employee employee =
             jdbcManager.from(Employee.class).where(
@@ -91,6 +97,7 @@ public class AutoSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testGetSingleResult_oneToMany() throws Exception {
         Department department =
             jdbcManager

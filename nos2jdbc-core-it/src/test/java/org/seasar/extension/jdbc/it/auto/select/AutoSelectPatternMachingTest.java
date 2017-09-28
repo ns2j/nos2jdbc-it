@@ -15,20 +15,22 @@
  */
 package org.seasar.extension.jdbc.it.auto.select;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Pattern;
 import org.seasar.extension.jdbc.where.SimpleWhere;
-import org.seasar.framework.unit.Seasar2;
-import org.seasar.framework.unit.annotation.Prerequisite;
 
-import static junit.framework.Assert.*;
+import nos2jdbc.core.it.NoS2Jdbc;
+import nos2jdbc.core.it.Prerequisite;
+
+import static org.junit.Assert.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class AutoSelectPatternMachingTest {
 
     private JdbcManager jdbcManager;
@@ -37,6 +39,7 @@ public class AutoSelectPatternMachingTest {
      * 
      * @throws Exception
      */
+    @Test
     @Prerequisite("#ENV != 'hsqldb'")
     public void testLike_escape() throws Exception {
         Pattern pattern = new Pattern();
@@ -54,6 +57,7 @@ public class AutoSelectPatternMachingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testStarts() throws Exception {
         Pattern pattern = new Pattern();
         pattern.value = "%$x";
@@ -68,6 +72,7 @@ public class AutoSelectPatternMachingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testEnds() throws Exception {
         Pattern pattern = new Pattern();
         pattern.value = "x%$";
@@ -82,6 +87,7 @@ public class AutoSelectPatternMachingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testContains() throws Exception {
         Pattern pattern = new Pattern();
         pattern.value = "x%$y";

@@ -17,6 +17,7 @@ package org.seasar.extension.jdbc.it.auto.select;
 
 import java.math.BigDecimal;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.IterationCallback;
 import org.seasar.extension.jdbc.IterationContext;
@@ -24,15 +25,16 @@ import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Department;
 import org.seasar.extension.jdbc.it.entity.Employee;
 import org.seasar.extension.jdbc.it.entity.NoId;
-import org.seasar.framework.unit.Seasar2;
 
-import static junit.framework.Assert.*;
+import nos2jdbc.core.it.NoS2Jdbc;
+
+import static org.junit.Assert.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class AutoSelectIterationCallbackTest {
 
     private JdbcManager jdbcManager;
@@ -54,6 +56,7 @@ public class AutoSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testSingleEntity() throws Exception {
         BigDecimal sum =
             jdbcManager.from(Employee.class).iterate(salarySumCallback);
@@ -64,6 +67,7 @@ public class AutoSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testSingleEntity_limitOnly() throws Exception {
         BigDecimal sum =
             jdbcManager
@@ -78,6 +82,7 @@ public class AutoSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testSingleEntity_offset_limit() throws Exception {
         BigDecimal sum =
             jdbcManager.from(Employee.class).offset(3).limit(5).orderBy(
@@ -89,6 +94,7 @@ public class AutoSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testSingleEntity_offset_limitZero() throws Exception {
         BigDecimal sum =
             jdbcManager.from(Employee.class).offset(3).limit(0).orderBy(
@@ -100,6 +106,7 @@ public class AutoSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testSingleEntity_offsetOnly() throws Exception {
         BigDecimal sum =
             jdbcManager
@@ -114,6 +121,7 @@ public class AutoSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testSingleEntity_offsetZero_limit() throws Exception {
         BigDecimal sum =
             jdbcManager.from(Employee.class).offset(0).limit(3).orderBy(
@@ -125,6 +133,7 @@ public class AutoSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testSingleEntity_offsetZero_limitZero() throws Exception {
         BigDecimal sum =
             jdbcManager.from(Employee.class).offset(0).limit(0).orderBy(
@@ -136,6 +145,7 @@ public class AutoSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testNoId() throws Exception {
         int result =
             jdbcManager.from(NoId.class).iterate(
@@ -154,6 +164,7 @@ public class AutoSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testManyToOne() throws Exception {
         BigDecimal sum =
             jdbcManager
@@ -180,6 +191,7 @@ public class AutoSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testOneToMany() throws Exception {
         BigDecimal sum =
             jdbcManager
@@ -207,6 +219,7 @@ public class AutoSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testManyToOne_innerJoin_emptyResult() throws Exception {
         jdbcManager.updateBySql("DELETE FROM EMPLOYEE").execute();
         assertEquals(0, jdbcManager.from(Employee.class).getCount());
@@ -230,6 +243,7 @@ public class AutoSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testOneToMany_innerJoin_emptyResult() throws Exception {
         jdbcManager.updateBySql("DELETE FROM EMPLOYEE").execute();
         jdbcManager.updateBySql("DELETE FROM DEPARTMENT").execute();

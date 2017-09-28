@@ -22,13 +22,15 @@ import java.util.List;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Employee;
-import org.seasar.framework.unit.Seasar2;
-import org.seasar.framework.unit.annotation.Prerequisite;
 
-import static junit.framework.Assert.*;
+import nos2jdbc.core.it.NoS2Jdbc;
+import nos2jdbc.core.it.Prerequisite;
+
+import static org.junit.Assert.*;
 
 import static org.seasar.extension.jdbc.parameter.Parameter.*;
 
@@ -36,7 +38,7 @@ import static org.seasar.extension.jdbc.parameter.Parameter.*;
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 @Prerequisite("#ENV not in {'hsqldb', 'h2', 'db2', 'standard'}")
 public class SqlFunctionCallTest {
 
@@ -46,6 +48,7 @@ public class SqlFunctionCallTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter_none() throws Exception {
         Integer result =
             jdbcManager
@@ -58,6 +61,7 @@ public class SqlFunctionCallTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter_simpleType() throws Exception {
         Integer result =
             jdbcManager.callBySql(
@@ -71,6 +75,7 @@ public class SqlFunctionCallTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter_simpleType_time() throws Exception {
         Date inparam =
             new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
@@ -89,6 +94,7 @@ public class SqlFunctionCallTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter_dto() throws Exception {
         MyDto dto = new MyDto();
         dto.param1 = 3;
@@ -107,6 +113,7 @@ public class SqlFunctionCallTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter_dto_time() throws Exception {
         Date date = new SimpleDateFormat("HH:mm:ss").parse("12:11:10");
         MyDto2 dto = new MyDto2();
@@ -124,6 +131,7 @@ public class SqlFunctionCallTest {
      * 
      * @throws Exception
      */
+    @Test
     @Prerequisite("#ENV not in {'mssql2005', 'mysql'}")
     public void testParameter_resultSet() throws Exception {
         List<Employee> employees =
@@ -143,6 +151,7 @@ public class SqlFunctionCallTest {
      * 
      * @throws Exception
      */
+    @Test
     @Prerequisite("#ENV not in {'mssql2005', 'mysql'}")
     public void testParameter_resultSetUpdate() throws Exception {
         List<Employee> employees =

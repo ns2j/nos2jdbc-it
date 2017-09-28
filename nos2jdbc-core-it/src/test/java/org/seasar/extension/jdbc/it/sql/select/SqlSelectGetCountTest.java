@@ -15,17 +15,19 @@
  */
 package org.seasar.extension.jdbc.it.sql.select;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.JdbcManager;
-import org.seasar.framework.unit.Seasar2;
 
-import static junit.framework.Assert.*;
+import nos2jdbc.core.it.NoS2Jdbc;
+
+import static org.junit.Assert.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class SqlSelectGetCountTest {
 
     private JdbcManager jdbcManager;
@@ -34,6 +36,7 @@ public class SqlSelectGetCountTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testGetCount() throws Exception {
         long count =
             jdbcManager.getCountBySql(

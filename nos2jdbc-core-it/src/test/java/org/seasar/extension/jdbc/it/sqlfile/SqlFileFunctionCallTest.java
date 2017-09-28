@@ -22,13 +22,15 @@ import java.util.List;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Employee;
-import org.seasar.framework.unit.Seasar2;
-import org.seasar.framework.unit.annotation.Prerequisite;
 
-import static junit.framework.Assert.*;
+import nos2jdbc.core.it.NoS2Jdbc;
+import nos2jdbc.core.it.Prerequisite;
+
+import static org.junit.Assert.*;
 
 import static org.seasar.extension.jdbc.parameter.Parameter.*;
 
@@ -36,7 +38,7 @@ import static org.seasar.extension.jdbc.parameter.Parameter.*;
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 @Prerequisite("#ENV not in {'hsqldb', 'h2', 'db2', 'standard'}")
 public class SqlFileFunctionCallTest {
 
@@ -46,6 +48,7 @@ public class SqlFileFunctionCallTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter_none() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_no" + ".sql";
         Integer result =
@@ -57,6 +60,7 @@ public class SqlFileFunctionCallTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter_simpleType() throws Exception {
         String path =
             getClass().getName().replace(".", "/") + "_simpleType" + ".sql";
@@ -69,6 +73,7 @@ public class SqlFileFunctionCallTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter_simpleType_time() throws Exception {
         String path =
             getClass().getName().replace(".", "/") + "_simpleType_time"
@@ -90,6 +95,7 @@ public class SqlFileFunctionCallTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter_dto() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_dto" + ".sql";
         MyDto dto = new MyDto();
@@ -108,6 +114,7 @@ public class SqlFileFunctionCallTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParameter_dtoTx_time() throws Exception {
         String path =
             getClass().getName().replace(".", "/") + "_dto_time" + ".sql";
@@ -125,6 +132,7 @@ public class SqlFileFunctionCallTest {
      * 
      * @throws Exception
      */
+    @Test
     @Prerequisite("#ENV not in {'mssql2005', 'mysql'}")
     public void testParameter_resultSet() throws Exception {
         String path =
@@ -143,6 +151,7 @@ public class SqlFileFunctionCallTest {
      * 
      * @throws Exception
      */
+    @Test
     @Prerequisite("#ENV not in {'mssql2005', 'mysql'}")
     public void testParameter_resultSetUpdate() throws Exception {
         String path =
