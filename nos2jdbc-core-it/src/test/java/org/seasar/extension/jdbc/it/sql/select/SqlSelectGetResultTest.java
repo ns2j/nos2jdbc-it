@@ -23,10 +23,12 @@ import java.util.TreeMap;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Employee;
-import org.seasar.framework.unit.Seasar2;
+
+import nos2jdbc.core.it.NoS2Jdbc;
 
 import static org.junit.Assert.*;
 
@@ -34,7 +36,7 @@ import static org.junit.Assert.*;
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class SqlSelectGetResultTest {
 
     private JdbcManager jdbcManager;
@@ -43,6 +45,7 @@ public class SqlSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_getResultList_NoResultException() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE EMPLOYEE_ID = 100";
         try {
@@ -59,6 +62,7 @@ public class SqlSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_getSingleResult() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE EMPLOYEE_ID = 1";
         Employee employee =
@@ -70,6 +74,7 @@ public class SqlSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_getSingleResult_NonUniqueResultException()
             throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE DEPARTMENT_ID = 1";
@@ -84,6 +89,7 @@ public class SqlSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_getSingleResult_NoResultException() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE EMPLOYEE_ID = 100";
         try {
@@ -100,6 +106,7 @@ public class SqlSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_getSingleResult_null() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE EMPLOYEE_ID = 100";
         Employee employee =
@@ -111,6 +118,7 @@ public class SqlSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap_getResultList_NoResultException() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE EMPLOYEE_ID = 100";
         try {
@@ -127,6 +135,7 @@ public class SqlSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap_getSingleResult() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE EMPLOYEE_ID = 1";
         Map<?, ?> employee =
@@ -138,6 +147,7 @@ public class SqlSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap_getSingleResult_NonUniqueResultException()
             throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE DEPARTMENT_ID = 1";
@@ -152,6 +162,7 @@ public class SqlSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap_getSingleResult_NoResultException() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE EMPLOYEE_ID = 100";
         try {
@@ -168,6 +179,7 @@ public class SqlSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap_getSingleResult_null() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE EMPLOYEE_ID = 100";
         Map<?, ?> employee =
@@ -179,6 +191,7 @@ public class SqlSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap_getSingleResult_AsLinkedHashMap() throws Exception {
         String sql =
             "SELECT VERSION, EMPLOYEE_NAME, EMPLOYEE_ID FROM EMPLOYEE WHERE EMPLOYEE_ID = 1";
@@ -196,6 +209,7 @@ public class SqlSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap_getSingleResult_AsTreeMap() throws Exception {
         String sql =
             "SELECT VERSION, EMPLOYEE_NAME, EMPLOYEE_ID FROM EMPLOYEE WHERE EMPLOYEE_ID = 1";
@@ -214,6 +228,7 @@ public class SqlSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testObject_getResultList_NoResultException() throws Exception {
         String sql = "SELECT EMPLOYEE_ID FROM EMPLOYEE WHERE EMPLOYEE_ID = 100";
         try {
@@ -230,6 +245,7 @@ public class SqlSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testObject_getSingleResult() throws Exception {
         String sql = "SELECT EMPLOYEE_ID FROM EMPLOYEE WHERE EMPLOYEE_ID = 1";
         Integer employeeId =
@@ -241,6 +257,7 @@ public class SqlSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testObject_getSingleResult_NonUniqueResultException()
             throws Exception {
         String sql = "SELECT EMPLOYEE_ID FROM EMPLOYEE WHERE DEPARTMENT_ID = 1";
@@ -255,6 +272,7 @@ public class SqlSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testObject_getSingleResult_NoResultException() throws Exception {
         String sql = "SELECT EMPLOYEE_ID FROM EMPLOYEE WHERE EMPLOYEE_ID = 100";
         try {
@@ -271,6 +289,7 @@ public class SqlSelectGetResultTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testObject_getSingleResult_null() throws Exception {
         String sql = "SELECT EMPLOYEE_ID FROM EMPLOYEE WHERE EMPLOYEE_ID = 100";
         Integer employeeId =

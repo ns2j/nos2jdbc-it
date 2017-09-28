@@ -26,7 +26,8 @@ import org.seasar.extension.jdbc.it.entity.ConcreteEmployee;
 import org.seasar.extension.jdbc.it.entity.Employee;
 import org.seasar.extension.jdbc.it.entity.NoId;
 import org.seasar.extension.jdbc.where.SimpleWhere;
-import org.seasar.framework.unit.Seasar2;
+
+import nos2jdbc.core.it.NoS2Jdbc;
 
 import static org.junit.Assert.*;
 
@@ -34,7 +35,7 @@ import static org.junit.Assert.*;
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class AutoDeleteTest {
 
     private JdbcManager jdbcManager;
@@ -43,6 +44,7 @@ public class AutoDeleteTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testExecute() throws Exception {
         Employee employee = new Employee();
         employee.employeeId = 1;
@@ -59,6 +61,7 @@ public class AutoDeleteTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testExecute_ignoreVersion() throws Exception {
         Employee employee = new Employee();
         employee.employeeId = 1;
@@ -75,6 +78,7 @@ public class AutoDeleteTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testExecute_compKey() throws Exception {
         CompKeyEmployee employee = new CompKeyEmployee();
         employee.employeeId1 = 1;
@@ -95,6 +99,7 @@ public class AutoDeleteTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testExecute_mappedSuperclass() throws Exception {
         ConcreteEmployee employee = new ConcreteEmployee();
         employee.employeeId = 1;
@@ -111,6 +116,7 @@ public class AutoDeleteTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testOptimisticLockException() throws Exception {
         Employee employee1 =
             jdbcManager
@@ -134,6 +140,7 @@ public class AutoDeleteTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testSuppresOptimisticLockException() throws Exception {
         Employee employee1 =
             jdbcManager

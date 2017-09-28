@@ -18,6 +18,7 @@ package org.seasar.extension.jdbc.it.auto.select;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.exception.PropertyNotFoundRuntimeException;
@@ -26,7 +27,8 @@ import org.seasar.extension.jdbc.it.condition.EmployeeCondition;
 import org.seasar.extension.jdbc.it.entity.Department;
 import org.seasar.extension.jdbc.it.entity.Employee;
 import org.seasar.extension.jdbc.where.SimpleWhere;
-import org.seasar.framework.unit.Seasar2;
+
+import nos2jdbc.core.it.NoS2Jdbc;
 
 import static org.junit.Assert.*;
 import static org.seasar.extension.jdbc.it.name.EmployeeNames.*;
@@ -36,7 +38,7 @@ import static org.seasar.extension.jdbc.operation.Operations.*;
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class SingleKeyJoinTest {
 
     private JdbcManager jdbcManager;
@@ -45,6 +47,7 @@ public class SingleKeyJoinTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testJoin_nest() throws Exception {
         List<Department> list =
             jdbcManager
@@ -62,6 +65,7 @@ public class SingleKeyJoinTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testJoin_nest_simpleWhere() throws Exception {
         List<Department> list =
             jdbcManager
@@ -77,6 +81,7 @@ public class SingleKeyJoinTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testJoin_nest_condition() throws Exception {
         List<Department> list =
             jdbcManager
@@ -92,6 +97,7 @@ public class SingleKeyJoinTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testJoin_star() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -110,6 +116,7 @@ public class SingleKeyJoinTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testJoin_star_simpleWhere() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -131,6 +138,7 @@ public class SingleKeyJoinTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testJoin_star_condition() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -152,6 +160,7 @@ public class SingleKeyJoinTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testJoin_star_names() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -171,6 +180,7 @@ public class SingleKeyJoinTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testJoin_illegalPropertyName() throws Exception {
         try {
             jdbcManager
@@ -187,6 +197,7 @@ public class SingleKeyJoinTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testJoin_illegalPropertyName2() throws Exception {
         try {
             jdbcManager
@@ -204,6 +215,7 @@ public class SingleKeyJoinTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testJoin_condition() throws Exception {
         List<Employee> list =
             jdbcManager.from(Employee.class).innerJoin(
@@ -217,6 +229,7 @@ public class SingleKeyJoinTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testJoin_names() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -231,6 +244,7 @@ public class SingleKeyJoinTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testJoin_condition_where() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -245,6 +259,7 @@ public class SingleKeyJoinTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testJoin_condition_where_names() throws Exception {
         List<Employee> list =
             jdbcManager

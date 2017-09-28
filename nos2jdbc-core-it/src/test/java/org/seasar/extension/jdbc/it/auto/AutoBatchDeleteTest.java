@@ -19,7 +19,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.OptimisticLockException;
+import javax.transaction.UserTransaction;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.JdbcManager;
@@ -29,7 +33,8 @@ import org.seasar.extension.jdbc.it.entity.ConcreteEmployee;
 import org.seasar.extension.jdbc.it.entity.Employee;
 import org.seasar.extension.jdbc.it.entity.NoId;
 import org.seasar.extension.jdbc.where.SimpleWhere;
-import org.seasar.framework.unit.Seasar2;
+
+import nos2jdbc.core.it.NoS2Jdbc;
 
 import static org.junit.Assert.*;
 
@@ -37,15 +42,16 @@ import static org.junit.Assert.*;
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class AutoBatchDeleteTest {
-
+    
     private JdbcManager jdbcManager;
 
     /**
      * 
      * @throws Exception
      */
+    @Test
     public void testExecute() throws Exception {
         List<Employee> list = new ArrayList<Employee>();
         Employee employee = new Employee();
@@ -75,6 +81,7 @@ public class AutoBatchDeleteTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testExecute_ignoreVersion() throws Exception {
         List<Employee> list = new ArrayList<Employee>();
         Employee employee = new Employee();
@@ -104,6 +111,7 @@ public class AutoBatchDeleteTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testExecute_compKey() throws Exception {
         List<CompKeyEmployee> list = new ArrayList<CompKeyEmployee>();
         CompKeyEmployee employee = new CompKeyEmployee();
@@ -141,6 +149,7 @@ public class AutoBatchDeleteTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testExecute_mappedSuperclass() throws Exception {
         List<ConcreteEmployee> list = new ArrayList<ConcreteEmployee>();
         ConcreteEmployee employee = new ConcreteEmployee();
@@ -170,6 +179,7 @@ public class AutoBatchDeleteTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testOptimisticLockException() throws Exception {
         Employee employee1 =
             jdbcManager
@@ -198,6 +208,7 @@ public class AutoBatchDeleteTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testOptimisticLockException_ignoreVersion() throws Exception {
         Employee employee1 =
             jdbcManager
@@ -222,6 +233,7 @@ public class AutoBatchDeleteTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testSuppresOptimisticLockException() throws Exception {
         Employee employee1 =
             jdbcManager

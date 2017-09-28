@@ -40,7 +40,8 @@ import org.seasar.extension.jdbc.it.entity.Employee;
 import org.seasar.extension.jdbc.it.entity.NoId;
 import org.seasar.extension.jdbc.it.entity.Tense;
 import org.seasar.extension.jdbc.where.SimpleWhere;
-import org.seasar.framework.unit.Seasar2;
+
+import nos2jdbc.core.it.NoS2Jdbc;
 
 import static org.junit.Assert.*;
 
@@ -48,7 +49,7 @@ import static org.junit.Assert.*;
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class AutoUpdateTest {
 
     private JdbcManager jdbcManager;
@@ -57,6 +58,7 @@ public class AutoUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testExecute() throws Exception {
         Department department = new Department();
         department.departmentId = 1;
@@ -79,6 +81,7 @@ public class AutoUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testExecute_includesVersion() throws Exception {
         Department department = new Department();
         department.departmentId = 1;
@@ -101,6 +104,7 @@ public class AutoUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testExecute_excludesNull() throws Exception {
         Department department = new Department();
         department.departmentId = 1;
@@ -123,6 +127,7 @@ public class AutoUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testExecute_includes() throws Exception {
         Department department = new Department();
         department.departmentId = 1;
@@ -150,6 +155,7 @@ public class AutoUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testExecute_excludes() throws Exception {
         Department department = new Department();
         department.departmentId = 1;
@@ -177,6 +183,7 @@ public class AutoUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testExecute_changeFrom() throws Exception {
         Department before =
             jdbcManager.from(Department.class).where(
@@ -207,6 +214,7 @@ public class AutoUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testExecute_compKey() throws Exception {
         CompKeyDepartment department = new CompKeyDepartment();
         department.departmentId1 = 1;
@@ -239,6 +247,7 @@ public class AutoUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testExecute_mappedSuperclass() throws Exception {
         ConcreteDepartment department = new ConcreteDepartment();
         department.departmentId = 1;
@@ -261,6 +270,7 @@ public class AutoUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testOptimisticLockException() throws Exception {
         Employee employee1 =
             jdbcManager
@@ -284,6 +294,7 @@ public class AutoUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testSuppresOptimisticLockException() throws Exception {
         Employee employee1 =
             jdbcManager
@@ -308,6 +319,7 @@ public class AutoUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testColumnAnnotation() throws Exception {
         Department2 department = new Department2();
         department.departmentId = 1;
@@ -328,6 +340,7 @@ public class AutoUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testTransientAnnotation() throws Exception {
         Department3 department = new Department3();
         department.departmentId = 1;
@@ -348,6 +361,7 @@ public class AutoUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testTransientModifier() throws Exception {
         Department4 department = new Department4();
         department.departmentId = 1;
@@ -368,6 +382,7 @@ public class AutoUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testEntityExistsException() throws Exception {
         Department department =
             jdbcManager
@@ -386,6 +401,7 @@ public class AutoUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testTemporalType() throws Exception {
         Tense tense = new Tense();
         tense.id = 1;

@@ -34,16 +34,17 @@ import org.seasar.extension.jdbc.it.entity.Department4;
 import org.seasar.extension.jdbc.it.entity.Employee;
 import org.seasar.extension.jdbc.it.entity.NoId;
 import org.seasar.extension.jdbc.where.SimpleWhere;
-import org.seasar.framework.unit.Seasar2;
-import org.seasar.framework.unit.annotation.Prerequisite;
 
-import static junit.framework.Assert.*;
+import nos2jdbc.core.it.NoS2Jdbc;
+import nos2jdbc.core.it.Prerequisite;
+
+import static org.junit.Assert.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class AutoBatchUpdateTest {
 
     private JdbcManager jdbcManager;
@@ -52,6 +53,7 @@ public class AutoBatchUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testExecute() throws Exception {
         List<Department> list = new ArrayList<Department>();
         Department department = new Department();
@@ -95,6 +97,7 @@ public class AutoBatchUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testExecute_includesVersion() throws Exception {
         List<Department> list = new ArrayList<Department>();
         Department department = new Department();
@@ -139,6 +142,7 @@ public class AutoBatchUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testExecute_includes() throws Exception {
         List<Department> list = new ArrayList<Department>();
         Department department = new Department();
@@ -188,6 +192,7 @@ public class AutoBatchUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testExecute_excludes() throws Exception {
         List<Department> list = new ArrayList<Department>();
         Department department = new Department();
@@ -237,6 +242,7 @@ public class AutoBatchUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testExecute_compKey() throws Exception {
         List<CompKeyDepartment> list = new ArrayList<CompKeyDepartment>();
         CompKeyDepartment department = new CompKeyDepartment();
@@ -294,6 +300,7 @@ public class AutoBatchUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testExecute_mappedSuperclass() throws Exception {
         List<ConcreteDepartment> list = new ArrayList<ConcreteDepartment>();
         ConcreteDepartment department = new ConcreteDepartment();
@@ -337,6 +344,7 @@ public class AutoBatchUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testOptimisticLockException() throws Exception {
         Employee employee1 =
             jdbcManager
@@ -365,6 +373,7 @@ public class AutoBatchUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testOptimisticLockException_includesVersion() throws Exception {
         Employee employee1 =
             jdbcManager
@@ -392,6 +401,7 @@ public class AutoBatchUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testSuppresOptimisticLockException() throws Exception {
         Employee employee1 =
             jdbcManager
@@ -419,6 +429,7 @@ public class AutoBatchUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testColumnAnnotation() throws Exception {
         List<Department2> list = new ArrayList<Department2>();
         Department2 department = new Department2();
@@ -448,6 +459,7 @@ public class AutoBatchUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testTransientAnnotation() throws Exception {
         List<Department3> list = new ArrayList<Department3>();
         Department3 department = new Department3();
@@ -477,6 +489,7 @@ public class AutoBatchUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testTransientModifier() throws Exception {
         List<Department4> list = new ArrayList<Department4>();
         Department4 department = new Department4();
@@ -506,7 +519,8 @@ public class AutoBatchUpdateTest {
      * 
      * @throws Exception
      */
-    @Prerequisite("#ENV != 'hsqldb'")
+    //@Prerequisite("#ENV != 'hsqldb'")
+    @Test
     public void testEntityExistsException() throws Exception {
         Department department =
             jdbcManager

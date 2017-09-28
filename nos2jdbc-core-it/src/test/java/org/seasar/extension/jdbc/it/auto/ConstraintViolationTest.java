@@ -17,21 +17,23 @@ package org.seasar.extension.jdbc.it.auto;
 
 import javax.persistence.EntityExistsException;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.exception.IdPropertyNotAssignedRuntimeException;
 import org.seasar.extension.jdbc.it.entity.ConstraintChecking;
 import org.seasar.framework.exception.SQLRuntimeException;
-import org.seasar.framework.unit.Seasar2;
-import org.seasar.framework.unit.annotation.Prerequisite;
 
-import static junit.framework.Assert.*;
+import nos2jdbc.core.it.NoS2Jdbc;
+import nos2jdbc.core.it.Prerequisite;
+
+import static org.junit.Assert.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 @Prerequisite("#ENV not in {'standard'}")
 public class ConstraintViolationTest {
 
@@ -41,6 +43,7 @@ public class ConstraintViolationTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testUniqueConstraint_primaryKey() throws Exception {
         ConstraintChecking checking = new ConstraintChecking();
         checking.primaryKey = 1;
@@ -67,6 +70,7 @@ public class ConstraintViolationTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testUniqueConstraint_uniqueKey() throws Exception {
         ConstraintChecking checking = new ConstraintChecking();
         checking.primaryKey = 1;
@@ -93,6 +97,7 @@ public class ConstraintViolationTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testReferentialIntegrityConstraint() throws Exception {
         ConstraintChecking checking = new ConstraintChecking();
         checking.primaryKey = 1;
@@ -111,6 +116,7 @@ public class ConstraintViolationTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testNotNullConstraint() throws Exception {
         ConstraintChecking checking = new ConstraintChecking();
         checking.primaryKey = 1;
@@ -129,6 +135,7 @@ public class ConstraintViolationTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testNotNullConstraint_primaryKey() throws Exception {
         ConstraintChecking checking = new ConstraintChecking();
         checking.primaryKey = null;
@@ -148,6 +155,7 @@ public class ConstraintViolationTest {
      * @throws Exception
      */
     @Prerequisite("#ENV not in {'mysql'}")
+    @Test
     public void testCheckConstraint() throws Exception {
         ConstraintChecking checking = new ConstraintChecking();
         checking.primaryKey = 1;

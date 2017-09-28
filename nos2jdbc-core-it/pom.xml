@@ -1,273 +1,211 @@
-<project
-  xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  <groupId>nos2jdbc-it</groupId>
+  <artifactId>nos2jdbc-core-it</artifactId>
+  <version>1.0.0</version>
 
-  <!-- The Basics -->
-  <artifactId>s2jdbc-it</artifactId>
-  <packaging>jar</packaging>
-  <parent>
-    <groupId>org.seasar.container</groupId>
-    <artifactId>s2-container-project</artifactId>
-    <version>2.4.49-SNAPSHOT</version>
-    <relativePath>../seasar2</relativePath>
-  </parent>
+ <repositories>
+    <repository>
+      <id>Alfresco</id>
+      <name>Alfresco Public</name>
+      <url>https://artifacts.alfresco.com/nexus/content/repositories/public/</url>
+    </repository>
+    <repository>
+      <id>Jahia</id>
+      <name>Jahia Repository</name>
+      <url>http://maven.jahia.org/maven2/</url>
+    </repository>
+  </repositories>
 
-  <!-- More Project Information -->
-  <name>S2JDBC-IT</name>
-  <url>http://s2container.seasar.org/</url>
+  <dependencies>
+    <dependency>
+      <groupId>javax.transaction</groupId>
+      <artifactId>javax.transaction-api</artifactId>
+      <version>1.2</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.persistence</groupId>
+      <artifactId>persistence-api</artifactId>
+      <version>1.0.2</version>
+    </dependency>
 
-  <!-- Profiles -->
+    <dependency>
+      <groupId>nos2jdbc</groupId>
+      <artifactId>nos2jdbc-core</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.2</version>
+    </dependency>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.17</version>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit-addons</groupId>
+      <artifactId>junit-addons</artifactId>
+      <version>1.4</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+       	<version>3.6.1</version>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+          <encoding>UTF-8</encoding>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.20</version>
+        <dependencies>
+          <dependency>
+            <groupId>org.apache.maven.surefire</groupId>
+            <artifactId>surefire-junit47</artifactId>
+            <version>2.20</version>
+          </dependency>
+        </dependencies>
+        <configuration>
+          <systemPropertyVariables>
+            <isEnumValueTypeOld>true</isEnumValueTypeOld>
+            <database>${database}</database>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
   <profiles>
     <profile>
       <id>standard</id>
+      <properties>
+        <database>standard</database>
+      </properties>
       <dependencies>
         <dependency>
           <groupId>org.apache.derby</groupId>
           <artifactId>derby</artifactId>
-          <version>10.3.1.4</version>
-          <type>jar</type>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.derby</groupId>
-          <artifactId>derbyLocale_ja_JP</artifactId>
-          <version>10.3.1.4</version>
-          <type>jar</type>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.derby</groupId>
-          <artifactId>derbytools</artifactId>
-          <version>10.3.1.4</version>
-          <type>jar</type>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.derby</groupId>
-          <artifactId>derby</artifactId>
-          <version>10.3.1.4</version>
-          <type>jar</type>
+          <version>10.13.1.1</version>
           <scope>test</scope>
         </dependency>
       </dependencies>
     </profile>
     <profile>
       <id>hsqldb</id>
+      <properties>
+        <database>hsqldb</database>
+      </properties>
+      <dependencies>
+        <dependency>
+          <groupId>org.hsqldb</groupId>
+          <artifactId>hsqldb</artifactId>
+          <version>2.4.0</version>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
     </profile>
     <profile>
       <id>h2</id>
+      <properties>
+        <database>h2</database>
+      </properties>
       <dependencies>
         <dependency>
           <groupId>com.h2database</groupId>
           <artifactId>h2</artifactId>
-          <version>1.0.60</version>
-          <type>jar</type>
+          <version>1.4.195</version>
           <scope>test</scope>
         </dependency>
       </dependencies>
     </profile>
     <profile>
       <id>postgre</id>
+      <properties>
+        <database>postgre</database>
+      </properties>
       <dependencies>
         <dependency>
-          <groupId>postgresql</groupId>
+          <groupId>org.postgresql</groupId>
           <artifactId>postgresql</artifactId>
-          <version>8.3-603.jdbc3</version>
-          <type>jar</type>
+          <version>42.1.4.jre6</version>
           <scope>test</scope>
         </dependency>
       </dependencies>
     </profile>
     <profile>
       <id>mysql</id>
+      <properties>
+        <database>mysql</database>
+      </properties>
       <dependencies>
         <dependency>
           <groupId>mysql</groupId>
           <artifactId>mysql-connector-java</artifactId>
-          <version>5.1.6</version>
-          <type>jar</type>
+          <version>6.0.6</version>
           <scope>test</scope>
         </dependency>
       </dependencies>
     </profile>
     <profile>
       <id>oracle</id>
+      <properties>
+        <database>oracle</database>
+      </properties>
       <dependencies>
         <dependency>
           <groupId>com.oracle</groupId>
-          <artifactId>ojdbc14</artifactId>
-          <version>10.2.0.4</version>
-          <type>jar</type>
+          <artifactId>ojdbc7</artifactId>
+          <version>12.1.0.2</version>
           <scope>test</scope>
         </dependency>
       </dependencies>
     </profile>
     <profile>
       <id>db2</id>
+      <properties>
+        <database>db2</database>
+      </properties>
       <dependencies>
         <dependency>
-          <groupId>com.ibm</groupId>
-          <artifactId>db2jcc</artifactId>
-          <version>3.50.152</version>
-          <type>jar</type>
+          <groupId>com.ibm.db2.jcc</groupId>
+          <artifactId>db2jcc4</artifactId>
+          <version>10.1</version>
           <scope>test</scope>
         </dependency>
       </dependencies>
     </profile>
     <profile>
       <id>mssql2005</id>
+      <properties>
+        <database>mssql2005</database>
+      </properties>
       <dependencies>
         <dependency>
-          <groupId>com.microsoft</groupId>
-          <artifactId>sqljdbc</artifactId>
-          <version>1.2.2828</version>
-          <type>jar</type>
+          <groupId>com.microsoft.sqlserver</groupId>
+          <artifactId>mssql-jdbc</artifactId>
+          <version>6.3.1.jre7-preview-v2</version>
           <scope>test</scope>
         </dependency>
       </dependencies>
     </profile>
   </profiles>
 
-  <!-- Build Settings -->
-  <build>
-    <defaultGoal>validate</defaultGoal>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <configuration>
-            <source>1.5</source>
-            <target>1.5</target>
-            <encoding>UTF-8</encoding>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-    <plugins>
-      <plugin>
-        <artifactId>maven-antrun-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>ant-setup-env</id>
-            <phase>generate-test-resources</phase>
-            <configuration>
-              <tasks>
-                <echo message="${database}" file="src/test/resources/env_ut.txt"/>
-              </tasks>
-            </configuration>
-            <goals>
-              <goal>run</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>ant-setup-data</id>
-            <phase>test-compile</phase>
-            <configuration>
-              <tasks>
-                <ant antfile="build.xml" target="setup-data">
-                  <property name="database" value="${database}"/>
-                  <property name="classpath" refid="maven.test.classpath"/>
-                </ant>
-              </tasks>
-            </configuration>
-            <goals>
-              <goal>run</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>ant-teardown-env</id>
-            <phase>test</phase>
-            <configuration>
-              <tasks>
-                <echo message="hsqldb" file="src/test/resources/env_ut.txt"/>
-              </tasks>
-            </configuration>
-            <goals>
-              <goal>run</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
-
-  <!-- Dependency Settings -->
-  <dependencies>
-    <dependency>
-      <groupId>org.seasar.container</groupId>
-      <artifactId>s2-tiger</artifactId>
-      <version>${version}</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>org.seasar.container</groupId>
-      <artifactId>s2-framework</artifactId>
-      <version>${version}</version>
-      <type>test-jar</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.seasar.container</groupId>
-      <artifactId>s2-extension</artifactId>
-      <version>${version}</version>
-      <type>test-jar</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.geronimo.specs</groupId>
-      <artifactId>geronimo-annotation_1.0_spec</artifactId>
-      <version>1.0</version>
-      <type>jar</type>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.geronimo.specs</groupId>
-      <artifactId>geronimo-ejb_3.0_spec</artifactId>
-      <version>1.0</version>
-      <type>jar</type>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.geronimo.specs</groupId>
-      <artifactId>geronimo-interceptor_3.0_spec</artifactId>
-      <version>1.0</version>
-      <type>jar</type>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.geronimo.specs</groupId>
-      <artifactId>geronimo-jpa_3.0_spec</artifactId>
-      <version>1.0</version>
-      <type>jar</type>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.4</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>junit-addons</groupId>
-      <artifactId>junit-addons</artifactId>
-      <version>1.4</version>
-      <type>jar</type>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>junit-addons</groupId>
-          <artifactId>junit-addons-runner</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.ant</groupId>
-      <artifactId>ant</artifactId>
-      <version>1.7.0</version>
-      <type>jar</type>
-    </dependency>
-  </dependencies>
 </project>

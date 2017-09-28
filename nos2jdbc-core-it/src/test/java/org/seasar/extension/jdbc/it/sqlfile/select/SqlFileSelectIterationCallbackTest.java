@@ -18,12 +18,14 @@ package org.seasar.extension.jdbc.it.sqlfile.select;
 import java.math.BigDecimal;
 import java.util.Map;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.IterationCallback;
 import org.seasar.extension.jdbc.IterationContext;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Employee;
-import org.seasar.framework.unit.Seasar2;
+
+import nos2jdbc.core.it.NoS2Jdbc;
 
 import static org.junit.Assert.*;
 
@@ -31,7 +33,7 @@ import static org.junit.Assert.*;
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class SqlFileSelectIterationCallbackTest {
 
     private static String PATH =
@@ -90,6 +92,7 @@ public class SqlFileSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean() throws Exception {
         BigDecimal sum =
             jdbcManager.selectBySqlFile(Employee.class, PATH).iterate(
@@ -101,6 +104,7 @@ public class SqlFileSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_limitOnly() throws Exception {
         BigDecimal sum =
             jdbcManager.selectBySqlFile(Employee.class, PATH).limit(3).iterate(
@@ -112,6 +116,7 @@ public class SqlFileSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_offset_limit() throws Exception {
         BigDecimal sum =
             jdbcManager
@@ -126,6 +131,7 @@ public class SqlFileSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_offsetOnly() throws Exception {
         BigDecimal sum =
             jdbcManager
@@ -139,6 +145,7 @@ public class SqlFileSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap() throws Exception {
         BigDecimal sum =
             jdbcManager.selectBySqlFile(Map.class, PATH).iterate(
@@ -150,6 +157,7 @@ public class SqlFileSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap_limitOnly() throws Exception {
         BigDecimal sum =
             jdbcManager.selectBySqlFile(Map.class, PATH).limit(3).iterate(
@@ -161,6 +169,7 @@ public class SqlFileSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap_offset_limit() throws Exception {
         BigDecimal sum =
             jdbcManager
@@ -175,6 +184,7 @@ public class SqlFileSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap_offsetOnly() throws Exception {
         BigDecimal sum =
             jdbcManager.selectBySqlFile(Map.class, PATH).offset(3).iterate(
@@ -186,6 +196,7 @@ public class SqlFileSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testObject() throws Exception {
         BigDecimal sum =
             jdbcManager.selectBySqlFile(BigDecimal.class, PATH2).iterate(
@@ -197,6 +208,7 @@ public class SqlFileSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testObject_limitOnly() throws Exception {
         BigDecimal sum =
             jdbcManager
@@ -210,6 +222,7 @@ public class SqlFileSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testObject_offset_limit() throws Exception {
         BigDecimal sum =
             jdbcManager
@@ -224,6 +237,7 @@ public class SqlFileSelectIterationCallbackTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testObject_offsetOnly() throws Exception {
         BigDecimal sum =
             jdbcManager

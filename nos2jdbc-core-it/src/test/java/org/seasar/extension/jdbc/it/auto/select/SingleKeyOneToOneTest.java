@@ -17,20 +17,22 @@ package org.seasar.extension.jdbc.it.auto.select;
 
 import java.util.List;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Address;
 import org.seasar.extension.jdbc.it.entity.Employee;
-import org.seasar.framework.unit.Seasar2;
 
-import static junit.framework.Assert.*;
+import nos2jdbc.core.it.NoS2Jdbc;
+
+import static org.junit.Assert.*;
 import static org.seasar.extension.jdbc.it.name.EmployeeNames.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class SingleKeyOneToOneTest {
 
     private JdbcManager jdbcManager;
@@ -39,6 +41,7 @@ public class SingleKeyOneToOneTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testLeftOuterJoin_fromOwnerToInverse() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -55,6 +58,7 @@ public class SingleKeyOneToOneTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testLeftOuterJoin_fromOwnerToInverse_names() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -71,6 +75,7 @@ public class SingleKeyOneToOneTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testLeftOuterJoin_fromOwnerToInverse_noFetch() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -87,6 +92,7 @@ public class SingleKeyOneToOneTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testInnerJoin_fromOwnerToInverse() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -103,6 +109,7 @@ public class SingleKeyOneToOneTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testInnerJoin_fromOwnerToInverse_noFetch() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -119,6 +126,7 @@ public class SingleKeyOneToOneTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testLeftOuterJoin_fromInverseToOwner() throws Exception {
         List<Address> list =
             jdbcManager
@@ -135,6 +143,7 @@ public class SingleKeyOneToOneTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testLeftOuterJoin_fromInverseToOwner_noFetch() throws Exception {
         List<Address> list =
             jdbcManager
@@ -151,6 +160,7 @@ public class SingleKeyOneToOneTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testInnerJoin_fromInverseToOwner() throws Exception {
         List<Address> list =
             jdbcManager
@@ -167,6 +177,7 @@ public class SingleKeyOneToOneTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testInnerJoin_fromInverseToOwner_noFetch() throws Exception {
         List<Address> list =
             jdbcManager

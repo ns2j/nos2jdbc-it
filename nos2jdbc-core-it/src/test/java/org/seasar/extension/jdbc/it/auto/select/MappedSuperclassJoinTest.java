@@ -18,12 +18,14 @@ package org.seasar.extension.jdbc.it.auto.select;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.ConcreteDepartment;
 import org.seasar.extension.jdbc.it.entity.ConcreteEmployee;
 import org.seasar.extension.jdbc.where.SimpleWhere;
-import org.seasar.framework.unit.Seasar2;
+
+import nos2jdbc.core.it.NoS2Jdbc;
 
 import static org.junit.Assert.*;
 
@@ -31,7 +33,7 @@ import static org.junit.Assert.*;
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class MappedSuperclassJoinTest {
 
     private JdbcManager jdbcManager;
@@ -40,6 +42,7 @@ public class MappedSuperclassJoinTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testJoin_nest() throws Exception {
         List<ConcreteDepartment> list =
             jdbcManager.from(ConcreteDepartment.class).leftOuterJoin(
@@ -54,6 +57,7 @@ public class MappedSuperclassJoinTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testJoin_star() throws Exception {
         List<ConcreteEmployee> list =
             jdbcManager
@@ -73,6 +77,7 @@ public class MappedSuperclassJoinTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testJoin_condition() throws Exception {
         List<ConcreteEmployee> list =
             jdbcManager.from(ConcreteEmployee.class).innerJoin(
@@ -86,6 +91,7 @@ public class MappedSuperclassJoinTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testJoin_condition_where() throws Exception {
         List<ConcreteEmployee> list =
             jdbcManager

@@ -18,7 +18,10 @@ package org.seasar.extension.jdbc.it.auto;
 import javax.persistence.EntityExistsException;
 
 import junitx.framework.ArrayAssert;
+import nos2jdbc.core.it.NoS2Jdbc;
+import nos2jdbc.core.it.Prerequisite;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.exception.IdGenerationFailedRuntimeException;
@@ -51,8 +54,6 @@ import org.seasar.extension.jdbc.it.entity.TableStrategy4;
 import org.seasar.extension.jdbc.it.entity.TableStrategy5;
 import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
 import org.seasar.extension.jdbc.where.SimpleWhere;
-import org.seasar.framework.unit.Seasar2;
-import org.seasar.framework.unit.annotation.Prerequisite;
 
 import static org.junit.Assert.*;
 
@@ -60,7 +61,7 @@ import static org.junit.Assert.*;
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class AutoInsertTest {
 
     private JdbcManager jdbcManager;
@@ -71,6 +72,7 @@ public class AutoInsertTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testExecute() throws Exception {
         Department department = new Department();
         department.departmentId = 99;
@@ -92,6 +94,7 @@ public class AutoInsertTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testExecute_excludesNull() throws Exception {
         Department department = new Department();
         department.departmentId = 99;
@@ -113,6 +116,7 @@ public class AutoInsertTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testExecute_includes() throws Exception {
         Department department = new Department();
         department.departmentId = 99;
@@ -142,6 +146,7 @@ public class AutoInsertTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testExecute_excludes() throws Exception {
         Department department = new Department();
         department.departmentId = 99;
@@ -169,6 +174,7 @@ public class AutoInsertTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testExecute_compKey() throws Exception {
         CompKeyDepartment department = new CompKeyDepartment();
         department.departmentId1 = 99;
@@ -194,6 +200,7 @@ public class AutoInsertTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testExecute_mappedSuperclass() throws Exception {
         ConcreteDepartment department = new ConcreteDepartment();
         department.departmentId = 99;
@@ -215,6 +222,7 @@ public class AutoInsertTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testId_IdPropertyNotAssignedRuntimeException() throws Exception {
         try {
             jdbcManager.insert(new Department5()).execute();
@@ -227,6 +235,7 @@ public class AutoInsertTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testId_auto() throws Exception {
         for (int i = 0; i < 110; i++) {
             AutoStrategy entity = new AutoStrategy();
@@ -239,6 +248,7 @@ public class AutoInsertTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testId_identity() throws Exception {
         try {
             for (int i = 0; i < 110; i++) {
@@ -260,6 +270,7 @@ public class AutoInsertTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testId_sequence() throws Exception {
         try {
             for (int i = 0; i < 110; i++) {
@@ -281,6 +292,7 @@ public class AutoInsertTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testId_sequence_explicitGenerator() throws Exception {
         try {
             for (int i = 0; i < 110; i++) {
@@ -302,6 +314,7 @@ public class AutoInsertTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testId_sequence_IdGeneratorNotFoundRuntimeException()
             throws Exception {
         try {
@@ -315,6 +328,7 @@ public class AutoInsertTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testId_table() throws Exception {
         for (int i = 0; i < 110; i++) {
             TableStrategy entity = new TableStrategy();
@@ -327,6 +341,7 @@ public class AutoInsertTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testId_table_explicitGenerator() throws Exception {
         for (int i = 0; i < 110; i++) {
             TableStrategy2 entity = new TableStrategy2();
@@ -340,6 +355,7 @@ public class AutoInsertTest {
      * @throws Exception
      */
     @Prerequisite("#ENV not in {'hsqldb', 'h2', 'standard', 'oracle', 'db2', 'mysql', 'postgre'}")
+    @Test
     public void testId_table_qualifiedGenerator() throws Exception {
         for (int i = 0; i < 110; i++) {
             TableStrategy5 entity = new TableStrategy5();
@@ -352,6 +368,7 @@ public class AutoInsertTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testId_table_IdGenerationFailedRuntimeException()
             throws Exception {
         try {
@@ -365,6 +382,7 @@ public class AutoInsertTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testId_table_IdGeneratorNotFoundRuntimeException()
             throws Exception {
         try {
@@ -378,6 +396,7 @@ public class AutoInsertTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testColumnAnnotation() throws Exception {
         Department2 department = new Department2();
         department.departmentId = 99;
@@ -399,6 +418,7 @@ public class AutoInsertTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testTransientAnnotation() throws Exception {
         Department3 department = new Department3();
         department.departmentId = 99;
@@ -420,6 +440,7 @@ public class AutoInsertTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testTransientModifier() throws Exception {
         Department4 department = new Department4();
         department.departmentId = 99;
@@ -441,6 +462,7 @@ public class AutoInsertTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testLargeObject() throws Exception {
         byte[] bytes = new byte[10000];
         for (int i = 0; i < bytes.length; i++) {
@@ -473,6 +495,7 @@ public class AutoInsertTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testEntityExistsException() throws Exception {
         Department department = new Department();
         department.departmentId = 1;
@@ -489,6 +512,7 @@ public class AutoInsertTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testEnumType() throws Exception {
         Job job = new Job();
         job.id = 10;
@@ -502,6 +526,7 @@ public class AutoInsertTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testUserDefineValueType() throws Exception {
         Authority authority = new Authority();
         authority.id = 10;
@@ -515,6 +540,7 @@ public class AutoInsertTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testNoId() throws Exception {
         NoId noId = new NoId();
         noId.value1 = 1;

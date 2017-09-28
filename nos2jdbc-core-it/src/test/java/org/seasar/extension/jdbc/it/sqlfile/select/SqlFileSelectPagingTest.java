@@ -18,10 +18,12 @@ package org.seasar.extension.jdbc.it.sqlfile.select;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Employee;
-import org.seasar.framework.unit.Seasar2;
+
+import nos2jdbc.core.it.NoS2Jdbc;
 
 import static org.junit.Assert.*;
 
@@ -29,7 +31,7 @@ import static org.junit.Assert.*;
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class SqlFileSelectPagingTest {
 
     private static String PATH =
@@ -46,6 +48,7 @@ public class SqlFileSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_paging() throws Exception {
         List<Employee> list =
             jdbcManager.selectBySqlFile(Employee.class, PATH).getResultList();
@@ -56,6 +59,7 @@ public class SqlFileSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_paging_limitOnly() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -71,6 +75,7 @@ public class SqlFileSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_paging_offset_limit() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -87,6 +92,7 @@ public class SqlFileSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_paging_offset_limitZero() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -103,6 +109,7 @@ public class SqlFileSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_paging_offsetOnly() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -118,6 +125,7 @@ public class SqlFileSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_paging_offsetZero_limit() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -134,6 +142,7 @@ public class SqlFileSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testBean_paging_offsetZero_limitZero() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -148,6 +157,7 @@ public class SqlFileSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap_paging() throws Exception {
         @SuppressWarnings("unchecked")
         List<Map> list =
@@ -161,6 +171,7 @@ public class SqlFileSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap_paging_limitOnly() throws Exception {
         @SuppressWarnings("unchecked")
         List<Map> list =
@@ -178,6 +189,7 @@ public class SqlFileSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap_paging_offset_limit() throws Exception {
         @SuppressWarnings("unchecked")
         List<Map> list =
@@ -196,6 +208,7 @@ public class SqlFileSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap_paging_offset_limitZero() throws Exception {
         @SuppressWarnings("unchecked")
         List<Map> list =
@@ -214,6 +227,7 @@ public class SqlFileSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap_paging_offsetOnly() throws Exception {
         @SuppressWarnings("unchecked")
         List<Map> list =
@@ -231,6 +245,7 @@ public class SqlFileSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap_paging_offsetZero_limit() throws Exception {
         @SuppressWarnings("unchecked")
         List<Map> list =
@@ -249,6 +264,7 @@ public class SqlFileSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testMap_paging_offsetZero_limitZero() throws Exception {
         @SuppressWarnings("unchecked")
         List<Map> list =
@@ -265,6 +281,7 @@ public class SqlFileSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testObject_paging() throws Exception {
         List<Integer> list =
             jdbcManager.selectBySqlFile(Integer.class, PATH2).getResultList();
@@ -275,6 +292,7 @@ public class SqlFileSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testObject_paging_limitOnly() throws Exception {
         List<Integer> list =
             jdbcManager
@@ -290,6 +308,7 @@ public class SqlFileSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testObject_paging_offset_limit() throws Exception {
         List<Integer> list =
             jdbcManager
@@ -306,6 +325,7 @@ public class SqlFileSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testObject_paging_offset_limitZero() throws Exception {
         List<Integer> list =
             jdbcManager
@@ -322,6 +342,7 @@ public class SqlFileSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testObject_paging_offsetOnly() throws Exception {
         List<Integer> list =
             jdbcManager
@@ -337,6 +358,7 @@ public class SqlFileSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testObject_paging_offsetZero_limit() throws Exception {
         List<Integer> list =
             jdbcManager
@@ -353,6 +375,7 @@ public class SqlFileSelectPagingTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testObject_paging_offsetZero_limitZero() throws Exception {
         List<Integer> list =
             jdbcManager

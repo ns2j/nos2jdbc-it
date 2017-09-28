@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Authority;
@@ -29,7 +30,8 @@ import org.seasar.extension.jdbc.it.entity.Job;
 import org.seasar.extension.jdbc.it.entity.JobType;
 import org.seasar.extension.jdbc.it.entity.Tense;
 import org.seasar.extension.jdbc.where.SimpleWhere;
-import org.seasar.framework.unit.Seasar2;
+
+import nos2jdbc.core.it.NoS2Jdbc;
 
 import static org.junit.Assert.*;
 import static org.seasar.extension.jdbc.parameter.Parameter.*;
@@ -38,15 +40,29 @@ import static org.seasar.extension.jdbc.parameter.Parameter.*;
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class AutoSelectValueTypeTest {
 
     private JdbcManager jdbcManager;
 
+    private long clearTime(long time) { //for oracle date
+	Calendar cal = Calendar.getInstance();
+	cal.setTimeInMillis(time);
+	cal.clear(Calendar.AM_PM);
+	cal.clear(Calendar.HOUR);
+	cal.clear(Calendar.HOUR_OF_DAY);
+	cal.clear(Calendar.MINUTE);
+	cal.clear(Calendar.SECOND);
+	cal.clear(Calendar.MILLISECOND);
+	return cal.getTimeInMillis();
+    }
+    
+    
     /**
      * 
      * @throws Exception
      */
+    @Test
     public void testTemporalType() throws Exception {
         Tense tense =
             jdbcManager.from(Tense.class).where("id = ?", 1).getSingleResult();
@@ -64,6 +80,7 @@ public class AutoSelectValueTypeTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testTemporalTypeCalendar_criteria() throws Exception {
         Date date =
             new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
@@ -93,6 +110,7 @@ public class AutoSelectValueTypeTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testTemporalTypeCalendar_simpleWhere() throws Exception {
         Date date =
             new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
@@ -119,6 +137,7 @@ public class AutoSelectValueTypeTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testTemporalTypeDate_criteria() throws Exception {
         Date date =
             new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
@@ -146,6 +165,7 @@ public class AutoSelectValueTypeTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testTemporalTypeDate_simpleWhere() throws Exception {
         Date date =
             new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
@@ -168,15 +188,19 @@ public class AutoSelectValueTypeTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testTemporalTypeSql_criteria() throws Exception {
-        long time =
+	long time =
             new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(
                 "2005-02-14 12:11:10").getTime();
+
         Tense tense =
             jdbcManager.from(Tense.class).where(
                 "sqlDate = ?",
-                new java.sql.Date(time)).getSingleResult();
+//                new java.sql.Date(time)).getSingleResult();
+                new java.sql.Date(clearTime(time))).getSingleResult();
         assertNotNull(tense);
+
         tense =
             jdbcManager.from(Tense.class).where(
                 "sqlTime = ?",
@@ -193,6 +217,7 @@ public class AutoSelectValueTypeTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testTemporalTypeSql_simpleWhere() throws Exception {
         long time =
             new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(
@@ -200,7 +225,8 @@ public class AutoSelectValueTypeTest {
         Tense tense =
             jdbcManager
                 .from(Tense.class)
-                .where(new SimpleWhere().eq("sqlDate", new java.sql.Date(time)))
+//                .where(new SimpleWhere().eq("sqlDate", new java.sql.Date(time)))
+                .where(new SimpleWhere().eq("sqlDate", new java.sql.Date(clearTime(time))))
                 .getSingleResult();
         assertNotNull(tense);
         tense =
@@ -223,6 +249,7 @@ public class AutoSelectValueTypeTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testUserDefineValueType() throws Exception {
         Authority authority =
             jdbcManager.from(Authority.class).id(3).getSingleResult();
@@ -233,6 +260,7 @@ public class AutoSelectValueTypeTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testUserDefineValueType_criteria() throws Exception {
         Authority authority =
             jdbcManager.from(Authority.class).where(
@@ -245,6 +273,7 @@ public class AutoSelectValueTypeTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testUserDefineValueType_simpleWhere() throws Exception {
         Authority authority =
             jdbcManager
@@ -260,6 +289,7 @@ public class AutoSelectValueTypeTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testEnumType() throws Exception {
         Job job = jdbcManager.from(Job.class).id(3).getSingleResult();
         assertEquals(JobType.PRESIDENT, job.jobType);
@@ -269,6 +299,7 @@ public class AutoSelectValueTypeTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testEnumType_criteria() throws Exception {
         Job job =
             jdbcManager
@@ -282,6 +313,7 @@ public class AutoSelectValueTypeTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testEnumType_simpleWhere() throws Exception {
         Job job =
             jdbcManager

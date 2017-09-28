@@ -20,15 +20,18 @@ import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Department;
 import org.seasar.extension.jdbc.it.entity.Employee;
 import org.seasar.extension.jdbc.where.SimpleWhere;
-import org.seasar.framework.unit.Seasar2;
+
+import nos2jdbc.core.it.NoS2Jdbc;
 
 import static org.junit.Assert.*;
+
+import org.junit.Test;
 
 /**
  * @author jfut
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class AutoSelectIncludesAndExcludesTest {
 
     private JdbcManager jdbcManager;
@@ -37,6 +40,7 @@ public class AutoSelectIncludesAndExcludesTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testIncludes() throws Exception {
         Employee employee =
             jdbcManager
@@ -60,6 +64,7 @@ public class AutoSelectIncludesAndExcludesTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testExcludes() throws Exception {
         Employee employee =
             jdbcManager
@@ -83,6 +88,7 @@ public class AutoSelectIncludesAndExcludesTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testIncludesAndExcludes() throws Exception {
         Employee employee =
             jdbcManager
@@ -112,6 +118,7 @@ public class AutoSelectIncludesAndExcludesTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testIncludesAndExcludes_oneToMany() throws Exception {
         Department department =
             jdbcManager
@@ -157,6 +164,7 @@ public class AutoSelectIncludesAndExcludesTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testIncludesAndExcludes_oneToMany_joinName() throws Exception {
         Department department =
             jdbcManager

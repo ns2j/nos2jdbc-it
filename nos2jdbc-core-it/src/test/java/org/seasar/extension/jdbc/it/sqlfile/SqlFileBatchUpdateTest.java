@@ -23,20 +23,21 @@ import java.util.Date;
 
 import javax.persistence.EntityExistsException;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Department;
 import org.seasar.extension.jdbc.it.entity.Tense;
-import org.seasar.framework.unit.Seasar2;
-import org.seasar.framework.unit.annotation.Prerequisite;
 
-import static junit.framework.Assert.*;
+import nos2jdbc.core.it.NoS2Jdbc;
+
+import static org.junit.Assert.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class SqlFileBatchUpdateTest {
 
     private JdbcManager jdbcManager;
@@ -45,6 +46,7 @@ public class SqlFileBatchUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParamter_none() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_no.sql";
         int[] result =
@@ -56,6 +58,7 @@ public class SqlFileBatchUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParamter_simpleType() throws Exception {
         String path =
             getClass().getName().replace(".", "/") + "_simpleType.sql";
@@ -91,6 +94,7 @@ public class SqlFileBatchUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testParamter_dto() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_dto.sql";
         MyDto dto = new MyDto();
@@ -132,7 +136,8 @@ public class SqlFileBatchUpdateTest {
      * 
      * @throws Exception
      */
-    @Prerequisite("#ENV != 'hsqldb'")
+    @Test
+    //@Prerequisite("#ENV != 'hsqldb'")
     public void testEntityExistsException_insert() throws Exception {
         String path =
             getClass().getName().replace(".", "/")
@@ -151,7 +156,8 @@ public class SqlFileBatchUpdateTest {
      * 
      * @throws Exception
      */
-    @Prerequisite("#ENV != 'hsqldb'")
+    @Test
+    //@Prerequisite("#ENV != 'hsqldb'")
     public void testEntityExistsException_update() throws Exception {
         String path =
             getClass().getName().replace(".", "/")
@@ -170,6 +176,7 @@ public class SqlFileBatchUpdateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testTemporalType() throws Exception {
         String path =
             getClass().getName().replace(".", "/") + "_temporalType.sql";

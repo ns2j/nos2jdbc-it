@@ -17,11 +17,13 @@ package org.seasar.extension.jdbc.it.auto.select;
 
 import java.util.List;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Department;
 import org.seasar.extension.jdbc.it.entity.Employee;
-import org.seasar.framework.unit.Seasar2;
+
+import nos2jdbc.core.it.NoS2Jdbc;
 
 import static org.junit.Assert.*;
 
@@ -29,7 +31,7 @@ import static org.junit.Assert.*;
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class AutoSelectHintTest {
 
     private JdbcManager jdbcManager;
@@ -38,6 +40,7 @@ public class AutoSelectHintTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testHint() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -55,6 +58,7 @@ public class AutoSelectHintTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testHint_withJoin() throws Exception {
         List<Department> list =
             jdbcManager

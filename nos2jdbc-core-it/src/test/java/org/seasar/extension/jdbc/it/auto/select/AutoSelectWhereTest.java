@@ -32,7 +32,8 @@ import org.seasar.extension.jdbc.it.entity.CompKeyEmployee;
 import org.seasar.extension.jdbc.it.entity.Employee;
 import org.seasar.extension.jdbc.where.ComplexWhere;
 import org.seasar.extension.jdbc.where.SimpleWhere;
-import org.seasar.framework.unit.Seasar2;
+
+import nos2jdbc.core.it.NoS2Jdbc;
 
 import static org.junit.Assert.*;
 import static org.seasar.extension.jdbc.it.name.EmployeeNames.*;
@@ -42,7 +43,7 @@ import static org.seasar.extension.jdbc.operation.Operations.*;
  * @author taedium
  * 
  */
-@RunWith(Seasar2.class)
+@RunWith(NoS2Jdbc.class)
 public class AutoSelectWhereTest {
 
     private JdbcManager jdbcManager;
@@ -51,6 +52,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_contains() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -64,6 +66,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_contains_condition() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -77,6 +80,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_contains_names() throws Exception {
         List<Employee> list =
             jdbcManager.from(Employee.class).where(
@@ -88,6 +92,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_ends() throws Exception {
         List<Employee> list =
             jdbcManager.from(Employee.class).where(
@@ -99,6 +104,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_ends_condition() throws Exception {
         List<Employee> list =
             jdbcManager.from(Employee.class).where(
@@ -110,6 +116,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_ends_names() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -123,6 +130,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_eq() throws Exception {
         List<Employee> list =
             jdbcManager.from(Employee.class).where(
@@ -134,6 +142,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_eq_condition() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -147,6 +156,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_eq_names() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -161,6 +171,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_eq_excludesWhitespace() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -177,6 +188,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_eq_null() throws Exception {
         List<Employee> list =
             jdbcManager.from(Employee.class).where(
@@ -188,6 +200,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_ge_le() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -201,6 +214,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_ge_le_condition() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -216,6 +230,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_ge_le_names() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -233,6 +248,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_gt_lt() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -246,6 +262,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_gt_lt_condition() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -261,6 +278,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_gt_lt_names() throws Exception {
         List<Employee> list =
             jdbcManager.from(Employee.class).where(
@@ -274,6 +292,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_in_array() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -287,6 +306,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_in_list() throws Exception {
         List<Employee> list =
             jdbcManager.from(Employee.class).where(
@@ -301,6 +321,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_in_condition_array() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -314,6 +335,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_in_condition_list() throws Exception {
         List<Employee> list =
             jdbcManager.from(Employee.class).where(
@@ -328,6 +350,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_in_names_array() throws Exception {
         List<Employee> list =
             jdbcManager.from(Employee.class).where(
@@ -339,6 +362,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_in_names_list() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -352,6 +376,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_isNotNull() throws Exception {
         List<Employee> list =
             jdbcManager.from(Employee.class).where(
@@ -363,6 +388,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_isNotNull_condition() throws Exception {
         List<Employee> list =
             jdbcManager.from(Employee.class).where(
@@ -374,6 +400,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_isNotNull_names() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -388,6 +415,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_isNotNull_false() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -401,6 +429,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_isNotNull_null() throws Exception {
         List<Employee> list =
             jdbcManager.from(Employee.class).where(
@@ -412,6 +441,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_isNull() throws Exception {
         List<Employee> list =
             jdbcManager.from(Employee.class).where(
@@ -423,6 +453,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_isNull_condition() throws Exception {
         List<Employee> list =
             jdbcManager.from(Employee.class).where(
@@ -434,6 +465,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_isNull_names() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -447,6 +479,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_isNull_false() throws Exception {
         List<Employee> list =
             jdbcManager.from(Employee.class).where(
@@ -458,6 +491,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_isNull_null() throws Exception {
         List<Employee> list =
             jdbcManager.from(Employee.class).where(
@@ -469,6 +503,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_like() throws Exception {
         List<Employee> list =
             jdbcManager.from(Employee.class).where(
@@ -480,6 +515,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_like_condition() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -493,6 +529,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_like_names() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -506,6 +543,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_map_illegalPropertyName() throws Exception {
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("illegal", 1);
@@ -521,6 +559,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_map_illegalPropertyName2() throws Exception {
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("department.illegal", 1);
@@ -537,6 +576,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_map_illegalPropertyName3() throws Exception {
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("illegal.illegal2", 1);
@@ -553,6 +593,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_ne() throws Exception {
         List<Employee> list =
             jdbcManager.from(Employee.class).where(
@@ -564,6 +605,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_ne_condition() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -577,6 +619,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_ne_names() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -591,6 +634,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_notIn_array() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -604,6 +648,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_notIn_list() throws Exception {
         List<Employee> list =
             jdbcManager.from(Employee.class).where(
@@ -618,6 +663,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_notIn_condition_array() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -632,6 +678,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_notIn_condition_list() throws Exception {
         List<Employee> list =
             jdbcManager.from(Employee.class).where(
@@ -646,6 +693,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_notIn_names_array() throws Exception {
         List<Employee> list =
             jdbcManager.from(Employee.class).where(
@@ -657,6 +705,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_notIn_names_list() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -670,6 +719,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_or() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -692,6 +742,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_or_excludesWhitespace() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -712,6 +763,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_simpleWhere_illegalPropertyName2() throws Exception {
         try {
             jdbcManager.from(Employee.class).leftOuterJoin("department").where(
@@ -726,6 +778,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_simpleWhere_illegalPropertyName3() throws Exception {
         try {
             jdbcManager.from(Employee.class).leftOuterJoin("department").where(
@@ -740,6 +793,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_starts() throws Exception {
         List<Employee> list =
             jdbcManager.from(Employee.class).where(
@@ -751,6 +805,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_starts_condition() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -764,6 +819,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testWhere_starts_names() throws Exception {
         List<Employee> list =
             jdbcManager
@@ -777,6 +833,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testId() throws Exception {
         Employee employee =
             jdbcManager.from(Employee.class).id(10).getSingleResult();
@@ -788,6 +845,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testId_composite() throws Exception {
         CompKeyEmployee employee =
             jdbcManager
@@ -811,6 +869,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testVersion() throws Exception {
         Employee employee =
             jdbcManager
@@ -826,6 +885,7 @@ public class AutoSelectWhereTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testVersion_UnsupportedOperationException() throws Exception {
         try {
             jdbcManager.from(Employee.class).version(1).getSingleResult();
