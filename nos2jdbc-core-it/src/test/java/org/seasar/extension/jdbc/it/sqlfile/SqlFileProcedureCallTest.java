@@ -19,12 +19,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIf;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.annotation.InOut;
 import org.seasar.extension.jdbc.annotation.Out;
@@ -32,20 +31,17 @@ import org.seasar.extension.jdbc.annotation.ResultSet;
 import org.seasar.extension.jdbc.it.entity.Department;
 import org.seasar.extension.jdbc.it.entity.Employee;
 import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
-
-import nos2jdbc.core.it.NoS2Jdbc;
-import nos2jdbc.core.it.Prerequisite;
-
-import static org.junit.Assert.*;
-
+import nos2jdbc.core.it.NoS2JdbcExtension;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.seasar.extension.jdbc.parameter.Parameter.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(NoS2Jdbc.class)
-@Prerequisite("#ENV not in {'hsqldb', 'h2', 'standard'}")
+@ExtendWith(NoS2JdbcExtension.class)
+//@Prerequisite("#ENV not in {'hsqldb', 'h2', 'standard'}")
+@DisabledIf("['hsqldb', 'h2', 'standard'].indexOf(systemProperty.get('database')) >= 0")
 public class SqlFileProcedureCallTest {
 
     private JdbcManager jdbcManager;
@@ -68,8 +64,7 @@ public class SqlFileProcedureCallTest {
      */
     @Test
     public void testParameter_simpleType() throws Exception {
-        String path =
-            getClass().getName().replace(".", "/") + "_simpleType" + ".sql";
+        String path = getClass().getName().replace(".", "/") + "_simpleType" + ".sql";
         jdbcManager.callBySqlFile(path, 1).execute();
     }
 
@@ -79,9 +74,7 @@ public class SqlFileProcedureCallTest {
      */
     @Test
     public void testParameter_simpleType_time() throws Exception {
-        String path =
-            getClass().getName().replace(".", "/") + "_simpleType_time"
-                + ".sql";
+        String path = getClass().getName().replace(".", "/") + "_simpleType_time" + ".sql";
         jdbcManager.callBySqlFile(path, time(new Date())).execute();
     }
 
@@ -107,8 +100,7 @@ public class SqlFileProcedureCallTest {
      */
     @Test
     public void testParameter_dto_time() throws Exception {
-        String path =
-            getClass().getName().replace(".", "/") + "_dto_time" + ".sql";
+        String path = getClass().getName().replace(".", "/") + "_dto_time" + ".sql";
         Date date = new SimpleDateFormat("HH:mm:ss").parse("12:11:10");
         MyDto2 dto = new MyDto2();
         dto.param1 = date;
@@ -174,8 +166,7 @@ public class SqlFileProcedureCallTest {
      */
     @Test
     public void testParameter_resultSetUpdate() throws Exception {
-        String path =
-            getClass().getName().replace(".", "/") + "_resultSetUpdate";
+        String path = getClass().getName().replace(".", "/") + "_resultSetUpdate";
         if (jdbcManagerImplementor.getDialect().needsParameterForResultSet()) {
             path += ".sql";
         } else {
@@ -191,13 +182,7 @@ public class SqlFileProcedureCallTest {
         assertEquals("JAMES", employees.get(1).employeeName);
         assertEquals("FORD", employees.get(2).employeeName);
         assertEquals("MILLER", employees.get(3).employeeName);
-        String departmentName =
-            jdbcManager
-                .selectBySql(
-                    String.class,
-                    "select DEPARTMENT_NAME from DEPARTMENT where DEPARTMENT_ID = ?",
-                    1)
-                .getSingleResult();
+        String departmentName = jdbcManager.selectBySql(String.class, "select DEPARTMENT_NAME from DEPARTMENT where DEPARTMENT_ID = ?", 1).getSingleResult();
         assertEquals("HOGE", departmentName);
     }
 
@@ -237,8 +222,7 @@ public class SqlFileProcedureCallTest {
      */
     @Test
     public void testParameter_resultSetsUpdatesOut() throws Exception {
-        String path =
-            getClass().getName().replace(".", "/") + "_resultSetsUpdatesOut";
+        String path = getClass().getName().replace(".", "/") + "_resultSetsUpdatesOut";
         if (jdbcManagerImplementor.getDialect().needsParameterForResultSet()) {
             path += ".sql";
         } else {
@@ -260,17 +244,9 @@ public class SqlFileProcedureCallTest {
         assertEquals(2, departments.size());
         assertEquals("SALES", departments.get(0).departmentName);
         assertEquals("OPERATIONS", departments.get(1).departmentName);
-        String street =
-            jdbcManager.selectBySql(
-                String.class,
-                "select STREET from ADDRESS where ADDRESS_ID = ?",
-                1).getSingleResult();
+        String street = jdbcManager.selectBySql(String.class, "select STREET from ADDRESS where ADDRESS_ID = ?", 1).getSingleResult();
         assertEquals("HOGE", street);
-        street =
-            jdbcManager.selectBySql(
-                String.class,
-                "select STREET from ADDRESS where ADDRESS_ID = ?",
-                2).getSingleResult();
+        street = jdbcManager.selectBySql(String.class, "select STREET from ADDRESS where ADDRESS_ID = ?", 2).getSingleResult();
         assertEquals("FOO", street);
         assertEquals(14, dto.employeeCount);
     }
@@ -348,7 +324,6 @@ public class SqlFileProcedureCallTest {
         /** */
         @Out
         public int employeeCount;
-
     }
 
     /**
@@ -364,7 +339,6 @@ public class SqlFileProcedureCallTest {
 
         /** */
         public int employeeId;
-
     }
 
     /**
@@ -414,5 +388,4 @@ public class SqlFileProcedureCallTest {
         @Out
         public int employeeCount;
     }
-
 }

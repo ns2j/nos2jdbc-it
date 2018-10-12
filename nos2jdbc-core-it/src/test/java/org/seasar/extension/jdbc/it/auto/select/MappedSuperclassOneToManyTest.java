@@ -16,21 +16,18 @@
 package org.seasar.extension.jdbc.it.auto.select;
 
 import java.util.List;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.ConcreteDepartment;
-
-import nos2jdbc.core.it.NoS2Jdbc;
-
-import static org.junit.Assert.*;
+import nos2jdbc.core.it.NoS2JdbcExtension;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(NoS2Jdbc.class)
+@ExtendWith(NoS2JdbcExtension.class)
 public class MappedSuperclassOneToManyTest {
 
     private JdbcManager jdbcManager;
@@ -41,9 +38,7 @@ public class MappedSuperclassOneToManyTest {
      */
     @Test
     public void testLeftOuterJoin() throws Exception {
-        List<ConcreteDepartment> list =
-            jdbcManager.from(ConcreteDepartment.class).leftOuterJoin(
-                "employees").getResultList();
+        List<ConcreteDepartment> list = jdbcManager.from(ConcreteDepartment.class).leftOuterJoin("employees").getResultList();
         assertEquals(4, list.size());
         assertNotNull(list.get(0).employees);
         assertNotNull(list.get(1).employees);
@@ -57,10 +52,7 @@ public class MappedSuperclassOneToManyTest {
      */
     @Test
     public void testLeftOuterJoin_noFetch() throws Exception {
-        List<ConcreteDepartment> list =
-            jdbcManager.from(ConcreteDepartment.class).leftOuterJoin(
-                "employees",
-                false).getResultList();
+        List<ConcreteDepartment> list = jdbcManager.from(ConcreteDepartment.class).leftOuterJoin("employees", false).getResultList();
         assertEquals(4, list.size());
         assertNull(list.get(0).employees);
         assertNull(list.get(1).employees);
@@ -74,11 +66,7 @@ public class MappedSuperclassOneToManyTest {
      */
     @Test
     public void testInnerJoin() throws Exception {
-        List<ConcreteDepartment> list =
-            jdbcManager
-                .from(ConcreteDepartment.class)
-                .innerJoin("employees")
-                .getResultList();
+        List<ConcreteDepartment> list = jdbcManager.from(ConcreteDepartment.class).innerJoin("employees").getResultList();
         assertEquals(3, list.size());
         assertNotNull(list.get(0).employees);
         assertNotNull(list.get(1).employees);
@@ -91,10 +79,7 @@ public class MappedSuperclassOneToManyTest {
      */
     @Test
     public void testInnerJoin_noFetch() throws Exception {
-        List<ConcreteDepartment> list =
-            jdbcManager.from(ConcreteDepartment.class).innerJoin(
-                "employees",
-                false).getResultList();
+        List<ConcreteDepartment> list = jdbcManager.from(ConcreteDepartment.class).innerJoin("employees", false).getResultList();
         assertEquals(3, list.size());
         assertNull(list.get(0).employees);
         assertNull(list.get(1).employees);

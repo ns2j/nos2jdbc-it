@@ -16,23 +16,20 @@
 package org.seasar.extension.jdbc.it.auto.select;
 
 import java.util.List;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Department;
 import org.seasar.extension.jdbc.it.entity.Employee;
-
-import nos2jdbc.core.it.NoS2Jdbc;
-
-import static org.junit.Assert.*;
+import nos2jdbc.core.it.NoS2JdbcExtension;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.seasar.extension.jdbc.it.name.EmployeeNames.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(NoS2Jdbc.class)
+@ExtendWith(NoS2JdbcExtension.class)
 public class SingleKeyManyToOneTest {
 
     private JdbcManager jdbcManager;
@@ -43,11 +40,7 @@ public class SingleKeyManyToOneTest {
      */
     @Test
     public void testLeftOuterJoin() throws Exception {
-        List<Employee> list =
-            jdbcManager
-                .from(Employee.class)
-                .leftOuterJoin("department")
-                .getResultList();
+        List<Employee> list = jdbcManager.from(Employee.class).leftOuterJoin("department").getResultList();
         assertEquals(14, list.size());
         for (Employee e : list) {
             assertNotNull(e);
@@ -61,11 +54,7 @@ public class SingleKeyManyToOneTest {
      */
     @Test
     public void testLeftOuterJoin_names() throws Exception {
-        List<Employee> list =
-            jdbcManager
-                .from(Employee.class)
-                .leftOuterJoin(department())
-                .getResultList();
+        List<Employee> list = jdbcManager.from(Employee.class).leftOuterJoin(department()).getResultList();
         assertEquals(14, list.size());
         for (Employee e : list) {
             assertNotNull(e);
@@ -79,11 +68,7 @@ public class SingleKeyManyToOneTest {
      */
     @Test
     public void testLeftOuterJoin_noFetch() throws Exception {
-        List<Employee> list =
-            jdbcManager
-                .from(Employee.class)
-                .leftOuterJoin("department", false)
-                .getResultList();
+        List<Employee> list = jdbcManager.from(Employee.class).leftOuterJoin("department", false).getResultList();
         assertEquals(14, list.size());
         for (Employee e : list) {
             assertNotNull(e);
@@ -97,11 +82,7 @@ public class SingleKeyManyToOneTest {
      */
     @Test
     public void testInnerJoin() throws Exception {
-        List<Employee> list =
-            jdbcManager
-                .from(Employee.class)
-                .innerJoin("department")
-                .getResultList();
+        List<Employee> list = jdbcManager.from(Employee.class).innerJoin("department").getResultList();
         assertEquals(14, list.size());
         for (Employee e : list) {
             assertNotNull(e);
@@ -115,11 +96,7 @@ public class SingleKeyManyToOneTest {
      */
     @Test
     public void testInnerJoin_noFetch() throws Exception {
-        List<Employee> list =
-            jdbcManager
-                .from(Employee.class)
-                .innerJoin("department", false)
-                .getResultList();
+        List<Employee> list = jdbcManager.from(Employee.class).innerJoin("department", false).getResultList();
         assertEquals(14, list.size());
         for (Employee e : list) {
             assertNotNull(e);
@@ -133,11 +110,7 @@ public class SingleKeyManyToOneTest {
      */
     @Test
     public void testInnerJoin_self() throws Exception {
-        List<Employee> list =
-            jdbcManager
-                .from(Employee.class)
-                .innerJoin("manager")
-                .getResultList();
+        List<Employee> list = jdbcManager.from(Employee.class).innerJoin("manager").getResultList();
         assertEquals(13, list.size());
         for (Employee e : list) {
             assertNotNull(e);
@@ -151,13 +124,7 @@ public class SingleKeyManyToOneTest {
      */
     @Test
     public void testInnerJoin_oneToMany_manyToOne() throws Exception {
-        Employee e =
-            jdbcManager
-                .from(Employee.class)
-                .innerJoin("department")
-                .innerJoin("department.employees")
-                .id(1)
-                .getSingleResult();
+        Employee e = jdbcManager.from(Employee.class).innerJoin("department").innerJoin("department.employees").id(1).getSingleResult();
         assertNotNull(e);
         Department d = e.department;
         assertNotNull(d);
@@ -166,5 +133,4 @@ public class SingleKeyManyToOneTest {
         assertEquals(5, employees.size());
         assertTrue(employees.contains(e));
     }
-
 }

@@ -17,11 +17,9 @@ package org.seasar.extension.jdbc.it.auto;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.EntityExistsException;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.exception.IdentityGeneratorNotSupportedRuntimeException;
 import org.seasar.extension.jdbc.exception.SequenceGeneratorNotSupportedRuntimeException;
@@ -40,17 +38,14 @@ import org.seasar.extension.jdbc.it.entity.TableStrategy;
 import org.seasar.extension.jdbc.it.entity.TableStrategy2;
 import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
 import org.seasar.extension.jdbc.where.SimpleWhere;
-
-import nos2jdbc.core.it.NoS2Jdbc;
-import nos2jdbc.core.it.Prerequisite;
-
-import static org.junit.Assert.*;
+import nos2jdbc.core.it.NoS2JdbcExtension;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(NoS2Jdbc.class)
+@ExtendWith(NoS2JdbcExtension.class)
 public class AutoBatchInsertTest {
 
     private JdbcManager jdbcManager;
@@ -74,24 +69,17 @@ public class AutoBatchInsertTest {
         department2.departmentNo = 99;
         department2.departmentName = "foo";
         list.add(department2);
-
         int[] result = jdbcManager.insertBatch(list).execute();
         assertEquals(2, result.length);
         assertEquals(1, department.version);
         assertEquals(1, department2.version);
-
-        department =
-            jdbcManager.from(Department.class).where(
-                new SimpleWhere().eq("departmentId", 98)).getSingleResult();
+        department = jdbcManager.from(Department.class).where(new SimpleWhere().eq("departmentId", 98)).getSingleResult();
         assertEquals(98, department.departmentId);
         assertEquals(98, department.departmentNo);
         assertEquals("hoge", department.departmentName);
         assertNull(department.location);
         assertEquals(1, department.version);
-
-        department =
-            jdbcManager.from(Department.class).where(
-                new SimpleWhere().eq("departmentId", 99)).getSingleResult();
+        department = jdbcManager.from(Department.class).where(new SimpleWhere().eq("departmentId", 99)).getSingleResult();
         assertEquals(99, department.departmentId);
         assertEquals(99, department.departmentNo);
         assertEquals("foo", department.departmentName);
@@ -120,29 +108,17 @@ public class AutoBatchInsertTest {
         department2.location = "baz";
         department2.version = 1;
         list.add(department2);
-
-        int[] result =
-            jdbcManager.insertBatch(list).includes(
-                "departmentId",
-                "departmentNo",
-                "location",
-                "version").execute();
+        int[] result = jdbcManager.insertBatch(list).includes("departmentId", "departmentNo", "location", "version").execute();
         assertEquals(2, result.length);
         assertEquals(1, department.version);
         assertEquals(1, department2.version);
-
-        department =
-            jdbcManager.from(Department.class).where(
-                new SimpleWhere().eq("departmentId", 98)).getSingleResult();
+        department = jdbcManager.from(Department.class).where(new SimpleWhere().eq("departmentId", 98)).getSingleResult();
         assertEquals(98, department.departmentId);
         assertEquals(98, department.departmentNo);
         assertNull(department.departmentName);
         assertEquals("foo", department.location);
         assertEquals(1, department.version);
-
-        department =
-            jdbcManager.from(Department.class).where(
-                new SimpleWhere().eq("departmentId", 99)).getSingleResult();
+        department = jdbcManager.from(Department.class).where(new SimpleWhere().eq("departmentId", 99)).getSingleResult();
         assertEquals(99, department.departmentId);
         assertEquals(99, department.departmentNo);
         assertNull(department.departmentName);
@@ -171,28 +147,17 @@ public class AutoBatchInsertTest {
         department2.location = "baz";
         department2.version = 1;
         list.add(department2);
-
-        int[] result =
-            jdbcManager
-                .insertBatch(list)
-                .excludes("departmentName", "location")
-                .execute();
+        int[] result = jdbcManager.insertBatch(list).excludes("departmentName", "location").execute();
         assertEquals(2, result.length);
         assertEquals(1, department.version);
         assertEquals(1, department2.version);
-
-        department =
-            jdbcManager.from(Department.class).where(
-                new SimpleWhere().eq("departmentId", 98)).getSingleResult();
+        department = jdbcManager.from(Department.class).where(new SimpleWhere().eq("departmentId", 98)).getSingleResult();
         assertEquals(98, department.departmentId);
         assertEquals(98, department.departmentNo);
         assertNull(department.departmentName);
         assertEquals("TOKYO", department.location);
         assertEquals(1, department.version);
-
-        department =
-            jdbcManager.from(Department.class).where(
-                new SimpleWhere().eq("departmentId", 99)).getSingleResult();
+        department = jdbcManager.from(Department.class).where(new SimpleWhere().eq("departmentId", 99)).getSingleResult();
         assertEquals(99, department.departmentId);
         assertEquals(99, department.departmentNo);
         assertNull(department.departmentName);
@@ -219,29 +184,18 @@ public class AutoBatchInsertTest {
         department2.departmentNo = 99;
         department2.departmentName = "foo";
         list.add(department2);
-
         int[] result = jdbcManager.insertBatch(list).execute();
         assertEquals(2, result.length);
         assertEquals(1, department.version);
         assertEquals(1, department2.version);
-
-        department =
-            jdbcManager.from(CompKeyDepartment.class).where(
-                new SimpleWhere().eq("departmentId1", 98).eq(
-                    "departmentId2",
-                    98)).getSingleResult();
+        department = jdbcManager.from(CompKeyDepartment.class).where(new SimpleWhere().eq("departmentId1", 98).eq("departmentId2", 98)).getSingleResult();
         assertEquals(98, department.departmentId1);
         assertEquals(98, department.departmentId2);
         assertEquals(98, department.departmentNo);
         assertEquals("hoge", department.departmentName);
         assertNull(department.location);
         assertEquals(1, department.version);
-
-        department =
-            jdbcManager.from(CompKeyDepartment.class).where(
-                new SimpleWhere().eq("departmentId1", 99).eq(
-                    "departmentId2",
-                    99)).getSingleResult();
+        department = jdbcManager.from(CompKeyDepartment.class).where(new SimpleWhere().eq("departmentId1", 99).eq("departmentId2", 99)).getSingleResult();
         assertEquals(99, department.departmentId1);
         assertEquals(99, department.departmentId2);
         assertEquals(99, department.departmentNo);
@@ -267,24 +221,17 @@ public class AutoBatchInsertTest {
         department2.departmentNo = 99;
         department2.departmentName = "foo";
         list.add(department2);
-
         int[] result = jdbcManager.insertBatch(list).execute();
         assertEquals(2, result.length);
         assertEquals(1, department.version);
         assertEquals(1, department2.version);
-
-        department =
-            jdbcManager.from(ConcreteDepartment.class).where(
-                new SimpleWhere().eq("departmentId", 98)).getSingleResult();
+        department = jdbcManager.from(ConcreteDepartment.class).where(new SimpleWhere().eq("departmentId", 98)).getSingleResult();
         assertEquals(98, department.departmentId);
         assertEquals(98, department.departmentNo);
         assertEquals("hoge", department.departmentName);
         assertNull(department.location);
         assertEquals(1, department.version);
-
-        department =
-            jdbcManager.from(ConcreteDepartment.class).where(
-                new SimpleWhere().eq("departmentId", 99)).getSingleResult();
+        department = jdbcManager.from(ConcreteDepartment.class).where(new SimpleWhere().eq("departmentId", 99)).getSingleResult();
         assertEquals(99, department.departmentId);
         assertEquals(99, department.departmentNo);
         assertEquals("foo", department.departmentName);
@@ -422,17 +369,12 @@ public class AutoBatchInsertTest {
         department2.departmentId = 99;
         department2.departmentNo = 99;
         department2.departmentName = "foo";
-
-        int[] result =
-            jdbcManager.insertBatch(department, department2).execute();
+        int[] result = jdbcManager.insertBatch(department, department2).execute();
         assertEquals(2, result.length);
-        String sql =
-            "select DEPARTMENT_NAME from DEPARTMENT where DEPARTMENT_ID = ?";
-        String departmentName =
-            jdbcManager.selectBySql(String.class, sql, 98).getSingleResult();
+        String sql = "select DEPARTMENT_NAME from DEPARTMENT where DEPARTMENT_ID = ?";
+        String departmentName = jdbcManager.selectBySql(String.class, sql, 98).getSingleResult();
         assertNull(departmentName);
-        departmentName =
-            jdbcManager.selectBySql(String.class, sql, 99).getSingleResult();
+        departmentName = jdbcManager.selectBySql(String.class, sql, 99).getSingleResult();
         assertNull(departmentName);
     }
 
@@ -450,17 +392,12 @@ public class AutoBatchInsertTest {
         department2.departmentId = 99;
         department2.departmentNo = 99;
         department2.departmentName = "foo";
-
-        int[] result =
-            jdbcManager.insertBatch(department, department2).execute();
+        int[] result = jdbcManager.insertBatch(department, department2).execute();
         assertEquals(2, result.length);
-        String sql =
-            "select DEPARTMENT_NAME from DEPARTMENT where DEPARTMENT_ID = ?";
-        String departmentName =
-            jdbcManager.selectBySql(String.class, sql, 98).getSingleResult();
+        String sql = "select DEPARTMENT_NAME from DEPARTMENT where DEPARTMENT_ID = ?";
+        String departmentName = jdbcManager.selectBySql(String.class, sql, 98).getSingleResult();
         assertNull(departmentName);
-        departmentName =
-            jdbcManager.selectBySql(String.class, sql, 99).getSingleResult();
+        departmentName = jdbcManager.selectBySql(String.class, sql, 99).getSingleResult();
         assertNull(departmentName);
     }
 
@@ -478,17 +415,12 @@ public class AutoBatchInsertTest {
         department2.departmentId = 99;
         department2.departmentNo = 99;
         department2.departmentName = "foo";
-
-        int[] result =
-            jdbcManager.insertBatch(department, department2).execute();
+        int[] result = jdbcManager.insertBatch(department, department2).execute();
         assertEquals(2, result.length);
-        String sql =
-            "select DEPARTMENT_NAME from DEPARTMENT where DEPARTMENT_ID = ?";
-        String departmentName =
-            jdbcManager.selectBySql(String.class, sql, 98).getSingleResult();
+        String sql = "select DEPARTMENT_NAME from DEPARTMENT where DEPARTMENT_ID = ?";
+        String departmentName = jdbcManager.selectBySql(String.class, sql, 98).getSingleResult();
         assertNull(departmentName);
-        departmentName =
-            jdbcManager.selectBySql(String.class, sql, 99).getSingleResult();
+        departmentName = jdbcManager.selectBySql(String.class, sql, 99).getSingleResult();
         assertNull(departmentName);
     }
 
@@ -497,17 +429,13 @@ public class AutoBatchInsertTest {
      * @throws Exception
      */
     @Test
-    //@Prerequisite("#ENV != 'hsqldb'")
-    public void testEntityExistsException() throws Exception {
+    public //@Prerequisite("#ENV != 'hsqldb'")
+    void testEntityExistsException() throws Exception {
         Department department = new Department();
         department.departmentId = 1;
         department.departmentNo = 50;
         department.departmentName = "hoge";
-        try {
-            jdbcManager.insertBatch(department).execute();
-            fail();
-        } catch (EntityExistsException e) {
-        }
+        assertThrows(EntityExistsException.class, () -> jdbcManager.insertBatch(department).execute());
     }
 
     /**
@@ -525,5 +453,4 @@ public class AutoBatchInsertTest {
         jdbcManager.insertBatch(noId1, noId2).execute();
         assertEquals(4L, jdbcManager.from(NoId.class).getCount());
     }
-
 }

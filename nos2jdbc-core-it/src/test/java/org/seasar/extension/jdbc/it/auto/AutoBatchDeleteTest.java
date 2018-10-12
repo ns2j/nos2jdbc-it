@@ -17,15 +17,12 @@ package org.seasar.extension.jdbc.it.auto;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.OptimisticLockException;
 import javax.transaction.UserTransaction;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.exception.NoIdPropertyRuntimeException;
 import org.seasar.extension.jdbc.it.entity.CompKeyEmployee;
@@ -33,18 +30,16 @@ import org.seasar.extension.jdbc.it.entity.ConcreteEmployee;
 import org.seasar.extension.jdbc.it.entity.Employee;
 import org.seasar.extension.jdbc.it.entity.NoId;
 import org.seasar.extension.jdbc.where.SimpleWhere;
-
-import nos2jdbc.core.it.NoS2Jdbc;
-
-import static org.junit.Assert.*;
+import nos2jdbc.core.it.NoS2JdbcExtension;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(NoS2Jdbc.class)
+@ExtendWith(NoS2JdbcExtension.class)
 public class AutoBatchDeleteTest {
-    
+
     private JdbcManager jdbcManager;
 
     /**
@@ -62,18 +57,11 @@ public class AutoBatchDeleteTest {
         employee2.employeeId = 2;
         employee2.version = 1;
         list.add(employee2);
-
         int[] result = jdbcManager.deleteBatch(list).execute();
         assertEquals(2, result.length);
-
-        employee =
-            jdbcManager.from(Employee.class).where(
-                new SimpleWhere().eq("employeeId", 1)).getSingleResult();
+        employee = jdbcManager.from(Employee.class).where(new SimpleWhere().eq("employeeId", 1)).getSingleResult();
         assertNull(employee);
-
-        employee =
-            jdbcManager.from(Employee.class).where(
-                new SimpleWhere().eq("employeeId", 2)).getSingleResult();
+        employee = jdbcManager.from(Employee.class).where(new SimpleWhere().eq("employeeId", 2)).getSingleResult();
         assertNull(employee);
     }
 
@@ -92,18 +80,11 @@ public class AutoBatchDeleteTest {
         employee2.employeeId = 2;
         employee2.version = 99;
         list.add(employee2);
-
         int[] result = jdbcManager.deleteBatch(list).ignoreVersion().execute();
         assertEquals(2, result.length);
-
-        employee =
-            jdbcManager.from(Employee.class).where(
-                new SimpleWhere().eq("employeeId", 1)).getSingleResult();
+        employee = jdbcManager.from(Employee.class).where(new SimpleWhere().eq("employeeId", 1)).getSingleResult();
         assertNull(employee);
-
-        employee =
-            jdbcManager.from(Employee.class).where(
-                new SimpleWhere().eq("employeeId", 2)).getSingleResult();
+        employee = jdbcManager.from(Employee.class).where(new SimpleWhere().eq("employeeId", 2)).getSingleResult();
         assertNull(employee);
     }
 
@@ -124,24 +105,11 @@ public class AutoBatchDeleteTest {
         employee2.employeeId2 = 2;
         employee2.version = 1;
         list.add(employee2);
-
         int[] result = jdbcManager.deleteBatch(list).execute();
         assertEquals(2, result.length);
-
-        employee =
-            jdbcManager
-                .from(CompKeyEmployee.class)
-                .where(
-                    new SimpleWhere().eq("employeeId1", 1).eq("employeeId2", 1))
-                .getSingleResult();
+        employee = jdbcManager.from(CompKeyEmployee.class).where(new SimpleWhere().eq("employeeId1", 1).eq("employeeId2", 1)).getSingleResult();
         assertNull(employee);
-
-        employee =
-            jdbcManager
-                .from(CompKeyEmployee.class)
-                .where(
-                    new SimpleWhere().eq("employeeId1", 2).eq("employeeId2", 2))
-                .getSingleResult();
+        employee = jdbcManager.from(CompKeyEmployee.class).where(new SimpleWhere().eq("employeeId1", 2).eq("employeeId2", 2)).getSingleResult();
         assertNull(employee);
     }
 
@@ -160,18 +128,11 @@ public class AutoBatchDeleteTest {
         employee2.employeeId = 2;
         employee2.version = 1;
         list.add(employee2);
-
         int[] result = jdbcManager.deleteBatch(list).execute();
         assertEquals(2, result.length);
-
-        employee =
-            jdbcManager.from(ConcreteEmployee.class).where(
-                new SimpleWhere().eq("employeeId", 1)).getSingleResult();
+        employee = jdbcManager.from(ConcreteEmployee.class).where(new SimpleWhere().eq("employeeId", 1)).getSingleResult();
         assertNull(employee);
-
-        employee =
-            jdbcManager.from(ConcreteEmployee.class).where(
-                new SimpleWhere().eq("employeeId", 2)).getSingleResult();
+        employee = jdbcManager.from(ConcreteEmployee.class).where(new SimpleWhere().eq("employeeId", 2)).getSingleResult();
         assertNull(employee);
     }
 
@@ -181,27 +142,11 @@ public class AutoBatchDeleteTest {
      */
     @Test
     public void testOptimisticLockException() throws Exception {
-        Employee employee1 =
-            jdbcManager
-                .from(Employee.class)
-                .where("employeeId = ?", 1)
-                .getSingleResult();
-        Employee employee2 =
-            jdbcManager
-                .from(Employee.class)
-                .where("employeeId = ?", 1)
-                .getSingleResult();
-        Employee employee3 =
-            jdbcManager
-                .from(Employee.class)
-                .where("employeeId = ?", 2)
-                .getSingleResult();
+        Employee employee1 = jdbcManager.from(Employee.class).where("employeeId = ?", 1).getSingleResult();
+        Employee employee2 = jdbcManager.from(Employee.class).where("employeeId = ?", 1).getSingleResult();
+        Employee employee3 = jdbcManager.from(Employee.class).where("employeeId = ?", 2).getSingleResult();
         jdbcManager.delete(employee1).execute();
-        try {
-            jdbcManager.deleteBatch(employee2, employee3).execute();
-            fail();
-        } catch (OptimisticLockException expected) {
-        }
+        assertThrows(OptimisticLockException.class, () -> jdbcManager.deleteBatch(employee2, employee3).execute());
     }
 
     /**
@@ -210,21 +155,9 @@ public class AutoBatchDeleteTest {
      */
     @Test
     public void testOptimisticLockException_ignoreVersion() throws Exception {
-        Employee employee1 =
-            jdbcManager
-                .from(Employee.class)
-                .where("employeeId = ?", 1)
-                .getSingleResult();
-        Employee employee2 =
-            jdbcManager
-                .from(Employee.class)
-                .where("employeeId = ?", 1)
-                .getSingleResult();
-        Employee employee3 =
-            jdbcManager
-                .from(Employee.class)
-                .where("employeeId = ?", 2)
-                .getSingleResult();
+        Employee employee1 = jdbcManager.from(Employee.class).where("employeeId = ?", 1).getSingleResult();
+        Employee employee2 = jdbcManager.from(Employee.class).where("employeeId = ?", 1).getSingleResult();
+        Employee employee3 = jdbcManager.from(Employee.class).where("employeeId = ?", 2).getSingleResult();
         jdbcManager.delete(employee1).execute();
         jdbcManager.deleteBatch(employee2, employee3).ignoreVersion().execute();
     }
@@ -235,33 +168,18 @@ public class AutoBatchDeleteTest {
      */
     @Test
     public void testSuppresOptimisticLockException() throws Exception {
-        Employee employee1 =
-            jdbcManager
-                .from(Employee.class)
-                .where("employeeId = ?", 1)
-                .getSingleResult();
-        Employee employee2 =
-            jdbcManager
-                .from(Employee.class)
-                .where("employeeId = ?", 1)
-                .getSingleResult();
-        Employee employee3 =
-            jdbcManager
-                .from(Employee.class)
-                .where("employeeId = ?", 2)
-                .getSingleResult();
+        Employee employee1 = jdbcManager.from(Employee.class).where("employeeId = ?", 1).getSingleResult();
+        Employee employee2 = jdbcManager.from(Employee.class).where("employeeId = ?", 1).getSingleResult();
+        Employee employee3 = jdbcManager.from(Employee.class).where("employeeId = ?", 2).getSingleResult();
         jdbcManager.delete(employee1).execute();
-        jdbcManager
-            .deleteBatch(employee2, employee3)
-            .suppresOptimisticLockException()
-            .execute();
+        jdbcManager.deleteBatch(employee2, employee3).suppresOptimisticLockException().execute();
     }
 
     /**
      * 
      * @throws Exception
      */
-    @Test(expected = NoIdPropertyRuntimeException.class)
+    @Test
     public void testNoId() throws Exception {
         NoId noId1 = new NoId();
         noId1.value1 = 1;
@@ -269,6 +187,6 @@ public class AutoBatchDeleteTest {
         NoId noId2 = new NoId();
         noId2.value1 = 1;
         noId2.value2 = 1;
-        jdbcManager.deleteBatch(noId1, noId2).execute();
+        assertThrows(NoIdPropertyRuntimeException.class, () -> jdbcManager.deleteBatch(noId1, noId2).execute());
     }
 }

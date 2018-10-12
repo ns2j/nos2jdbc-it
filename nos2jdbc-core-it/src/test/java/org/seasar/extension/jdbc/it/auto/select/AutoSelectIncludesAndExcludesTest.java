@@ -15,23 +15,20 @@
  */
 package org.seasar.extension.jdbc.it.auto.select;
 
-import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Department;
 import org.seasar.extension.jdbc.it.entity.Employee;
 import org.seasar.extension.jdbc.where.SimpleWhere;
-
-import nos2jdbc.core.it.NoS2Jdbc;
-
-import static org.junit.Assert.*;
-
-import org.junit.Test;
+import nos2jdbc.core.it.NoS2JdbcExtension;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 /**
  * @author jfut
  * 
  */
-@RunWith(NoS2Jdbc.class)
+@ExtendWith(NoS2JdbcExtension.class)
 public class AutoSelectIncludesAndExcludesTest {
 
     private JdbcManager jdbcManager;
@@ -42,12 +39,7 @@ public class AutoSelectIncludesAndExcludesTest {
      */
     @Test
     public void testIncludes() throws Exception {
-        Employee employee =
-            jdbcManager
-                .from(Employee.class)
-                .where(new SimpleWhere().eq("employeeId", 1))
-                .includes("employeeName", "hiredate")
-                .getSingleResult();
+        Employee employee = jdbcManager.from(Employee.class).where(new SimpleWhere().eq("employeeId", 1)).includes("employeeName", "hiredate").getSingleResult();
         assertNotNull(employee);
         assertNotSame(0, employee.employeeId);
         assertEquals(0, employee.employeeNo);
@@ -66,12 +58,7 @@ public class AutoSelectIncludesAndExcludesTest {
      */
     @Test
     public void testExcludes() throws Exception {
-        Employee employee =
-            jdbcManager
-                .from(Employee.class)
-                .where(new SimpleWhere().eq("employeeId", 1))
-                .excludes("employeeId", "employeeName", "hiredate")
-                .getSingleResult();
+        Employee employee = jdbcManager.from(Employee.class).where(new SimpleWhere().eq("employeeId", 1)).excludes("employeeId", "employeeName", "hiredate").getSingleResult();
         assertNotNull(employee);
         assertNotSame(0, employee.employeeId);
         assertNotSame(0, employee.employeeNo);
@@ -90,14 +77,7 @@ public class AutoSelectIncludesAndExcludesTest {
      */
     @Test
     public void testIncludesAndExcludes() throws Exception {
-        Employee employee =
-            jdbcManager
-                .from(Employee.class)
-                .leftOuterJoin("address")
-                .where(new SimpleWhere().eq("employeeId", 1))
-                .includes("employeeName", "hiredate", "address.street")
-                .excludes("employeeName", "address", "address.street")
-                .getSingleResult();
+        Employee employee = jdbcManager.from(Employee.class).leftOuterJoin("address").where(new SimpleWhere().eq("employeeId", 1)).includes("employeeName", "hiredate", "address.street").excludes("employeeName", "address", "address.street").getSingleResult();
         assertNotNull(employee);
         assertNotSame(0, employee.employeeId);
         assertEquals(0, employee.employeeNo);
@@ -120,23 +100,7 @@ public class AutoSelectIncludesAndExcludesTest {
      */
     @Test
     public void testIncludesAndExcludes_oneToMany() throws Exception {
-        Department department =
-            jdbcManager
-                .from(Department.class)
-                .leftOuterJoin("employees")
-                .leftOuterJoin("employees.address")
-                .where(new SimpleWhere().eq("departmentId", 1))
-                .includes(
-                    "departmentNo",
-                    "departmentName",
-                    "employees.employeeName",
-                    "employees.hiredate",
-                    "employees.address.street")
-                .excludes(
-                    "employees.employeeName",
-                    "employees.address",
-                    "employees.address.street")
-                .getSingleResult();
+        Department department = jdbcManager.from(Department.class).leftOuterJoin("employees").leftOuterJoin("employees.address").where(new SimpleWhere().eq("departmentId", 1)).includes("departmentNo", "departmentName", "employees.employeeName", "employees.hiredate", "employees.address.street").excludes("employees.employeeName", "employees.address", "employees.address.street").getSingleResult();
         assertNotNull(department);
         assertNotSame(0, department.departmentId);
         assertNotNull(department.departmentName);
@@ -166,15 +130,7 @@ public class AutoSelectIncludesAndExcludesTest {
      */
     @Test
     public void testIncludesAndExcludes_oneToMany_joinName() throws Exception {
-        Department department =
-            jdbcManager
-                .from(Department.class)
-                .leftOuterJoin("employees")
-                .leftOuterJoin("employees.address")
-                .where(new SimpleWhere().eq("departmentId", 1))
-                .includes("departmentNo", "departmentName", "employees.address")
-                .excludes("employees", "employees.address")
-                .getSingleResult();
+        Department department = jdbcManager.from(Department.class).leftOuterJoin("employees").leftOuterJoin("employees.address").where(new SimpleWhere().eq("departmentId", 1)).includes("departmentNo", "departmentName", "employees.address").excludes("employees", "employees.address").getSingleResult();
         assertNotNull(department);
         assertNotSame(0, department.departmentId);
         assertNotNull(department.departmentName);
@@ -197,5 +153,4 @@ public class AutoSelectIncludesAndExcludesTest {
             assertNotSame(0, employee.address.version);
         }
     }
-
 }

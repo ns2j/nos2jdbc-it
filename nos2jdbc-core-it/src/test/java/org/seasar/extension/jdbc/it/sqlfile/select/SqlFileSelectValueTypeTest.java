@@ -18,25 +18,21 @@ package org.seasar.extension.jdbc.it.sqlfile.select;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Map;
-
 import javax.persistence.TemporalType;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Tense;
 import org.seasar.extension.jdbc.it.sqlfile.select.SqlFileSelectWhereTest.Param2;
 import org.seasar.extension.jdbc.it.sqlfile.select.SqlFileSelectWhereTest.Param3;
-
-import nos2jdbc.core.it.NoS2Jdbc;
-
-import static org.junit.Assert.*;
+import nos2jdbc.core.it.NoS2JdbcExtension;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(NoS2Jdbc.class)
+@ExtendWith(NoS2JdbcExtension.class)
 public class SqlFileSelectValueTypeTest {
 
     private JdbcManager jdbcManager;
@@ -47,17 +43,11 @@ public class SqlFileSelectValueTypeTest {
      */
     @Test
     public void testBean_temporalType() throws Exception {
-        String path =
-            getClass().getName().replace(".", "/") + "_temporalType.sql";
-        Tense tense =
-            jdbcManager.selectBySqlFile(Tense.class, path).getSingleResult();
-        long date =
-            new SimpleDateFormat("yyyy-MM-dd").parse("2005-02-14").getTime();
-        long time =
-            new SimpleDateFormat("HH:mm:ss").parse("12:11:10").getTime();
-        long timestamp =
-            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(
-                "2005-02-14 12:11:10").getTime();
+        String path = getClass().getName().replace(".", "/") + "_temporalType.sql";
+        Tense tense = jdbcManager.selectBySqlFile(Tense.class, path).getSingleResult();
+        long date = new SimpleDateFormat("yyyy-MM-dd").parse("2005-02-14").getTime();
+        long time = new SimpleDateFormat("HH:mm:ss").parse("12:11:10").getTime();
+        long timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2005-02-14 12:11:10").getTime();
         assertNotNull(tense);
         assertEquals(date, tense.calDate.getTimeInMillis());
         assertEquals(date, tense.dateDate.getTime());
@@ -78,40 +68,19 @@ public class SqlFileSelectValueTypeTest {
     public void testBean_temporalType_Calendar() throws Exception {
         Param2 param = new Param2();
         param.calDate = Calendar.getInstance();
-        param.calDate.setTime(new SimpleDateFormat("yyyy-MM-dd")
-            .parse("2005-02-14"));
+        param.calDate.setTime(new SimpleDateFormat("yyyy-MM-dd").parse("2005-02-14"));
         param.calTime = Calendar.getInstance();
-        param.calTime.setTime(new SimpleDateFormat("HH:mm:ss")
-            .parse("12:11:10"));
+        param.calTime.setTime(new SimpleDateFormat("HH:mm:ss").parse("12:11:10"));
         param.calTimestamp = Calendar.getInstance();
-        param.calTimestamp.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-            .parse("2005-02-14 12:11:10"));
-
-        String path =
-            getClass().getName().replace(".", "/")
-                + "_temporalType_Calendar1.sql";
-        Tense tense =
-            jdbcManager
-                .selectBySqlFile(Tense.class, path, param)
-                .getSingleResult();
+        param.calTimestamp.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2005-02-14 12:11:10"));
+        String path = getClass().getName().replace(".", "/") + "_temporalType_Calendar1.sql";
+        Tense tense = jdbcManager.selectBySqlFile(Tense.class, path, param).getSingleResult();
         assertNotNull(tense);
-
-        path =
-            getClass().getName().replace(".", "/")
-                + "_temporalType_Calendar2.sql";
-        tense =
-            jdbcManager
-                .selectBySqlFile(Tense.class, path, param)
-                .getSingleResult();
+        path = getClass().getName().replace(".", "/") + "_temporalType_Calendar2.sql";
+        tense = jdbcManager.selectBySqlFile(Tense.class, path, param).getSingleResult();
         assertNotNull(tense);
-
-        path =
-            getClass().getName().replace(".", "/")
-                + "_temporalType_Calendar3.sql";
-        tense =
-            jdbcManager
-                .selectBySqlFile(Tense.class, path, param)
-                .getSingleResult();
+        path = getClass().getName().replace(".", "/") + "_temporalType_Calendar3.sql";
+        tense = jdbcManager.selectBySqlFile(Tense.class, path, param).getSingleResult();
         assertNotNull(tense);
     }
 
@@ -124,32 +93,15 @@ public class SqlFileSelectValueTypeTest {
         Param3 param = new Param3();
         param.dateDate = new SimpleDateFormat("yyyy-MM-dd").parse("2005-02-14");
         param.dateTime = new SimpleDateFormat("HH:mm:ss").parse("12:11:10");
-        param.dateTimestamp =
-            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-                .parse("2005-02-14 12:11:10");
-
-        String path =
-            getClass().getName().replace(".", "/") + "_temporalType_Date1.sql";
-        Tense tense =
-            jdbcManager
-                .selectBySqlFile(Tense.class, path, param)
-                .getSingleResult();
+        param.dateTimestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2005-02-14 12:11:10");
+        String path = getClass().getName().replace(".", "/") + "_temporalType_Date1.sql";
+        Tense tense = jdbcManager.selectBySqlFile(Tense.class, path, param).getSingleResult();
         assertNotNull(tense);
-
-        path =
-            getClass().getName().replace(".", "/") + "_temporalType_Date2.sql";
-        tense =
-            jdbcManager
-                .selectBySqlFile(Tense.class, path, param)
-                .getSingleResult();
+        path = getClass().getName().replace(".", "/") + "_temporalType_Date2.sql";
+        tense = jdbcManager.selectBySqlFile(Tense.class, path, param).getSingleResult();
         assertNotNull(tense);
-
-        path =
-            getClass().getName().replace(".", "/") + "_temporalType_Date3.sql";
-        tense =
-            jdbcManager
-                .selectBySqlFile(Tense.class, path, param)
-                .getSingleResult();
+        path = getClass().getName().replace(".", "/") + "_temporalType_Date3.sql";
+        tense = jdbcManager.selectBySqlFile(Tense.class, path, param).getSingleResult();
         assertNotNull(tense);
     }
 
@@ -159,10 +111,8 @@ public class SqlFileSelectValueTypeTest {
      */
     @Test
     public void testMap_temporalType() throws Exception {
-        String path =
-            getClass().getName().replace(".", "/") + "_temporalType.sql";
-        Map<?, ?> tense =
-            jdbcManager.selectBySqlFile(Map.class, path).getSingleResult();
+        String path = getClass().getName().replace(".", "/") + "_temporalType.sql";
+        Map<?, ?> tense = jdbcManager.selectBySqlFile(Map.class, path).getSingleResult();
         assertNotNull(tense);
         assertNotNull(tense.get("calDate"));
         assertNotNull(tense.get("dateDate"));
@@ -181,15 +131,10 @@ public class SqlFileSelectValueTypeTest {
      */
     @Test
     public void testObject_temporalType() throws Exception {
-        String path =
-            getClass().getName().replace(".", "/") + "_Object_temporalType.sql";
-        Calendar calTimestamp =
-            jdbcManager.selectBySqlFile(Calendar.class, path).temporal(
-                TemporalType.TIMESTAMP).getSingleResult();
+        String path = getClass().getName().replace(".", "/") + "_Object_temporalType.sql";
+        Calendar calTimestamp = jdbcManager.selectBySqlFile(Calendar.class, path).temporal(TemporalType.TIMESTAMP).getSingleResult();
         assertNotNull(calTimestamp);
-        long time =
-            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(
-                "2005-02-14 12:11:10").getTime();
+        long time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2005-02-14 12:11:10").getTime();
         assertEquals(time, calTimestamp.getTimeInMillis());
     }
 }

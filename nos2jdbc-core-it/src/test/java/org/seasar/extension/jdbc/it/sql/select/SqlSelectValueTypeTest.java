@@ -19,24 +19,20 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
-
 import javax.persistence.TemporalType;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Tense;
-
-import nos2jdbc.core.it.NoS2Jdbc;
-
-import static org.junit.Assert.*;
+import nos2jdbc.core.it.NoS2JdbcExtension;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.seasar.extension.jdbc.parameter.Parameter.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(NoS2Jdbc.class)
+@ExtendWith(NoS2JdbcExtension.class)
 public class SqlSelectValueTypeTest {
 
     private JdbcManager jdbcManager;
@@ -48,15 +44,10 @@ public class SqlSelectValueTypeTest {
     @Test
     public void testBean_temporalType() throws Exception {
         String sql = "SELECT * FROM TENSE WHERE ID = 1";
-        Tense tense =
-            jdbcManager.selectBySql(Tense.class, sql).getSingleResult();
-        long date =
-            new SimpleDateFormat("yyyy-MM-dd").parse("2005-02-14").getTime();
-        long time =
-            new SimpleDateFormat("HH:mm:ss").parse("12:11:10").getTime();
-        long timestamp =
-            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(
-                "2005-02-14 12:11:10").getTime();
+        Tense tense = jdbcManager.selectBySql(Tense.class, sql).getSingleResult();
+        long date = new SimpleDateFormat("yyyy-MM-dd").parse("2005-02-14").getTime();
+        long time = new SimpleDateFormat("HH:mm:ss").parse("12:11:10").getTime();
+        long timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2005-02-14 12:11:10").getTime();
         assertNotNull(tense);
         assertEquals(date, tense.calDate.getTimeInMillis());
         assertEquals(date, tense.dateDate.getTime());
@@ -76,30 +67,14 @@ public class SqlSelectValueTypeTest {
     @Test
     public void testBean_temporalType_Calendar() throws Exception {
         Calendar calendar = Calendar.getInstance();
-        calendar
-            .setTime(new SimpleDateFormat("yyyy-MM-dd").parse("2005-02-14"));
-        Tense tense =
-            jdbcManager.selectBySql(
-                Tense.class,
-                "SELECT * FROM TENSE WHERE CAL_DATE = ?",
-                date(calendar)).getSingleResult();
+        calendar.setTime(new SimpleDateFormat("yyyy-MM-dd").parse("2005-02-14"));
+        Tense tense = jdbcManager.selectBySql(Tense.class, "SELECT * FROM TENSE WHERE CAL_DATE = ?", date(calendar)).getSingleResult();
         assertNotNull(tense);
-
         calendar.setTime(new SimpleDateFormat("HH:mm:ss").parse("12:11:10"));
-        tense =
-            jdbcManager.selectBySql(
-                Tense.class,
-                "SELECT * FROM TENSE WHERE CAL_TIME = ?",
-                time(calendar)).getSingleResult();
+        tense = jdbcManager.selectBySql(Tense.class, "SELECT * FROM TENSE WHERE CAL_TIME = ?", time(calendar)).getSingleResult();
         assertNotNull(tense);
-
-        calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-            .parse("2005-02-14 12:11:10"));
-        tense =
-            jdbcManager.selectBySql(
-                Tense.class,
-                "SELECT * FROM TENSE WHERE CAL_TIMESTAMP = ?",
-                timestamp(calendar)).getSingleResult();
+        calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2005-02-14 12:11:10"));
+        tense = jdbcManager.selectBySql(Tense.class, "SELECT * FROM TENSE WHERE CAL_TIMESTAMP = ?", timestamp(calendar)).getSingleResult();
         assertNotNull(tense);
     }
 
@@ -110,29 +85,13 @@ public class SqlSelectValueTypeTest {
     @Test
     public void testBean_temporalType_Date() throws Exception {
         Date date = new SimpleDateFormat("yyyy-MM-dd").parse("2005-02-14");
-        Tense tense =
-            jdbcManager.selectBySql(
-                Tense.class,
-                "SELECT * FROM TENSE WHERE DATE_DATE = ?",
-                date(date)).getSingleResult();
+        Tense tense = jdbcManager.selectBySql(Tense.class, "SELECT * FROM TENSE WHERE DATE_DATE = ?", date(date)).getSingleResult();
         assertNotNull(tense);
-
         date = new SimpleDateFormat("HH:mm:ss").parse("12:11:10");
-        tense =
-            jdbcManager.selectBySql(
-                Tense.class,
-                "SELECT * FROM TENSE WHERE DATE_TIME = ?",
-                time(date)).getSingleResult();
+        tense = jdbcManager.selectBySql(Tense.class, "SELECT * FROM TENSE WHERE DATE_TIME = ?", time(date)).getSingleResult();
         assertNotNull(tense);
-
-        date =
-            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-                .parse("2005-02-14 12:11:10");
-        tense =
-            jdbcManager.selectBySql(
-                Tense.class,
-                "SELECT * FROM TENSE WHERE DATE_TIMESTAMP = ?",
-                timestamp(date)).getSingleResult();
+        date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2005-02-14 12:11:10");
+        tense = jdbcManager.selectBySql(Tense.class, "SELECT * FROM TENSE WHERE DATE_TIMESTAMP = ?", timestamp(date)).getSingleResult();
         assertNotNull(tense);
     }
 
@@ -143,8 +102,7 @@ public class SqlSelectValueTypeTest {
     @Test
     public void testMap_temporalType() throws Exception {
         String sql = "SELECT * FROM TENSE WHERE ID = 1";
-        Map<?, ?> tense =
-            jdbcManager.selectBySql(Map.class, sql).getSingleResult();
+        Map<?, ?> tense = jdbcManager.selectBySql(Map.class, sql).getSingleResult();
         assertNotNull(tense);
         assertNotNull(tense.get("calDate"));
         assertNotNull(tense.get("dateDate"));
@@ -164,13 +122,9 @@ public class SqlSelectValueTypeTest {
     @Test
     public void testObject_temporalType() throws Exception {
         String sql = "SELECT CAL_TIMESTAMP FROM TENSE WHERE ID = 1";
-        Calendar calTimestamp =
-            jdbcManager.selectBySql(Calendar.class, sql).temporal(
-                TemporalType.TIMESTAMP).getSingleResult();
+        Calendar calTimestamp = jdbcManager.selectBySql(Calendar.class, sql).temporal(TemporalType.TIMESTAMP).getSingleResult();
         assertNotNull(calTimestamp);
-        long time =
-            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(
-                "2005-02-14 12:11:10").getTime();
+        long time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2005-02-14 12:11:10").getTime();
         assertEquals(time, calTimestamp.getTimeInMillis());
     }
 }

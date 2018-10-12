@@ -16,9 +16,8 @@
 package org.seasar.extension.jdbc.it.auto;
 
 import javax.persistence.OptimisticLockException;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.exception.NoIdPropertyRuntimeException;
 import org.seasar.extension.jdbc.it.entity.CompKeyEmployee;
@@ -26,16 +25,14 @@ import org.seasar.extension.jdbc.it.entity.ConcreteEmployee;
 import org.seasar.extension.jdbc.it.entity.Employee;
 import org.seasar.extension.jdbc.it.entity.NoId;
 import org.seasar.extension.jdbc.where.SimpleWhere;
-
-import nos2jdbc.core.it.NoS2Jdbc;
-
-import static org.junit.Assert.*;
+import nos2jdbc.core.it.NoS2JdbcExtension;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(NoS2Jdbc.class)
+@ExtendWith(NoS2JdbcExtension.class)
 public class AutoDeleteTest {
 
     private JdbcManager jdbcManager;
@@ -51,9 +48,7 @@ public class AutoDeleteTest {
         employee.version = 1;
         int result = jdbcManager.delete(employee).execute();
         assertEquals(1, result);
-        employee =
-            jdbcManager.from(Employee.class).where(
-                new SimpleWhere().eq("employeeId", 1)).getSingleResult();
+        employee = jdbcManager.from(Employee.class).where(new SimpleWhere().eq("employeeId", 1)).getSingleResult();
         assertNull(employee);
     }
 
@@ -68,9 +63,7 @@ public class AutoDeleteTest {
         employee.version = 99;
         int result = jdbcManager.delete(employee).ignoreVersion().execute();
         assertEquals(1, result);
-        employee =
-            jdbcManager.from(Employee.class).where(
-                new SimpleWhere().eq("employeeId", 1)).getSingleResult();
+        employee = jdbcManager.from(Employee.class).where(new SimpleWhere().eq("employeeId", 1)).getSingleResult();
         assertNull(employee);
     }
 
@@ -86,12 +79,7 @@ public class AutoDeleteTest {
         employee.version = 1;
         int result = jdbcManager.delete(employee).execute();
         assertEquals(1, result);
-        employee =
-            jdbcManager
-                .from(CompKeyEmployee.class)
-                .where(
-                    new SimpleWhere().eq("employeeId1", 1).eq("employeeId2", 1))
-                .getSingleResult();
+        employee = jdbcManager.from(CompKeyEmployee.class).where(new SimpleWhere().eq("employeeId1", 1).eq("employeeId2", 1)).getSingleResult();
         assertNull(employee);
     }
 
@@ -106,9 +94,7 @@ public class AutoDeleteTest {
         employee.version = 1;
         int result = jdbcManager.delete(employee).execute();
         assertEquals(1, result);
-        employee =
-            jdbcManager.from(ConcreteEmployee.class).where(
-                new SimpleWhere().eq("employeeId", 1)).getSingleResult();
+        employee = jdbcManager.from(ConcreteEmployee.class).where(new SimpleWhere().eq("employeeId", 1)).getSingleResult();
         assertNull(employee);
     }
 
@@ -118,22 +104,10 @@ public class AutoDeleteTest {
      */
     @Test
     public void testOptimisticLockException() throws Exception {
-        Employee employee1 =
-            jdbcManager
-                .from(Employee.class)
-                .where("employeeId = ?", 1)
-                .getSingleResult();
-        Employee employee2 =
-            jdbcManager
-                .from(Employee.class)
-                .where("employeeId = ?", 1)
-                .getSingleResult();
+        Employee employee1 = jdbcManager.from(Employee.class).where("employeeId = ?", 1).getSingleResult();
+        Employee employee2 = jdbcManager.from(Employee.class).where("employeeId = ?", 1).getSingleResult();
         jdbcManager.delete(employee1).execute();
-        try {
-            jdbcManager.delete(employee2).execute();
-            fail();
-        } catch (OptimisticLockException e) {
-        }
+        assertThrows(OptimisticLockException.class, () -> jdbcManager.delete(employee2).execute());
     }
 
     /**
@@ -142,22 +116,10 @@ public class AutoDeleteTest {
      */
     @Test
     public void testSuppresOptimisticLockException() throws Exception {
-        Employee employee1 =
-            jdbcManager
-                .from(Employee.class)
-                .where("employeeId = ?", 1)
-                .getSingleResult();
-        Employee employee2 =
-            jdbcManager
-                .from(Employee.class)
-                .where("employeeId = ?", 1)
-                .getSingleResult();
+        Employee employee1 = jdbcManager.from(Employee.class).where("employeeId = ?", 1).getSingleResult();
+        Employee employee2 = jdbcManager.from(Employee.class).where("employeeId = ?", 1).getSingleResult();
         jdbcManager.delete(employee1).execute();
-        int result =
-            jdbcManager
-                .delete(employee2)
-                .suppresOptimisticLockException()
-                .execute();
+        int result = jdbcManager.delete(employee2).suppresOptimisticLockException().execute();
         assertEquals(0, result);
     }
 
@@ -165,11 +127,11 @@ public class AutoDeleteTest {
      * 
      * @throws Exception
      */
-    @Test(expected = NoIdPropertyRuntimeException.class)
+    @Test
     public void testNoId() throws Exception {
         NoId noId = new NoId();
         noId.value1 = 1;
         noId.value1 = 2;
-        jdbcManager.delete(noId).execute();
+        assertThrows(NoIdPropertyRuntimeException.class, () -> jdbcManager.delete(noId).execute());
     }
 }

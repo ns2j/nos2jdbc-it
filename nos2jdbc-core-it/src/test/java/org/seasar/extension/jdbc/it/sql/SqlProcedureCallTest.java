@@ -19,12 +19,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIf;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.annotation.InOut;
 import org.seasar.extension.jdbc.annotation.Out;
@@ -32,20 +31,17 @@ import org.seasar.extension.jdbc.annotation.ResultSet;
 import org.seasar.extension.jdbc.it.entity.Department;
 import org.seasar.extension.jdbc.it.entity.Employee;
 import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
-
-import nos2jdbc.core.it.NoS2Jdbc;
-import nos2jdbc.core.it.Prerequisite;
-
-import static org.junit.Assert.*;
-
+import nos2jdbc.core.it.NoS2JdbcExtension;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.seasar.extension.jdbc.parameter.Parameter.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(NoS2Jdbc.class)
-@Prerequisite("#ENV not in {'hsqldb','h2', 'standard'}")
+@ExtendWith(NoS2JdbcExtension.class)
+//@Prerequisite("#ENV not in {'hsqldb','h2', 'standard'}")
+@DisabledIf("['hsqldb','h2', 'standard'].indexOf(systemProperty.get('database')) >= 0")
 public class SqlProcedureCallTest {
 
     private JdbcManager jdbcManager;
@@ -76,9 +72,7 @@ public class SqlProcedureCallTest {
      */
     @Test
     public void testParameter_simpleType_time() throws Exception {
-        jdbcManager.callBySql(
-            "{call PROC_SIMPLETYPE_TIME_PARAM(?)}",
-            time(new Date())).execute();
+        jdbcManager.callBySql("{call PROC_SIMPLETYPE_TIME_PARAM(?)}", time(new Date())).execute();
     }
 
     /**
@@ -106,9 +100,7 @@ public class SqlProcedureCallTest {
         MyDto2 dto = new MyDto2();
         dto.param1 = date;
         dto.param2 = date;
-        jdbcManager
-            .callBySql("{call PROC_DTO_TIME_PARAM(?, ?, ?)}", dto)
-            .execute();
+        jdbcManager.callBySql("{call PROC_DTO_TIME_PARAM(?, ?, ?)}", dto).execute();
         assertEquals(date.getTime(), dto.param1.getTime());
         assertEquals(date.getTime(), dto.param2.getTime());
         assertEquals(date.getTime(), dto.param3.getTimeInMillis());
@@ -185,13 +177,7 @@ public class SqlProcedureCallTest {
         assertEquals("JAMES", employees.get(1).employeeName);
         assertEquals("FORD", employees.get(2).employeeName);
         assertEquals("MILLER", employees.get(3).employeeName);
-        String departmentName =
-            jdbcManager
-                .selectBySql(
-                    String.class,
-                    "SELECT DEPARTMENT_NAME FROM DEPARTMENT WHERE DEPARTMENT_ID = ?",
-                    1)
-                .getSingleResult();
+        String departmentName = jdbcManager.selectBySql(String.class, "SELECT DEPARTMENT_NAME FROM DEPARTMENT WHERE DEPARTMENT_ID = ?", 1).getSingleResult();
         assertEquals("HOGE", departmentName);
     }
 
@@ -253,17 +239,9 @@ public class SqlProcedureCallTest {
         assertEquals(2, departments.size());
         assertEquals("SALES", departments.get(0).departmentName);
         assertEquals("OPERATIONS", departments.get(1).departmentName);
-        String street =
-            jdbcManager.selectBySql(
-                String.class,
-                "SELECT STREET FROM ADDRESS WHERE ADDRESS_ID = ?",
-                1).getSingleResult();
+        String street = jdbcManager.selectBySql(String.class, "SELECT STREET FROM ADDRESS WHERE ADDRESS_ID = ?", 1).getSingleResult();
         assertEquals("HOGE", street);
-        street =
-            jdbcManager.selectBySql(
-                String.class,
-                "SELECT STREET FROM ADDRESS WHERE ADDRESS_ID = ?",
-                2).getSingleResult();
+        street = jdbcManager.selectBySql(String.class, "SELECT STREET FROM ADDRESS WHERE ADDRESS_ID = ?", 2).getSingleResult();
         assertEquals("FOO", street);
         assertEquals(14, dto.employeeCount);
     }
@@ -341,7 +319,6 @@ public class SqlProcedureCallTest {
         /** */
         @Out
         public int employeeCount;
-
     }
 
     /**
@@ -357,7 +334,6 @@ public class SqlProcedureCallTest {
 
         /** */
         public int employeeId;
-
     }
 
     /**
@@ -407,5 +383,4 @@ public class SqlProcedureCallTest {
         @Out
         public int employeeCount;
     }
-
 }

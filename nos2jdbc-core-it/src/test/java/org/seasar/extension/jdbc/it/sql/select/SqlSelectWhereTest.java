@@ -17,21 +17,18 @@ package org.seasar.extension.jdbc.it.sql.select;
 
 import java.util.List;
 import java.util.Map;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Employee;
-
-import nos2jdbc.core.it.NoS2Jdbc;
-
-import static org.junit.Assert.*;
+import nos2jdbc.core.it.NoS2JdbcExtension;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(NoS2Jdbc.class)
+@ExtendWith(NoS2JdbcExtension.class)
 public class SqlSelectWhereTest {
 
     private JdbcManager jdbcManager;
@@ -42,12 +39,8 @@ public class SqlSelectWhereTest {
      */
     @Test
     public void testBean_parameter() throws Exception {
-        String sql =
-            "SELECT * FROM EMPLOYEE WHERE DEPARTMENT_ID = ? AND SALARY = ?";
-        List<Employee> list =
-            jdbcManager
-                .selectBySql(Employee.class, sql, 2, 3000)
-                .getResultList();
+        String sql = "SELECT * FROM EMPLOYEE WHERE DEPARTMENT_ID = ? AND SALARY = ?";
+        List<Employee> list = jdbcManager.selectBySql(Employee.class, sql, 2, 3000).getResultList();
         assertEquals(2, list.size());
     }
 
@@ -58,8 +51,7 @@ public class SqlSelectWhereTest {
     @Test
     public void testBean_parameter_none() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE";
-        List<Employee> list =
-            jdbcManager.selectBySql(Employee.class, sql).getResultList();
+        List<Employee> list = jdbcManager.selectBySql(Employee.class, sql).getResultList();
         assertEquals(14, list.size());
     }
 
@@ -69,11 +61,8 @@ public class SqlSelectWhereTest {
      */
     @Test
     public void testMap_parameter() throws Exception {
-        String sql =
-            "SELECT * FROM EMPLOYEE WHERE DEPARTMENT_ID = ? AND SALARY = ?";
-        @SuppressWarnings("unchecked")
-        List<Map> list =
-            jdbcManager.selectBySql(Map.class, sql, 2, 3000).getResultList();
+        String sql = "SELECT * FROM EMPLOYEE WHERE DEPARTMENT_ID = ? AND SALARY = ?";
+        @SuppressWarnings("unchecked") List<Map> list = jdbcManager.selectBySql(Map.class, sql, 2, 3000).getResultList();
         assertEquals(2, list.size());
     }
 
@@ -84,9 +73,7 @@ public class SqlSelectWhereTest {
     @Test
     public void testMap_parameter_none() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE";
-        @SuppressWarnings("unchecked")
-        List<Map> list =
-            jdbcManager.selectBySql(Map.class, sql).getResultList();
+        @SuppressWarnings("unchecked") List<Map> list = jdbcManager.selectBySql(Map.class, sql).getResultList();
         assertEquals(14, list.size());
     }
 
@@ -96,12 +83,8 @@ public class SqlSelectWhereTest {
      */
     @Test
     public void testObject_parameter() throws Exception {
-        String sql =
-            "SELECT EMPLOYEE_ID FROM EMPLOYEE WHERE DEPARTMENT_ID = ? AND SALARY = ?";
-        List<Integer> list =
-            jdbcManager
-                .selectBySql(Integer.class, sql, 2, 3000)
-                .getResultList();
+        String sql = "SELECT EMPLOYEE_ID FROM EMPLOYEE WHERE DEPARTMENT_ID = ? AND SALARY = ?";
+        List<Integer> list = jdbcManager.selectBySql(Integer.class, sql, 2, 3000).getResultList();
         assertEquals(2, list.size());
     }
 
@@ -112,8 +95,7 @@ public class SqlSelectWhereTest {
     @Test
     public void testObject_parameter_none() throws Exception {
         String sql = "SELECT EMPLOYEE_ID FROM EMPLOYEE";
-        List<Integer> list =
-            jdbcManager.selectBySql(Integer.class, sql).getResultList();
+        List<Integer> list = jdbcManager.selectBySql(Integer.class, sql).getResultList();
         assertEquals(14, list.size());
     }
 }

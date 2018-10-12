@@ -19,32 +19,30 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIf;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.annotation.InOut;
 import org.seasar.extension.jdbc.annotation.Out;
 import org.seasar.extension.jdbc.annotation.ResultSet;
 import org.seasar.extension.jdbc.it.entity.Department;
 import org.seasar.extension.jdbc.it.entity.Employee;
-
-import nos2jdbc.core.it.NoS2Jdbc;
-import nos2jdbc.core.it.Prerequisite;
-
-import static org.junit.Assert.*;
-
+import nos2jdbc.core.it.NoS2JdbcExtension;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.seasar.extension.jdbc.parameter.Parameter.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(NoS2Jdbc.class)
-@Prerequisite("#ENV not in {'hsqldb', 'h2', 'standard'}")
+@ExtendWith(NoS2JdbcExtension.class)
+//@Prerequisite("#ENV not in {'hsqldb', 'h2', 'standard'}")
+@DisabledIf("['hsqldb', 'h2', 'standard'].indexOf(systemProperty.get('database')) >= 0")
 public class AutoProcedureCallTest {
 
     private JdbcManager jdbcManager;
@@ -180,13 +178,7 @@ public class AutoProcedureCallTest {
         assertEquals("JAMES", employees.get(1).employeeName);
         assertEquals("FORD", employees.get(2).employeeName);
         assertEquals("MILLER", employees.get(3).employeeName);
-        String departmentName =
-            jdbcManager
-                .selectBySql(
-                    String.class,
-                    "select DEPARTMENT_NAME from DEPARTMENT where DEPARTMENT_ID = ?",
-                    1)
-                .getSingleResult();
+        String departmentName = jdbcManager.selectBySql(String.class, "select DEPARTMENT_NAME from DEPARTMENT where DEPARTMENT_ID = ?", 1).getSingleResult();
         assertEquals("HOGE", departmentName);
     }
 
@@ -206,13 +198,7 @@ public class AutoProcedureCallTest {
         assertEquals("JAMES", employees.get(1).employeeName);
         assertEquals("FORD", employees.get(2).employeeName);
         assertEquals("MILLER", employees.get(3).employeeName);
-        String departmentName =
-            jdbcManager
-                .selectBySql(
-                    String.class,
-                    "select DEPARTMENT_NAME from DEPARTMENT where DEPARTMENT_ID = ?",
-                    1)
-                .getSingleResult();
+        String departmentName = jdbcManager.selectBySql(String.class, "select DEPARTMENT_NAME from DEPARTMENT where DEPARTMENT_ID = ?", 1).getSingleResult();
         assertEquals("HOGE", departmentName);
     }
 
@@ -262,17 +248,9 @@ public class AutoProcedureCallTest {
         assertEquals(2, departments.size());
         assertEquals("SALES", departments.get(0).departmentName);
         assertEquals("OPERATIONS", departments.get(1).departmentName);
-        String street =
-            jdbcManager.selectBySql(
-                String.class,
-                "select STREET from ADDRESS where ADDRESS_ID = ?",
-                1).getSingleResult();
+        String street = jdbcManager.selectBySql(String.class, "select STREET from ADDRESS where ADDRESS_ID = ?", 1).getSingleResult();
         assertEquals("HOGE", street);
-        street =
-            jdbcManager.selectBySql(
-                String.class,
-                "select STREET from ADDRESS where ADDRESS_ID = ?",
-                2).getSingleResult();
+        street = jdbcManager.selectBySql(String.class, "select STREET from ADDRESS where ADDRESS_ID = ?", 2).getSingleResult();
         assertEquals("FOO", street);
         assertEquals(14, dto.employeeCount);
     }
@@ -350,7 +328,6 @@ public class AutoProcedureCallTest {
         /** */
         @Out
         public int employeeCount;
-
     }
 
     /**
@@ -366,7 +343,6 @@ public class AutoProcedureCallTest {
 
         /** */
         public int employeeId;
-
     }
 
     /**
@@ -416,5 +392,4 @@ public class AutoProcedureCallTest {
         @Out
         public int employeeCount;
     }
-
 }

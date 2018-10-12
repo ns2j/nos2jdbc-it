@@ -16,23 +16,20 @@
 package org.seasar.extension.jdbc.it.auto.select;
 
 import java.util.List;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.JoinType;
 import org.seasar.extension.jdbc.it.entity.ConcreteAddress;
 import org.seasar.extension.jdbc.it.entity.ConcreteEmployee;
-
-import nos2jdbc.core.it.NoS2Jdbc;
-
-import static org.junit.Assert.*;
+import nos2jdbc.core.it.NoS2JdbcExtension;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(NoS2Jdbc.class)
+@ExtendWith(NoS2JdbcExtension.class)
 public class MappedSuperclassOneToOneTest {
 
     private JdbcManager jdbcManager;
@@ -43,11 +40,7 @@ public class MappedSuperclassOneToOneTest {
      */
     @Test
     public void testLeftOuterJoin_fromOwnerToInverse() throws Exception {
-        List<ConcreteEmployee> list =
-            jdbcManager
-                .from(ConcreteEmployee.class)
-                .leftOuterJoin("address")
-                .getResultList();
+        List<ConcreteEmployee> list = jdbcManager.from(ConcreteEmployee.class).leftOuterJoin("address").getResultList();
         assertEquals(14, list.size());
         for (ConcreteEmployee e : list) {
             assertNotNull(e.address);
@@ -60,10 +53,7 @@ public class MappedSuperclassOneToOneTest {
      */
     @Test
     public void testLeftOuterJoin_fromOwnerToInverse_noFetch() throws Exception {
-        List<ConcreteEmployee> list =
-            jdbcManager.from(ConcreteEmployee.class).leftOuterJoin(
-                "address",
-                false).getResultList();
+        List<ConcreteEmployee> list = jdbcManager.from(ConcreteEmployee.class).leftOuterJoin("address", false).getResultList();
         assertEquals(14, list.size());
         for (ConcreteEmployee e : list) {
             assertNull(e.address);
@@ -76,11 +66,7 @@ public class MappedSuperclassOneToOneTest {
      */
     @Test
     public void testInnerJoin_fromOwnerToInverse() throws Exception {
-        List<ConcreteEmployee> list =
-            jdbcManager
-                .from(ConcreteEmployee.class)
-                .innerJoin("address")
-                .getResultList();
+        List<ConcreteEmployee> list = jdbcManager.from(ConcreteEmployee.class).innerJoin("address").getResultList();
         assertEquals(14, list.size());
         for (ConcreteEmployee e : list) {
             assertNotNull(e.address);
@@ -93,11 +79,7 @@ public class MappedSuperclassOneToOneTest {
      */
     @Test
     public void testInnerJoin_fromOwnerToInverse_noFetch() throws Exception {
-        List<ConcreteEmployee> list =
-            jdbcManager.from(ConcreteEmployee.class).join(
-                "address",
-                JoinType.INNER,
-                false).getResultList();
+        List<ConcreteEmployee> list = jdbcManager.from(ConcreteEmployee.class).join("address", JoinType.INNER, false).getResultList();
         assertEquals(14, list.size());
         for (ConcreteEmployee e : list) {
             assertNull(e.address);
@@ -110,11 +92,7 @@ public class MappedSuperclassOneToOneTest {
      */
     @Test
     public void testLeftOuterJoin_fromInverseToOwner() throws Exception {
-        List<ConcreteAddress> list =
-            jdbcManager
-                .from(ConcreteAddress.class)
-                .leftOuterJoin("employee")
-                .getResultList();
+        List<ConcreteAddress> list = jdbcManager.from(ConcreteAddress.class).leftOuterJoin("employee").getResultList();
         assertEquals(14, list.size());
         for (ConcreteAddress e : list) {
             assertNotNull(e.employee);
@@ -127,10 +105,7 @@ public class MappedSuperclassOneToOneTest {
      */
     @Test
     public void testLeftOuterJoin_fromInverseToOwner_noFetch() throws Exception {
-        List<ConcreteAddress> list =
-            jdbcManager.from(ConcreteAddress.class).leftOuterJoin(
-                "employee",
-                false).getResultList();
+        List<ConcreteAddress> list = jdbcManager.from(ConcreteAddress.class).leftOuterJoin("employee", false).getResultList();
         assertEquals(14, list.size());
         for (ConcreteAddress e : list) {
             assertNull(e.employee);
@@ -143,11 +118,7 @@ public class MappedSuperclassOneToOneTest {
      */
     @Test
     public void testInnerJoin_fromInverseToOwner() throws Exception {
-        List<ConcreteAddress> list =
-            jdbcManager
-                .from(ConcreteAddress.class)
-                .innerJoin("employee")
-                .getResultList();
+        List<ConcreteAddress> list = jdbcManager.from(ConcreteAddress.class).innerJoin("employee").getResultList();
         assertEquals(14, list.size());
         for (ConcreteAddress e : list) {
             assertNotNull(e.employee);
@@ -160,10 +131,7 @@ public class MappedSuperclassOneToOneTest {
      */
     @Test
     public void testInnerJoin_fromInverseToOwner_noFetch() throws Exception {
-        List<ConcreteAddress> list =
-            jdbcManager.from(ConcreteAddress.class).innerJoin(
-                "employee",
-                false).getResultList();
+        List<ConcreteAddress> list = jdbcManager.from(ConcreteAddress.class).innerJoin("employee", false).getResultList();
         assertEquals(14, list.size());
         for (ConcreteAddress e : list) {
             assertNull(e.employee);

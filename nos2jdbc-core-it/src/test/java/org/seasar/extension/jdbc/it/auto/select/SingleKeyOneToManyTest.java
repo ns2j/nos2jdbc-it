@@ -16,23 +16,20 @@
 package org.seasar.extension.jdbc.it.auto.select;
 
 import java.util.List;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Department;
 import org.seasar.extension.jdbc.it.entity.Employee;
-
-import nos2jdbc.core.it.NoS2Jdbc;
-
-import static org.junit.Assert.*;
+import nos2jdbc.core.it.NoS2JdbcExtension;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.seasar.extension.jdbc.it.name.DepartmentNames.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(NoS2Jdbc.class)
+@ExtendWith(NoS2JdbcExtension.class)
 public class SingleKeyOneToManyTest {
 
     private JdbcManager jdbcManager;
@@ -43,12 +40,7 @@ public class SingleKeyOneToManyTest {
      */
     @Test
     public void testLeftOuterJoin() throws Exception {
-        List<Department> list =
-            jdbcManager
-                .from(Department.class)
-                .leftOuterJoin("employees")
-                .orderBy("departmentId")
-                .getResultList();
+        List<Department> list = jdbcManager.from(Department.class).leftOuterJoin("employees").orderBy("departmentId").getResultList();
         assertEquals(4, list.size());
         assertNotNull(list.get(0).employees);
         assertNotNull(list.get(1).employees);
@@ -63,12 +55,7 @@ public class SingleKeyOneToManyTest {
      */
     @Test
     public void testLeftOuterJoin_names() throws Exception {
-        List<Department> list =
-            jdbcManager
-                .from(Department.class)
-                .leftOuterJoin(employees())
-                .orderBy("departmentId")
-                .getResultList();
+        List<Department> list = jdbcManager.from(Department.class).leftOuterJoin(employees()).orderBy("departmentId").getResultList();
         assertEquals(4, list.size());
         assertNotNull(list.get(0).employees);
         assertNotNull(list.get(1).employees);
@@ -83,12 +70,7 @@ public class SingleKeyOneToManyTest {
      */
     @Test
     public void testLeftOuterJoin_noFetch() throws Exception {
-        List<Department> list =
-            jdbcManager
-                .from(Department.class)
-                .leftOuterJoin("employees", false)
-                .orderBy("departmentId")
-                .getResultList();
+        List<Department> list = jdbcManager.from(Department.class).leftOuterJoin("employees", false).orderBy("departmentId").getResultList();
         assertEquals(4, list.size());
         assertNull(list.get(0).employees);
         assertNull(list.get(1).employees);
@@ -102,9 +84,7 @@ public class SingleKeyOneToManyTest {
      */
     @Test
     public void testInnerJoin() throws Exception {
-        List<Department> list =
-            jdbcManager.from(Department.class).innerJoin("employees").orderBy(
-                "departmentId").getResultList();
+        List<Department> list = jdbcManager.from(Department.class).innerJoin("employees").orderBy("departmentId").getResultList();
         assertEquals(3, list.size());
         assertNotNull(list.get(0).employees);
         assertNotNull(list.get(1).employees);
@@ -117,12 +97,7 @@ public class SingleKeyOneToManyTest {
      */
     @Test
     public void testInnerJoin_noFetch() throws Exception {
-        List<Department> list =
-            jdbcManager
-                .from(Department.class)
-                .innerJoin("employees", false)
-                .orderBy("departmentId")
-                .getResultList();
+        List<Department> list = jdbcManager.from(Department.class).innerJoin("employees", false).orderBy("departmentId").getResultList();
         assertEquals(3, list.size());
         assertNull(list.get(0).employees);
         assertNull(list.get(1).employees);
@@ -135,13 +110,7 @@ public class SingleKeyOneToManyTest {
      */
     @Test
     public void testInnerJoin_manyToOne_oneToMany() throws Exception {
-        Department d =
-            jdbcManager
-                .from(Department.class)
-                .innerJoin("employees")
-                .innerJoin("employees.department")
-                .id(1)
-                .getSingleResult();
+        Department d = jdbcManager.from(Department.class).innerJoin("employees").innerJoin("employees.department").id(1).getSingleResult();
         assertNotNull(d);
         List<Employee> employees = d.employees;
         assertNotNull(employees);
@@ -150,5 +119,4 @@ public class SingleKeyOneToManyTest {
         assertNotNull(employee);
         assertEquals(d, employee.department);
     }
-
 }

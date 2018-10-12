@@ -16,22 +16,19 @@
 package org.seasar.extension.jdbc.it.auto.select;
 
 import java.util.List;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Department;
 import org.seasar.extension.jdbc.it.entity.Employee;
-
-import nos2jdbc.core.it.NoS2Jdbc;
-
-import static org.junit.Assert.*;
+import nos2jdbc.core.it.NoS2JdbcExtension;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(NoS2Jdbc.class)
+@ExtendWith(NoS2JdbcExtension.class)
 public class AutoSelectHintTest {
 
     private JdbcManager jdbcManager;
@@ -42,13 +39,7 @@ public class AutoSelectHintTest {
      */
     @Test
     public void testHint() throws Exception {
-        List<Employee> list =
-            jdbcManager
-                .from(Employee.class)
-                .where("employeeName like 'S%'")
-                .orderBy("employeeName")
-                .hint("index (Employee IX_EMPLOYEE_1)")
-                .getResultList();
+        List<Employee> list = jdbcManager.from(Employee.class).where("employeeName like 'S%'").orderBy("employeeName").hint("index (Employee IX_EMPLOYEE_1)").getResultList();
         assertEquals(2, list.size());
         assertEquals("SCOTT", list.get(0).employeeName);
         assertEquals("SMITH", list.get(1).employeeName);
@@ -60,16 +51,8 @@ public class AutoSelectHintTest {
      */
     @Test
     public void testHint_withJoin() throws Exception {
-        List<Department> list =
-            jdbcManager
-                .from(Department.class)
-                .innerJoin("employees")
-                .where("employees.employeeName like 'S%'")
-                .orderBy("departmentId")
-                .hint("index (employees IX_EMPLOYEE_1)")
-                .getResultList();
+        List<Department> list = jdbcManager.from(Department.class).innerJoin("employees").where("employees.employeeName like 'S%'").orderBy("departmentId").hint("index (employees IX_EMPLOYEE_1)").getResultList();
         assertEquals(1, list.size());
         assertEquals("RESEARCH", list.get(0).departmentName);
     }
-
 }
