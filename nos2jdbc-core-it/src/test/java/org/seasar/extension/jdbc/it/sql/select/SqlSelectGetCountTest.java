@@ -15,19 +15,17 @@
  */
 package org.seasar.extension.jdbc.it.sql.select;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
-
-import nos2jdbc.core.it.NoS2Jdbc;
-
-import static org.junit.Assert.*;
+import nos2jdbc.core.it.NoS2JdbcExtension;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(NoS2Jdbc.class)
+@ExtendWith(NoS2JdbcExtension.class)
 public class SqlSelectGetCountTest {
 
     private JdbcManager jdbcManager;
@@ -38,11 +36,7 @@ public class SqlSelectGetCountTest {
      */
     @Test
     public void testGetCount() throws Exception {
-        long count =
-            jdbcManager.getCountBySql(
-                "SELECT * FROM EMPLOYEE WHERE MANAGER_ID = ?",
-                9);
+        long count = jdbcManager.getCountBySql("SELECT * FROM EMPLOYEE WHERE MANAGER_ID = ?", 9);
         assertEquals(3L, count);
     }
-
 }

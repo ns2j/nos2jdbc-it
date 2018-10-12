@@ -21,24 +21,20 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
 import javax.persistence.EntityExistsException;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Tense;
-
-import nos2jdbc.core.it.NoS2Jdbc;
-
-import static org.junit.Assert.*;
+import nos2jdbc.core.it.NoS2JdbcExtension;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.seasar.extension.jdbc.parameter.Parameter.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(NoS2Jdbc.class)
+@ExtendWith(NoS2JdbcExtension.class)
 public class SqlUpdateTest {
 
     private JdbcManager jdbcManager;
@@ -60,12 +56,8 @@ public class SqlUpdateTest {
      */
     @Test
     public void testParameter() throws Exception {
-        String sql =
-            "DELETE FROM EMPLOYEE WHERE DEPARTMENT_ID = ? AND SALARY > ?";
-        int actual =
-            jdbcManager.updateBySql(sql, int.class, BigDecimal.class).params(
-                3,
-                new BigDecimal(1000)).execute();
+        String sql = "DELETE FROM EMPLOYEE WHERE DEPARTMENT_ID = ? AND SALARY > ?";
+        int actual = jdbcManager.updateBySql(sql, int.class, BigDecimal.class).params(3, new BigDecimal(1000)).execute();
         assertEquals(5, actual);
     }
 
@@ -75,16 +67,8 @@ public class SqlUpdateTest {
      */
     @Test
     public void testEntityExistsException_insert() throws Exception {
-        String sql =
-            "INSERT INTO DEPARTMENT (DEPARTMENT_ID, DEPARTMENT_NO) VALUES(?, ?)";
-        try {
-            jdbcManager
-                .updateBySql(sql, int.class, int.class)
-                .params(1, 50)
-                .execute();
-            fail();
-        } catch (EntityExistsException e) {
-        }
+        String sql = "INSERT INTO DEPARTMENT (DEPARTMENT_ID, DEPARTMENT_NO) VALUES(?, ?)";
+        assertThrows(EntityExistsException.class, () -> jdbcManager.updateBySql(sql, int.class, int.class).params(1, 50).execute());
     }
 
     /**
@@ -93,20 +77,9 @@ public class SqlUpdateTest {
      */
     @Test
     public void testEntityExistsException_update() throws Exception {
-        jdbcManager
-            .updateBySql(
-                "INSERT INTO DEPARTMENT (DEPARTMENT_ID, DEPARTMENT_NO) VALUES (99, 99)")
-            .execute();
-        String sql =
-            "UPDATE DEPARTMENT SET DEPARTMENT_ID = ? WHERE DEPARTMENT_ID = ?";
-        try {
-            jdbcManager
-                .updateBySql(sql, int.class, int.class)
-                .params(1, 99)
-                .execute();
-            fail();
-        } catch (EntityExistsException e) {
-        }
+        jdbcManager.updateBySql("INSERT INTO DEPARTMENT (DEPARTMENT_ID, DEPARTMENT_NO) VALUES (99, 99)").execute();
+        String sql = "UPDATE DEPARTMENT SET DEPARTMENT_ID = ? WHERE DEPARTMENT_ID = ?";
+        assertThrows(EntityExistsException.class, () -> jdbcManager.updateBySql(sql, int.class, int.class).params(1, 99).execute());
     }
 
     /**
@@ -115,51 +88,18 @@ public class SqlUpdateTest {
      */
     @Test
     public void testTemporalType() throws Exception {
-        String sql =
-            "UPDATE TENSE SET DATE_DATE = ?, DATE_TIME = ?, DATE_TIMESTAMP = ?, CAL_DATE = ?, CAL_TIME = ?, CAL_TIMESTAMP = ?, SQL_DATE = ?, SQL_TIME = ?, SQL_TIMESTAMP = ? WHERE ID = ?";
-        long date =
-            new SimpleDateFormat("yyyy-MM-dd").parse("2005-03-14").getTime();
-        long time =
-            new SimpleDateFormat("HH:mm:ss").parse("13:11:10").getTime();
-        long timestamp =
-            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(
-                "2005-03-14 13:11:10").getTime();
+        String sql = "UPDATE TENSE SET DATE_DATE = ?, DATE_TIME = ?, DATE_TIMESTAMP = ?, CAL_DATE = ?, CAL_TIME = ?, CAL_TIMESTAMP = ?, SQL_DATE = ?, SQL_TIME = ?, SQL_TIMESTAMP = ? WHERE ID = ?";
+        long date = new SimpleDateFormat("yyyy-MM-dd").parse("2005-03-14").getTime();
+        long time = new SimpleDateFormat("HH:mm:ss").parse("13:11:10").getTime();
+        long timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2005-03-14 13:11:10").getTime();
         Calendar calDate = Calendar.getInstance();
         calDate.setTimeInMillis(date);
         Calendar calTime = Calendar.getInstance();
         calTime.setTimeInMillis(time);
         Calendar calTimestamp = Calendar.getInstance();
         calTimestamp.setTimeInMillis(timestamp);
-
-        jdbcManager.updateBySql(
-            sql,
-            Date.class,
-            Date.class,
-            Date.class,
-            Calendar.class,
-            Calendar.class,
-            Calendar.class,
-            java.sql.Date.class,
-            Time.class,
-            Timestamp.class,
-            int.class).params(
-            date(new Date(date)),
-            time(new Date(time)),
-            timestamp(new Date(timestamp)),
-            calDate,
-            calTime,
-            calTimestamp,
-            new java.sql.Date(date),
-            new Time(time),
-            new Timestamp(timestamp),
-            1).execute();
-
-        Tense tense =
-            jdbcManager
-                .selectBySql(
-                    Tense.class,
-                    "SELECT DATE_DATE, DATE_TIME, DATE_TIMESTAMP, CAL_DATE, CAL_TIME, CAL_TIMESTAMP, SQL_DATE, SQL_TIME, SQL_TIMESTAMP FROM TENSE WHERE ID = 1")
-                .getSingleResult();
+        jdbcManager.updateBySql(sql, Date.class, Date.class, Date.class, Calendar.class, Calendar.class, Calendar.class, java.sql.Date.class, Time.class, Timestamp.class, int.class).params(date(new Date(date)), time(new Date(time)), timestamp(new Date(timestamp)), calDate, calTime, calTimestamp, new java.sql.Date(date), new Time(time), new Timestamp(timestamp), 1).execute();
+        Tense tense = jdbcManager.selectBySql(Tense.class, "SELECT DATE_DATE, DATE_TIME, DATE_TIMESTAMP, CAL_DATE, CAL_TIME, CAL_TIMESTAMP, SQL_DATE, SQL_TIME, SQL_TIMESTAMP FROM TENSE WHERE ID = 1").getSingleResult();
         assertEquals(date, tense.calDate.getTimeInMillis());
         assertEquals(date, tense.dateDate.getTime());
         assertEquals(date, tense.sqlDate.getTime());

@@ -15,23 +15,20 @@
  */
 package org.seasar.extension.jdbc.it.auto.select;
 
-import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.CompKeyEmployee;
 import org.seasar.extension.jdbc.it.entity.Department;
 import org.seasar.extension.jdbc.it.entity.NoId;
-
-import nos2jdbc.core.it.NoS2Jdbc;
-
-import static org.junit.Assert.*;
-
-import org.junit.Test;
+import nos2jdbc.core.it.NoS2JdbcExtension;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(NoS2Jdbc.class)
+@ExtendWith(NoS2JdbcExtension.class)
 public class AutoSelectGetCountTest {
 
     private JdbcManager jdbcManager;
@@ -72,12 +69,7 @@ public class AutoSelectGetCountTest {
      */
     @Test
     public void testOneToMany() throws Exception {
-        long count =
-            jdbcManager
-                .from(Department.class)
-                .innerJoin("employees")
-                .getCount();
+        long count = jdbcManager.from(Department.class).innerJoin("employees").getCount();
         assertEquals(14L, count);
     }
-
 }

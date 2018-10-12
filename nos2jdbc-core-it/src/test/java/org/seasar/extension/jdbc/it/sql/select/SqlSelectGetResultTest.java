@@ -19,24 +19,20 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
-
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Employee;
-
-import nos2jdbc.core.it.NoS2Jdbc;
-
-import static org.junit.Assert.*;
+import nos2jdbc.core.it.NoS2JdbcExtension;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(NoS2Jdbc.class)
+@ExtendWith(NoS2JdbcExtension.class)
 public class SqlSelectGetResultTest {
 
     private JdbcManager jdbcManager;
@@ -48,14 +44,7 @@ public class SqlSelectGetResultTest {
     @Test
     public void testBean_getResultList_NoResultException() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE EMPLOYEE_ID = 100";
-        try {
-            jdbcManager
-                .selectBySql(Employee.class, sql)
-                .disallowNoResult()
-                .getResultList();
-            fail();
-        } catch (NoResultException e) {
-        }
+        assertThrows(NoResultException.class, () -> jdbcManager.selectBySql(Employee.class, sql).disallowNoResult().getResultList());
     }
 
     /**
@@ -65,8 +54,7 @@ public class SqlSelectGetResultTest {
     @Test
     public void testBean_getSingleResult() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE EMPLOYEE_ID = 1";
-        Employee employee =
-            jdbcManager.selectBySql(Employee.class, sql).getSingleResult();
+        Employee employee = jdbcManager.selectBySql(Employee.class, sql).getSingleResult();
         assertNotNull(employee);
     }
 
@@ -75,14 +63,9 @@ public class SqlSelectGetResultTest {
      * @throws Exception
      */
     @Test
-    public void testBean_getSingleResult_NonUniqueResultException()
-            throws Exception {
+    public void testBean_getSingleResult_NonUniqueResultException() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE DEPARTMENT_ID = 1";
-        try {
-            jdbcManager.selectBySql(Employee.class, sql).getSingleResult();
-            fail();
-        } catch (NonUniqueResultException e) {
-        }
+        assertThrows(NonUniqueResultException.class, () -> jdbcManager.selectBySql(Employee.class, sql).getSingleResult());
     }
 
     /**
@@ -92,14 +75,7 @@ public class SqlSelectGetResultTest {
     @Test
     public void testBean_getSingleResult_NoResultException() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE EMPLOYEE_ID = 100";
-        try {
-            jdbcManager
-                .selectBySql(Employee.class, sql)
-                .disallowNoResult()
-                .getSingleResult();
-            fail();
-        } catch (NoResultException e) {
-        }
+        assertThrows(NoResultException.class, () -> jdbcManager.selectBySql(Employee.class, sql).disallowNoResult().getSingleResult());
     }
 
     /**
@@ -109,8 +85,7 @@ public class SqlSelectGetResultTest {
     @Test
     public void testBean_getSingleResult_null() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE EMPLOYEE_ID = 100";
-        Employee employee =
-            jdbcManager.selectBySql(Employee.class, sql).getSingleResult();
+        Employee employee = jdbcManager.selectBySql(Employee.class, sql).getSingleResult();
         assertNull(employee);
     }
 
@@ -121,14 +96,7 @@ public class SqlSelectGetResultTest {
     @Test
     public void testMap_getResultList_NoResultException() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE EMPLOYEE_ID = 100";
-        try {
-            jdbcManager
-                .selectBySql(Map.class, sql)
-                .disallowNoResult()
-                .getResultList();
-            fail();
-        } catch (NoResultException e) {
-        }
+        assertThrows(NoResultException.class, () -> jdbcManager.selectBySql(Map.class, sql).disallowNoResult().getResultList());
     }
 
     /**
@@ -138,8 +106,7 @@ public class SqlSelectGetResultTest {
     @Test
     public void testMap_getSingleResult() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE EMPLOYEE_ID = 1";
-        Map<?, ?> employee =
-            jdbcManager.selectBySql(Map.class, sql).getSingleResult();
+        Map<?, ?> employee = jdbcManager.selectBySql(Map.class, sql).getSingleResult();
         assertNotNull(employee);
     }
 
@@ -148,14 +115,9 @@ public class SqlSelectGetResultTest {
      * @throws Exception
      */
     @Test
-    public void testMap_getSingleResult_NonUniqueResultException()
-            throws Exception {
+    public void testMap_getSingleResult_NonUniqueResultException() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE DEPARTMENT_ID = 1";
-        try {
-            jdbcManager.selectBySql(Map.class, sql).getSingleResult();
-            fail();
-        } catch (NonUniqueResultException e) {
-        }
+        assertThrows(NonUniqueResultException.class, () -> jdbcManager.selectBySql(Map.class, sql).getSingleResult());
     }
 
     /**
@@ -165,14 +127,7 @@ public class SqlSelectGetResultTest {
     @Test
     public void testMap_getSingleResult_NoResultException() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE EMPLOYEE_ID = 100";
-        try {
-            jdbcManager
-                .selectBySql(Map.class, sql)
-                .disallowNoResult()
-                .getSingleResult();
-            fail();
-        } catch (NoResultException e) {
-        }
+        assertThrows(NoResultException.class, () -> jdbcManager.selectBySql(Map.class, sql).disallowNoResult().getSingleResult());
     }
 
     /**
@@ -182,8 +137,7 @@ public class SqlSelectGetResultTest {
     @Test
     public void testMap_getSingleResult_null() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE EMPLOYEE_ID = 100";
-        Map<?, ?> employee =
-            jdbcManager.selectBySql(Map.class, sql).getSingleResult();
+        Map<?, ?> employee = jdbcManager.selectBySql(Map.class, sql).getSingleResult();
         assertNull(employee);
     }
 
@@ -193,10 +147,8 @@ public class SqlSelectGetResultTest {
      */
     @Test
     public void testMap_getSingleResult_AsLinkedHashMap() throws Exception {
-        String sql =
-            "SELECT VERSION, EMPLOYEE_NAME, EMPLOYEE_ID FROM EMPLOYEE WHERE EMPLOYEE_ID = 1";
-        Map<?, ?> employee =
-            jdbcManager.selectBySql(LinkedHashMap.class, sql).getSingleResult();
+        String sql = "SELECT VERSION, EMPLOYEE_NAME, EMPLOYEE_ID FROM EMPLOYEE WHERE EMPLOYEE_ID = 1";
+        Map<?, ?> employee = jdbcManager.selectBySql(LinkedHashMap.class, sql).getSingleResult();
         Iterator<?> it = employee.keySet().iterator();
         assertEquals("version", it.next());
         assertNotNull(employee.get("version"));
@@ -211,10 +163,8 @@ public class SqlSelectGetResultTest {
      */
     @Test
     public void testMap_getSingleResult_AsTreeMap() throws Exception {
-        String sql =
-            "SELECT VERSION, EMPLOYEE_NAME, EMPLOYEE_ID FROM EMPLOYEE WHERE EMPLOYEE_ID = 1";
-        Map<?, ?> employee =
-            jdbcManager.selectBySql(TreeMap.class, sql).getSingleResult();
+        String sql = "SELECT VERSION, EMPLOYEE_NAME, EMPLOYEE_ID FROM EMPLOYEE WHERE EMPLOYEE_ID = 1";
+        Map<?, ?> employee = jdbcManager.selectBySql(TreeMap.class, sql).getSingleResult();
         Iterator<?> it = employee.keySet().iterator();
         assertEquals("employeeId", it.next());
         assertNotNull(employee.get("employeeId"));
@@ -231,14 +181,7 @@ public class SqlSelectGetResultTest {
     @Test
     public void testObject_getResultList_NoResultException() throws Exception {
         String sql = "SELECT EMPLOYEE_ID FROM EMPLOYEE WHERE EMPLOYEE_ID = 100";
-        try {
-            jdbcManager
-                .selectBySql(Integer.class, sql)
-                .disallowNoResult()
-                .getResultList();
-            fail();
-        } catch (NoResultException e) {
-        }
+        assertThrows(NoResultException.class, () -> jdbcManager.selectBySql(Integer.class, sql).disallowNoResult().getResultList());
     }
 
     /**
@@ -248,8 +191,7 @@ public class SqlSelectGetResultTest {
     @Test
     public void testObject_getSingleResult() throws Exception {
         String sql = "SELECT EMPLOYEE_ID FROM EMPLOYEE WHERE EMPLOYEE_ID = 1";
-        Integer employeeId =
-            jdbcManager.selectBySql(Integer.class, sql).getSingleResult();
+        Integer employeeId = jdbcManager.selectBySql(Integer.class, sql).getSingleResult();
         assertNotNull(employeeId);
     }
 
@@ -258,14 +200,9 @@ public class SqlSelectGetResultTest {
      * @throws Exception
      */
     @Test
-    public void testObject_getSingleResult_NonUniqueResultException()
-            throws Exception {
+    public void testObject_getSingleResult_NonUniqueResultException() throws Exception {
         String sql = "SELECT EMPLOYEE_ID FROM EMPLOYEE WHERE DEPARTMENT_ID = 1";
-        try {
-            jdbcManager.selectBySql(Integer.class, sql).getSingleResult();
-            fail();
-        } catch (NonUniqueResultException e) {
-        }
+        assertThrows(NonUniqueResultException.class, () -> jdbcManager.selectBySql(Integer.class, sql).getSingleResult());
     }
 
     /**
@@ -275,14 +212,7 @@ public class SqlSelectGetResultTest {
     @Test
     public void testObject_getSingleResult_NoResultException() throws Exception {
         String sql = "SELECT EMPLOYEE_ID FROM EMPLOYEE WHERE EMPLOYEE_ID = 100";
-        try {
-            jdbcManager
-                .selectBySql(Integer.class, sql)
-                .disallowNoResult()
-                .getSingleResult();
-            fail();
-        } catch (NoResultException e) {
-        }
+        assertThrows(NoResultException.class, () -> jdbcManager.selectBySql(Integer.class, sql).disallowNoResult().getSingleResult());
     }
 
     /**
@@ -292,9 +222,7 @@ public class SqlSelectGetResultTest {
     @Test
     public void testObject_getSingleResult_null() throws Exception {
         String sql = "SELECT EMPLOYEE_ID FROM EMPLOYEE WHERE EMPLOYEE_ID = 100";
-        Integer employeeId =
-            jdbcManager.selectBySql(Integer.class, sql).getSingleResult();
+        Integer employeeId = jdbcManager.selectBySql(Integer.class, sql).getSingleResult();
         assertNull(employeeId);
     }
-
 }

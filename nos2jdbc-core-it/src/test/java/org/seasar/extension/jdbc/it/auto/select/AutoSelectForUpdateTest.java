@@ -15,25 +15,23 @@
  */
 package org.seasar.extension.jdbc.it.auto.select;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIf;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.exception.BaseJoinNotFoundRuntimeException;
 import org.seasar.extension.jdbc.exception.PropertyNotFoundRuntimeException;
 import org.seasar.extension.jdbc.it.entity.Employee;
 import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
-
-import nos2jdbc.core.it.NoS2Jdbc;
-import nos2jdbc.core.it.Prerequisite;
-
-import static org.junit.Assert.*;
+import nos2jdbc.core.it.NoS2JdbcExtension;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.seasar.extension.jdbc.SelectForUpdateType.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(NoS2Jdbc.class)
+@ExtendWith(NoS2JdbcExtension.class)
 public class AutoSelectForUpdateTest {
 
     private JdbcManager jdbcManager;
@@ -57,17 +55,13 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    @Prerequisite("#ENV != 'standard'")
+    //@Prerequisite("#ENV != 'standard'")
+    @DisabledIf("['standard'].indexOf(systemProperty.get('database')) >= 0")
     public void testForUpdate_innerJoin() throws Exception {
-        if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, false)
-            || !jdbcManagerImplementor.getDialect().supportsInnerJoinForUpdate()) {
+        if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, false) || !jdbcManagerImplementor.getDialect().supportsInnerJoinForUpdate()) {
             return;
         }
-        jdbcManager
-            .from(Employee.class)
-            .innerJoin("department")
-            .forUpdate()
-            .getResultList();
+        jdbcManager.from(Employee.class).innerJoin("department").forUpdate().getResultList();
     }
 
     /**
@@ -75,17 +69,13 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    @Prerequisite("#ENV != 'standard'")
+    //@Prerequisite("#ENV != 'standard'")
+    @DisabledIf("['standard'].indexOf(systemProperty.get('database')) >= 0")
     public void testForUpdate_leftOuterJoin() throws Exception {
-        if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, false)
-            || !jdbcManagerImplementor.getDialect().supportsOuterJoinForUpdate()) {
+        if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, false) || !jdbcManagerImplementor.getDialect().supportsOuterJoinForUpdate()) {
             return;
         }
-        jdbcManager
-            .from(Employee.class)
-            .leftOuterJoin("department")
-            .forUpdate()
-            .getResultList();
+        jdbcManager.from(Employee.class).leftOuterJoin("department").forUpdate().getResultList();
     }
 
     /**
@@ -93,22 +83,11 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdate_paging_UnsupportedOperationException()
-            throws Exception {
+    public void testForUpdate_paging_UnsupportedOperationException() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, false)) {
             return;
         }
-        try {
-            jdbcManager
-                .from(Employee.class)
-                .orderBy("employeeName")
-                .offset(5)
-                .limit(3)
-                .forUpdate()
-                .getResultList();
-            fail();
-        } catch (UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> jdbcManager.from(Employee.class).orderBy("employeeName").offset(5).limit(3).forUpdate().getResultList());
     }
 
     /**
@@ -120,11 +99,7 @@ public class AutoSelectForUpdateTest {
         if (jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, false)) {
             return;
         }
-        try {
-            jdbcManager.from(Employee.class).forUpdate();
-            fail();
-        } catch (UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> jdbcManager.from(Employee.class).forUpdate());
     }
 
     /**
@@ -148,11 +123,7 @@ public class AutoSelectForUpdateTest {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, false)) {
             return;
         }
-        jdbcManager
-            .from(Employee.class)
-            .innerJoin("department")
-            .forUpdateNowait()
-            .getResultList();
+        jdbcManager.from(Employee.class).innerJoin("department").forUpdateNowait().getResultList();
     }
 
     /**
@@ -161,15 +132,10 @@ public class AutoSelectForUpdateTest {
      */
     @Test
     public void testForUpdateNowait_leftOuterJoin() throws Exception {
-        if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, false)
-            || !jdbcManagerImplementor.getDialect().supportsOuterJoinForUpdate()) {
+        if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, false) || !jdbcManagerImplementor.getDialect().supportsOuterJoinForUpdate()) {
             return;
         }
-        jdbcManager
-            .from(Employee.class)
-            .leftOuterJoin("department")
-            .forUpdateNowait()
-            .getResultList();
+        jdbcManager.from(Employee.class).leftOuterJoin("department").forUpdateNowait().getResultList();
     }
 
     /**
@@ -177,22 +143,11 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateNowait_paging_UnsupportedOperationException()
-            throws Exception {
+    public void testForUpdateNowait_paging_UnsupportedOperationException() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, false)) {
             return;
         }
-        try {
-            jdbcManager
-                .from(Employee.class)
-                .orderBy("employeeName")
-                .offset(5)
-                .limit(3)
-                .forUpdateNowait()
-                .getResultList();
-            fail();
-        } catch (UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> jdbcManager.from(Employee.class).orderBy("employeeName").offset(5).limit(3).forUpdateNowait().getResultList());
     }
 
     /**
@@ -200,16 +155,11 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateNowait_UnsupportedOperationException()
-            throws Exception {
+    public void testForUpdateNowait_UnsupportedOperationException() throws Exception {
         if (jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, false)) {
             return;
         }
-        try {
-            jdbcManager.from(Employee.class).forUpdateNowait();
-            fail();
-        } catch (UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> jdbcManager.from(Employee.class).forUpdateNowait());
     }
 
     /**
@@ -221,10 +171,7 @@ public class AutoSelectForUpdateTest {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, true)) {
             return;
         }
-        jdbcManager
-            .from(Employee.class)
-            .forUpdateNowait("employeeName")
-            .getResultList();
+        jdbcManager.from(Employee.class).forUpdateNowait("employeeName").getResultList();
     }
 
     /**
@@ -236,11 +183,7 @@ public class AutoSelectForUpdateTest {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, true)) {
             return;
         }
-        jdbcManager
-            .from(Employee.class)
-            .innerJoin("department")
-            .forUpdateNowait("employeeName")
-            .getResultList();
+        jdbcManager.from(Employee.class).innerJoin("department").forUpdateNowait("employeeName").getResultList();
     }
 
     /**
@@ -252,11 +195,7 @@ public class AutoSelectForUpdateTest {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, true)) {
             return;
         }
-        jdbcManager
-            .from(Employee.class)
-            .innerJoin("department")
-            .forUpdateNowait("department.location")
-            .getResultList();
+        jdbcManager.from(Employee.class).innerJoin("department").forUpdateNowait("department.location").getResultList();
     }
 
     /**
@@ -265,15 +204,10 @@ public class AutoSelectForUpdateTest {
      */
     @Test
     public void testForUpdateNowaitWithTarget_leftOuterJoin() throws Exception {
-        if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, true)
-            || !jdbcManagerImplementor.getDialect().supportsOuterJoinForUpdate()) {
+        if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, true) || !jdbcManagerImplementor.getDialect().supportsOuterJoinForUpdate()) {
             return;
         }
-        jdbcManager
-            .from(Employee.class)
-            .leftOuterJoin("department")
-            .forUpdateNowait("employeeName")
-            .getResultList();
+        jdbcManager.from(Employee.class).leftOuterJoin("department").forUpdateNowait("employeeName").getResultList();
     }
 
     /**
@@ -282,15 +216,10 @@ public class AutoSelectForUpdateTest {
      */
     @Test
     public void testForUpdateNowaitWithTarget_leftOuterJoin2() throws Exception {
-        if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, true)
-            || !jdbcManagerImplementor.getDialect().supportsOuterJoinForUpdate()) {
+        if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, true) || !jdbcManagerImplementor.getDialect().supportsOuterJoinForUpdate()) {
             return;
         }
-        jdbcManager
-            .from(Employee.class)
-            .leftOuterJoin("department")
-            .forUpdateNowait("department.location")
-            .getResultList();
+        jdbcManager.from(Employee.class).leftOuterJoin("department").forUpdateNowait("department.location").getResultList();
     }
 
     /**
@@ -298,22 +227,11 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateNowaitWithTarget_paging_UnsupportedOperationException()
-            throws Exception {
+    public void testForUpdateNowaitWithTarget_paging_UnsupportedOperationException() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, true)) {
             return;
         }
-        try {
-            jdbcManager
-                .from(Employee.class)
-                .orderBy("employeeName")
-                .offset(5)
-                .limit(3)
-                .forUpdateNowait("employeeName")
-                .getResultList();
-            fail();
-        } catch (UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> jdbcManager.from(Employee.class).orderBy("employeeName").offset(5).limit(3).forUpdateNowait("employeeName").getResultList());
     }
 
     /**
@@ -321,16 +239,11 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateNowaitWithTarget_UnsupportedOperationException()
-            throws Exception {
+    public void testForUpdateNowaitWithTarget_UnsupportedOperationException() throws Exception {
         if (jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, true)) {
             return;
         }
-        try {
-            jdbcManager.from(Employee.class).forUpdateNowait("employeeName");
-            fail();
-        } catch (UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> jdbcManager.from(Employee.class).forUpdateNowait("employeeName"));
     }
 
     /**
@@ -342,9 +255,7 @@ public class AutoSelectForUpdateTest {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, true)) {
             return;
         }
-        jdbcManager.from(Employee.class).forUpdateNowait(
-            "employeeName",
-            "salary").getResultList();
+        jdbcManager.from(Employee.class).forUpdateNowait("employeeName", "salary").getResultList();
     }
 
     /**
@@ -356,11 +267,7 @@ public class AutoSelectForUpdateTest {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, true)) {
             return;
         }
-        jdbcManager
-            .from(Employee.class)
-            .innerJoin("department")
-            .forUpdateNowait("employeeName", "department.location")
-            .getResultList();
+        jdbcManager.from(Employee.class).innerJoin("department").forUpdateNowait("employeeName", "department.location").getResultList();
     }
 
     /**
@@ -369,15 +276,10 @@ public class AutoSelectForUpdateTest {
      */
     @Test
     public void testForUpdateNowaitWithTargets_leftOuterJoin() throws Exception {
-        if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, true)
-            || !jdbcManagerImplementor.getDialect().supportsOuterJoinForUpdate()) {
+        if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, true) || !jdbcManagerImplementor.getDialect().supportsOuterJoinForUpdate()) {
             return;
         }
-        jdbcManager
-            .from(Employee.class)
-            .leftOuterJoin("department")
-            .forUpdateNowait("employeeName", "department.location")
-            .getResultList();
+        jdbcManager.from(Employee.class).leftOuterJoin("department").forUpdateNowait("employeeName", "department.location").getResultList();
     }
 
     /**
@@ -385,22 +287,11 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateNowaitWithTargets_pagingOffsetLimit()
-            throws Exception {
+    public void testForUpdateNowaitWithTargets_pagingOffsetLimit() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, true)) {
             return;
         }
-        try {
-            jdbcManager
-                .from(Employee.class)
-                .orderBy("employeeName")
-                .offset(5)
-                .limit(3)
-                .forUpdateNowait("employeeName", "salary")
-                .getResultList();
-            fail();
-        } catch (UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> jdbcManager.from(Employee.class).orderBy("employeeName").offset(5).limit(3).forUpdateNowait("employeeName", "salary").getResultList());
     }
 
     /**
@@ -408,18 +299,11 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateNowaitWithTargets_UnsupportedOperationException()
-            throws Exception {
+    public void testForUpdateNowaitWithTargets_UnsupportedOperationException() throws Exception {
         if (jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, true)) {
             return;
         }
-        try {
-            jdbcManager.from(Employee.class).forUpdateNowait(
-                "employeeName",
-                "salary");
-            fail();
-        } catch (UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> jdbcManager.from(Employee.class).forUpdateNowait("employeeName", "salary"));
     }
 
     /**
@@ -443,8 +327,7 @@ public class AutoSelectForUpdateTest {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, false)) {
             return;
         }
-        jdbcManager.from(Employee.class).innerJoin("department").forUpdateWait(
-            1).getResultList();
+        jdbcManager.from(Employee.class).innerJoin("department").forUpdateWait(1).getResultList();
     }
 
     /**
@@ -453,15 +336,10 @@ public class AutoSelectForUpdateTest {
      */
     @Test
     public void testForUpdateWait_leftOuterJoin() throws Exception {
-        if (!jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, false)
-            || !jdbcManagerImplementor.getDialect().supportsOuterJoinForUpdate()) {
+        if (!jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, false) || !jdbcManagerImplementor.getDialect().supportsOuterJoinForUpdate()) {
             return;
         }
-        jdbcManager
-            .from(Employee.class)
-            .leftOuterJoin("department")
-            .forUpdateWait(1)
-            .getResultList();
+        jdbcManager.from(Employee.class).leftOuterJoin("department").forUpdateWait(1).getResultList();
     }
 
     /**
@@ -469,22 +347,11 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWait_paging_UnsupportedOperationException()
-            throws Exception {
+    public void testForUpdateWait_paging_UnsupportedOperationException() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, false)) {
             return;
         }
-        try {
-            jdbcManager
-                .from(Employee.class)
-                .orderBy("employeeName")
-                .offset(5)
-                .limit(3)
-                .forUpdateWait(1)
-                .getResultList();
-            fail();
-        } catch (UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> jdbcManager.from(Employee.class).orderBy("employeeName").offset(5).limit(3).forUpdateWait(1).getResultList());
     }
 
     /**
@@ -492,16 +359,11 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWait_UnsupportedOperationException()
-            throws Exception {
+    public void testForUpdateWait_UnsupportedOperationException() throws Exception {
         if (jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, false)) {
             return;
         }
-        try {
-            jdbcManager.from(Employee.class).forUpdateWait(1);
-            fail();
-        } catch (UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> jdbcManager.from(Employee.class).forUpdateWait(1));
     }
 
     /**
@@ -513,10 +375,7 @@ public class AutoSelectForUpdateTest {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, true)) {
             return;
         }
-        jdbcManager
-            .from(Employee.class)
-            .forUpdateWait(1, "employeeName")
-            .getResultList();
+        jdbcManager.from(Employee.class).forUpdateWait(1, "employeeName").getResultList();
     }
 
     /**
@@ -528,9 +387,7 @@ public class AutoSelectForUpdateTest {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, true)) {
             return;
         }
-        jdbcManager.from(Employee.class).innerJoin("department").forUpdateWait(
-            1,
-            "employeeName").getResultList();
+        jdbcManager.from(Employee.class).innerJoin("department").forUpdateWait(1, "employeeName").getResultList();
     }
 
     /**
@@ -542,9 +399,7 @@ public class AutoSelectForUpdateTest {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, true)) {
             return;
         }
-        jdbcManager.from(Employee.class).innerJoin("department").forUpdateWait(
-            1,
-            "department.location").getResultList();
+        jdbcManager.from(Employee.class).innerJoin("department").forUpdateWait(1, "department.location").getResultList();
     }
 
     /**
@@ -556,11 +411,7 @@ public class AutoSelectForUpdateTest {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, true)) {
             return;
         }
-        jdbcManager
-            .from(Employee.class)
-            .leftOuterJoin("department")
-            .forUpdateWait(1, "employeeName")
-            .getResultList();
+        jdbcManager.from(Employee.class).leftOuterJoin("department").forUpdateWait(1, "employeeName").getResultList();
     }
 
     /**
@@ -572,11 +423,7 @@ public class AutoSelectForUpdateTest {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, true)) {
             return;
         }
-        jdbcManager
-            .from(Employee.class)
-            .leftOuterJoin("department")
-            .forUpdateWait(1, "department.location")
-            .getResultList();
+        jdbcManager.from(Employee.class).leftOuterJoin("department").forUpdateWait(1, "department.location").getResultList();
     }
 
     /**
@@ -584,22 +431,11 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWaitWithTarget_paging_UnsupportedOperationException()
-            throws Exception {
+    public void testForUpdateWaitWithTarget_paging_UnsupportedOperationException() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, true)) {
             return;
         }
-        try {
-            jdbcManager
-                .from(Employee.class)
-                .orderBy("employeeName")
-                .offset(5)
-                .limit(3)
-                .forUpdateWait(1, "employeeName")
-                .getResultList();
-            fail();
-        } catch (UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> jdbcManager.from(Employee.class).orderBy("employeeName").offset(5).limit(3).forUpdateWait(1, "employeeName").getResultList());
     }
 
     /**
@@ -607,16 +443,11 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWaitWithTarget_UnsupportedOperationException()
-            throws Exception {
+    public void testForUpdateWaitWithTarget_UnsupportedOperationException() throws Exception {
         if (jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, true)) {
             return;
         }
-        try {
-            jdbcManager.from(Employee.class).forUpdateWait(1, "employeeName");
-            fail();
-        } catch (UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> jdbcManager.from(Employee.class).forUpdateWait(1, "employeeName"));
     }
 
     /**
@@ -628,10 +459,7 @@ public class AutoSelectForUpdateTest {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, true)) {
             return;
         }
-        jdbcManager.from(Employee.class).forUpdateWait(
-            1,
-            "employeeName",
-            "salary").getResultList();
+        jdbcManager.from(Employee.class).forUpdateWait(1, "employeeName", "salary").getResultList();
     }
 
     /**
@@ -643,10 +471,7 @@ public class AutoSelectForUpdateTest {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, true)) {
             return;
         }
-        jdbcManager.from(Employee.class).innerJoin("department").forUpdateWait(
-            1,
-            "employeeName",
-            "department.location").getResultList();
+        jdbcManager.from(Employee.class).innerJoin("department").forUpdateWait(1, "employeeName", "department.location").getResultList();
     }
 
     /**
@@ -658,11 +483,7 @@ public class AutoSelectForUpdateTest {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, true)) {
             return;
         }
-        jdbcManager
-            .from(Employee.class)
-            .leftOuterJoin("department")
-            .forUpdateWait(1, "employeeName", "department.location")
-            .getResultList();
+        jdbcManager.from(Employee.class).leftOuterJoin("department").forUpdateWait(1, "employeeName", "department.location").getResultList();
     }
 
     /**
@@ -670,22 +491,11 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWaitWithTargets_paging_UnsupportedOperationException()
-            throws Exception {
+    public void testForUpdateWaitWithTargets_paging_UnsupportedOperationException() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, true)) {
             return;
         }
-        try {
-            jdbcManager
-                .from(Employee.class)
-                .orderBy("employeeName")
-                .offset(5)
-                .limit(3)
-                .forUpdateWait(1, "employeeName", "salary")
-                .getResultList();
-            fail();
-        } catch (UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> jdbcManager.from(Employee.class).orderBy("employeeName").offset(5).limit(3).forUpdateWait(1, "employeeName", "salary").getResultList());
     }
 
     /**
@@ -693,19 +503,11 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWaitWithTargets_UnsupportedOperationException()
-            throws Exception {
+    public void testForUpdateWaitWithTargets_UnsupportedOperationException() throws Exception {
         if (jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, true)) {
             return;
         }
-        try {
-            jdbcManager.from(Employee.class).forUpdateWait(
-                1,
-                "employeeName",
-                "salary");
-            fail();
-        } catch (UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> jdbcManager.from(Employee.class).forUpdateWait(1, "employeeName", "salary"));
     }
 
     /**
@@ -717,10 +519,7 @@ public class AutoSelectForUpdateTest {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true)) {
             return;
         }
-        jdbcManager
-            .from(Employee.class)
-            .forUpdate("employeeName")
-            .getResultList();
+        jdbcManager.from(Employee.class).forUpdate("employeeName").getResultList();
     }
 
     /**
@@ -732,8 +531,7 @@ public class AutoSelectForUpdateTest {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true)) {
             return;
         }
-        jdbcManager.from(Employee.class).innerJoin("department").forUpdate(
-            "employeeName").getResultList();
+        jdbcManager.from(Employee.class).innerJoin("department").forUpdate("employeeName").getResultList();
     }
 
     /**
@@ -745,8 +543,7 @@ public class AutoSelectForUpdateTest {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true)) {
             return;
         }
-        jdbcManager.from(Employee.class).innerJoin("department").forUpdate(
-            "department.location").getResultList();
+        jdbcManager.from(Employee.class).innerJoin("department").forUpdate("department.location").getResultList();
     }
 
     /**
@@ -755,12 +552,10 @@ public class AutoSelectForUpdateTest {
      */
     @Test
     public void testForUpdateWithTarget_leftOuterJoin() throws Exception {
-        if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true)
-            || !jdbcManagerImplementor.getDialect().supportsOuterJoinForUpdate()) {
+        if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true) || !jdbcManagerImplementor.getDialect().supportsOuterJoinForUpdate()) {
             return;
         }
-        jdbcManager.from(Employee.class).leftOuterJoin("department").forUpdate(
-            "employeeName").getResultList();
+        jdbcManager.from(Employee.class).leftOuterJoin("department").forUpdate("employeeName").getResultList();
     }
 
     /**
@@ -769,12 +564,10 @@ public class AutoSelectForUpdateTest {
      */
     @Test
     public void testForUpdateWithTarget_leftOuterJoin2() throws Exception {
-        if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true)
-            || !jdbcManagerImplementor.getDialect().supportsOuterJoinForUpdate()) {
+        if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true) || !jdbcManagerImplementor.getDialect().supportsOuterJoinForUpdate()) {
             return;
         }
-        jdbcManager.from(Employee.class).leftOuterJoin("department").forUpdate(
-            "department.location").getResultList();
+        jdbcManager.from(Employee.class).leftOuterJoin("department").forUpdate("department.location").getResultList();
     }
 
     /**
@@ -782,22 +575,11 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWithTarget_paging_UnsupportedOperationException()
-            throws Exception {
+    public void testForUpdateWithTarget_paging_UnsupportedOperationException() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true)) {
             return;
         }
-        try {
-            jdbcManager
-                .from(Employee.class)
-                .orderBy("employeeName")
-                .offset(5)
-                .limit(3)
-                .forUpdate("employeeName")
-                .getResultList();
-            fail();
-        } catch (UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> jdbcManager.from(Employee.class).orderBy("employeeName").offset(5).limit(3).forUpdate("employeeName").getResultList());
     }
 
     /**
@@ -805,16 +587,11 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWithTarget_UnsupportedOperationException()
-            throws Exception {
+    public void testForUpdateWithTarget_UnsupportedOperationException() throws Exception {
         if (jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true)) {
             return;
         }
-        try {
-            jdbcManager.from(Employee.class).forUpdate("employeeName");
-            fail();
-        } catch (UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> jdbcManager.from(Employee.class).forUpdate("employeeName"));
     }
 
     /**
@@ -826,10 +603,7 @@ public class AutoSelectForUpdateTest {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true)) {
             return;
         }
-        jdbcManager
-            .from(Employee.class)
-            .forUpdate("employeeName", "salary")
-            .getResultList();
+        jdbcManager.from(Employee.class).forUpdate("employeeName", "salary").getResultList();
     }
 
     /**
@@ -841,15 +615,7 @@ public class AutoSelectForUpdateTest {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true)) {
             return;
         }
-        try {
-            jdbcManager
-                .from(Employee.class)
-                .forUpdate("illegal")
-                .getResultList();
-            fail();
-        } catch (PropertyNotFoundRuntimeException e) {
-            System.out.println(e.getMessage());
-        }
+        assertThrows(PropertyNotFoundRuntimeException.class, () -> jdbcManager.from(Employee.class).forUpdate("illegal").getResultList());
     }
 
     /**
@@ -857,19 +623,11 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWithTargets_illegalPropertyName2()
-            throws Exception {
+    public void testForUpdateWithTargets_illegalPropertyName2() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true)) {
             return;
         }
-        try {
-            jdbcManager.from(Employee.class).innerJoin("department").forUpdate(
-                "illegal.location").getResultList();
-            fail();
-        } catch (BaseJoinNotFoundRuntimeException e) {
-            System.out.println(e.getMessage());
-        }
-
+        assertThrows(BaseJoinNotFoundRuntimeException.class, () -> jdbcManager.from(Employee.class).innerJoin("department").forUpdate("illegal.location").getResultList());
     }
 
     /**
@@ -877,15 +635,13 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWithTargets_illegalPropertyName3()
-            throws Exception {
+    public void testForUpdateWithTargets_illegalPropertyName3() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true)) {
             return;
         }
         try {
-            jdbcManager.from(Employee.class).innerJoin("department").forUpdate(
-                "department").getResultList();
-            fail();
+            jdbcManager.from(Employee.class).innerJoin("department").forUpdate("department").getResultList();
+            assertThrows(PropertyNotFoundRuntimeException.class, () -> jdbcManager.from(Employee.class).innerJoin("department").forUpdate("department").getResultList());
         } catch (PropertyNotFoundRuntimeException e) {
             System.out.println(e.getMessage());
         }
@@ -900,9 +656,7 @@ public class AutoSelectForUpdateTest {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true)) {
             return;
         }
-        jdbcManager.from(Employee.class).innerJoin("department").forUpdate(
-            "employeeName",
-            "department.location").getResultList();
+        jdbcManager.from(Employee.class).innerJoin("department").forUpdate("employeeName", "department.location").getResultList();
     }
 
     /**
@@ -911,13 +665,10 @@ public class AutoSelectForUpdateTest {
      */
     @Test
     public void testForUpdateWithTargets_leftOuterJoin() throws Exception {
-        if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true)
-            || !jdbcManagerImplementor.getDialect().supportsOuterJoinForUpdate()) {
+        if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true) || !jdbcManagerImplementor.getDialect().supportsOuterJoinForUpdate()) {
             return;
         }
-        jdbcManager.from(Employee.class).leftOuterJoin("department").forUpdate(
-            "employeeName",
-            "department.location").getResultList();
+        jdbcManager.from(Employee.class).leftOuterJoin("department").forUpdate("employeeName", "department.location").getResultList();
     }
 
     /**
@@ -925,22 +676,11 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWithTargets_paging_UnsupportedOperationException()
-            throws Exception {
+    public void testForUpdateWithTargets_paging_UnsupportedOperationException() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true)) {
             return;
         }
-        try {
-            jdbcManager
-                .from(Employee.class)
-                .orderBy("employeeName")
-                .offset(5)
-                .limit(3)
-                .forUpdate("employeeName", "salary")
-                .getResultList();
-            fail();
-        } catch (UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> jdbcManager.from(Employee.class).orderBy("employeeName").offset(5).limit(3).forUpdate("employeeName", "salary").getResultList());
     }
 
     /**
@@ -948,18 +688,10 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWithTargets_UnsupportedOperationException()
-            throws Exception {
+    public void testForUpdateWithTargets_UnsupportedOperationException() throws Exception {
         if (jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true)) {
             return;
         }
-        try {
-            jdbcManager
-                .from(Employee.class)
-                .forUpdate("employeeName", "salary");
-            fail();
-        } catch (UnsupportedOperationException e) {
-        }
+        assertThrows(UnsupportedOperationException.class, () -> jdbcManager.from(Employee.class).forUpdate("employeeName", "salary"));
     }
-
 }

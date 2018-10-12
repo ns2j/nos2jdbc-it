@@ -15,19 +15,17 @@
  */
 package org.seasar.extension.jdbc.it.sqlfile.select;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
-
-import nos2jdbc.core.it.NoS2Jdbc;
+import nos2jdbc.core.it.NoS2JdbcExtension;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(NoS2Jdbc.class)
+@ExtendWith(NoS2JdbcExtension.class)
 public class SqlFileSelectGetCountTest {
 
     private JdbcManager jdbcManager;

@@ -17,23 +17,20 @@ package org.seasar.extension.jdbc.it.auto.select;
 
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Department;
 import org.seasar.extension.jdbc.it.entity.Employee;
 import org.seasar.extension.jdbc.where.SimpleWhere;
-
-import nos2jdbc.core.it.NoS2Jdbc;
-
-import static org.junit.Assert.*;
+import nos2jdbc.core.it.NoS2JdbcExtension;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(NoS2Jdbc.class)
+@ExtendWith(NoS2JdbcExtension.class)
 public class AutoSelectGetResultTest {
 
     private JdbcManager jdbcManager;
@@ -44,9 +41,7 @@ public class AutoSelectGetResultTest {
      */
     @Test
     public void testGetSingleResult() throws Exception {
-        Employee employee =
-            jdbcManager.from(Employee.class).where(
-                new SimpleWhere().eq("employeeId", 1)).getSingleResult();
+        Employee employee = jdbcManager.from(Employee.class).where(new SimpleWhere().eq("employeeId", 1)).getSingleResult();
         assertNotNull(employee);
     }
 
@@ -56,12 +51,7 @@ public class AutoSelectGetResultTest {
      */
     @Test
     public void testGetSingleResult_NonUniqueResultException() throws Exception {
-        try {
-            jdbcManager.from(Employee.class).where(
-                new SimpleWhere().eq("departmentId", 1)).getSingleResult();
-            fail();
-        } catch (NonUniqueResultException e) {
-        }
+	assertThrows(NonUniqueResultException.class, () -> jdbcManager.from(Employee.class).where(new SimpleWhere().eq("departmentId", 1)).getSingleResult());
     }
 
     /**
@@ -70,15 +60,7 @@ public class AutoSelectGetResultTest {
      */
     @Test
     public void testGetSingleResult_NoResultException() throws Exception {
-        try {
-            jdbcManager
-                .from(Employee.class)
-                .where(new SimpleWhere().eq("employeeId", 100))
-                .disallowNoResult()
-                .getSingleResult();
-            fail();
-        } catch (NoResultException e) {
-        }
+	assertThrows(NoResultException.class, () -> jdbcManager.from(Employee.class).where(new SimpleWhere().eq("employeeId", 100)).disallowNoResult().getSingleResult());
     }
 
     /**
@@ -87,9 +69,7 @@ public class AutoSelectGetResultTest {
      */
     @Test
     public void testGetSingleResult_null() throws Exception {
-        Employee employee =
-            jdbcManager.from(Employee.class).where(
-                new SimpleWhere().eq("employeeId", 100)).getSingleResult();
+        Employee employee = jdbcManager.from(Employee.class).where(new SimpleWhere().eq("employeeId", 100)).getSingleResult();
         assertNull(employee);
     }
 
@@ -99,13 +79,7 @@ public class AutoSelectGetResultTest {
      */
     @Test
     public void testGetSingleResult_oneToMany() throws Exception {
-        Department department =
-            jdbcManager
-                .from(Department.class)
-                .leftOuterJoin("employees")
-                .where(new SimpleWhere().eq("departmentId", 1))
-                .getSingleResult();
+        Department department = jdbcManager.from(Department.class).leftOuterJoin("employees").where(new SimpleWhere().eq("departmentId", 1)).getSingleResult();
         assertNotNull(department);
     }
-
 }

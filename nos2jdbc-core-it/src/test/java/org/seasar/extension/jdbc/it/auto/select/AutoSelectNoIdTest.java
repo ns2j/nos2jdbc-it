@@ -16,23 +16,20 @@
 package org.seasar.extension.jdbc.it.auto.select;
 
 import java.util.List;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.exception.JoinColumnNotFoundRuntimeException;
 import org.seasar.extension.jdbc.it.entity.NoId;
 import org.seasar.extension.jdbc.it.entity.OwnerOfNoId;
-
-import nos2jdbc.core.it.NoS2Jdbc;
-
-import static org.junit.Assert.*;
+import nos2jdbc.core.it.NoS2JdbcExtension;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(NoS2Jdbc.class)
+@ExtendWith(NoS2JdbcExtension.class)
 public class AutoSelectNoIdTest {
 
     private JdbcManager jdbcManager;
@@ -51,9 +48,8 @@ public class AutoSelectNoIdTest {
      * 
      * @throws Exception
      */
-    @Test(expected = JoinColumnNotFoundRuntimeException.class)
+    @Test
     public void testOwnerOfNoId() throws Exception {
-        jdbcManager.from(OwnerOfNoId.class).innerJoin("noId").getResultList();
+	assertThrows(JoinColumnNotFoundRuntimeException.class, () -> jdbcManager.from(OwnerOfNoId.class).innerJoin("noId").getResultList());
     }
-
 }

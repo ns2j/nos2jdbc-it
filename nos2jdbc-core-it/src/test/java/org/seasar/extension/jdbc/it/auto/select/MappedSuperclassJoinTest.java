@@ -17,23 +17,20 @@ package org.seasar.extension.jdbc.it.auto.select;
 
 import java.math.BigDecimal;
 import java.util.List;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.ConcreteDepartment;
 import org.seasar.extension.jdbc.it.entity.ConcreteEmployee;
 import org.seasar.extension.jdbc.where.SimpleWhere;
-
-import nos2jdbc.core.it.NoS2Jdbc;
-
-import static org.junit.Assert.*;
+import nos2jdbc.core.it.NoS2JdbcExtension;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(NoS2Jdbc.class)
+@ExtendWith(NoS2JdbcExtension.class)
 public class MappedSuperclassJoinTest {
 
     private JdbcManager jdbcManager;
@@ -44,10 +41,7 @@ public class MappedSuperclassJoinTest {
      */
     @Test
     public void testJoin_nest() throws Exception {
-        List<ConcreteDepartment> list =
-            jdbcManager.from(ConcreteDepartment.class).leftOuterJoin(
-                "employees").leftOuterJoin("employees.address").orderBy(
-                "departmentId").getResultList();
+        List<ConcreteDepartment> list = jdbcManager.from(ConcreteDepartment.class).leftOuterJoin("employees").leftOuterJoin("employees.address").orderBy("departmentId").getResultList();
         assertEquals(4, list.size());
         assertNotNull(list.get(0).employees);
         assertNotNull(list.get(0).employees.get(0).address);
@@ -59,14 +53,7 @@ public class MappedSuperclassJoinTest {
      */
     @Test
     public void testJoin_star() throws Exception {
-        List<ConcreteEmployee> list =
-            jdbcManager
-                .from(ConcreteEmployee.class)
-                .innerJoin("manager")
-                .leftOuterJoin("department")
-                .leftOuterJoin("address")
-                .orderBy("departmentId")
-                .getResultList();
+        List<ConcreteEmployee> list = jdbcManager.from(ConcreteEmployee.class).innerJoin("manager").leftOuterJoin("department").leftOuterJoin("address").orderBy("departmentId").getResultList();
         assertEquals(13, list.size());
         assertNotNull(list.get(0).department);
         assertNotNull(list.get(0).manager);
@@ -79,11 +66,7 @@ public class MappedSuperclassJoinTest {
      */
     @Test
     public void testJoin_condition() throws Exception {
-        List<ConcreteEmployee> list =
-            jdbcManager.from(ConcreteEmployee.class).innerJoin(
-                "department",
-                "managerId = ?",
-                9).where("salary > ?", new BigDecimal(2000)).getResultList();
+        List<ConcreteEmployee> list = jdbcManager.from(ConcreteEmployee.class).innerJoin("department", "managerId = ?", 9).where("salary > ?", new BigDecimal(2000)).getResultList();
         assertEquals(3, list.size());
     }
 
@@ -93,12 +76,7 @@ public class MappedSuperclassJoinTest {
      */
     @Test
     public void testJoin_condition_where() throws Exception {
-        List<ConcreteEmployee> list =
-            jdbcManager
-                .from(ConcreteEmployee.class)
-                .innerJoin("department", new SimpleWhere().eq("managerId", 9))
-                .where(new SimpleWhere().gt("salary", new BigDecimal(2000)))
-                .getResultList();
+        List<ConcreteEmployee> list = jdbcManager.from(ConcreteEmployee.class).innerJoin("department", new SimpleWhere().eq("managerId", 9)).where(new SimpleWhere().gt("salary", new BigDecimal(2000))).getResultList();
         assertEquals(3, list.size());
     }
 }

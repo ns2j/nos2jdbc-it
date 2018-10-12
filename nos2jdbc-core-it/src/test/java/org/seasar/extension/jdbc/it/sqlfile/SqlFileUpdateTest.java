@@ -20,24 +20,20 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
 import javax.persistence.EntityExistsException;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Department;
 import org.seasar.extension.jdbc.it.entity.Tense;
-
-import nos2jdbc.core.it.NoS2Jdbc;
-
-import static org.junit.Assert.*;
+import nos2jdbc.core.it.NoS2JdbcExtension;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(NoS2Jdbc.class)
+@ExtendWith(NoS2JdbcExtension.class)
 public class SqlFileUpdateTest {
 
     private JdbcManager jdbcManager;
@@ -51,12 +47,7 @@ public class SqlFileUpdateTest {
         String path = getClass().getName().replace(".", "/") + "_no.sql";
         int result = jdbcManager.updateBySqlFile(path, null).execute();
         assertEquals(1, result);
-        Department department =
-            jdbcManager
-                .selectBySql(
-                    Department.class,
-                    "select * from DEPARTMENT where DEPARTMENT_ID = 1")
-                .getSingleResult();
+        Department department = jdbcManager.selectBySql(Department.class, "select * from DEPARTMENT where DEPARTMENT_ID = 1").getSingleResult();
         assertEquals(1, department.departmentId);
         assertEquals(10, department.departmentNo);
         assertEquals("ACCOUNTING", department.departmentName);
@@ -70,16 +61,10 @@ public class SqlFileUpdateTest {
      */
     @Test
     public void testParamter_simpleType() throws Exception {
-        String path =
-            getClass().getName().replace(".", "/") + "_simpleType.sql";
+        String path = getClass().getName().replace(".", "/") + "_simpleType.sql";
         int result = jdbcManager.updateBySqlFile(path, 2).execute();
         assertEquals(1, result);
-        Department department =
-            jdbcManager
-                .selectBySql(
-                    Department.class,
-                    "select * from DEPARTMENT where DEPARTMENT_ID = 2")
-                .getSingleResult();
+        Department department = jdbcManager.selectBySql(Department.class, "select * from DEPARTMENT where DEPARTMENT_ID = 2").getSingleResult();
         assertEquals(2, department.departmentId);
         assertEquals(20, department.departmentNo);
         assertEquals("RESEARCH", department.departmentName);
@@ -99,12 +84,7 @@ public class SqlFileUpdateTest {
         myDto.location = "foo";
         int result = jdbcManager.updateBySqlFile(path, myDto).execute();
         assertEquals(1, result);
-        Department department =
-            jdbcManager
-                .selectBySql(
-                    Department.class,
-                    "select * from DEPARTMENT where DEPARTMENT_ID = 2")
-                .getSingleResult();
+        Department department = jdbcManager.selectBySql(Department.class, "select * from DEPARTMENT where DEPARTMENT_ID = 2").getSingleResult();
         assertEquals(2, department.departmentId);
         assertEquals(20, department.departmentNo);
         assertEquals("RESEARCH", department.departmentName);
@@ -118,17 +98,11 @@ public class SqlFileUpdateTest {
      */
     @Test
     public void testEntityExistsException_insert() throws Exception {
-        String path =
-            getClass().getName().replace(".", "/")
-                + "_EntityExistsException_insert.sql";
+        String path = getClass().getName().replace(".", "/") + "_EntityExistsException_insert.sql";
         MyDto2 dto = new MyDto2();
         dto.departmentId = 1;
         dto.departmentNo = 50;
-        try {
-            jdbcManager.updateBySqlFile(path, dto).execute();
-            fail();
-        } catch (EntityExistsException e) {
-        }
+        assertThrows(EntityExistsException.class, () -> jdbcManager.updateBySqlFile(path, dto).execute());
     }
 
     /**
@@ -137,21 +111,12 @@ public class SqlFileUpdateTest {
      */
     @Test
     public void testEntityExistsException_update() throws Exception {
-        jdbcManager
-            .updateBySql(
-                "insert into DEPARTMENT (DEPARTMENT_ID, DEPARTMENT_NO) values (99, 99)")
-            .execute();
-        String path =
-            getClass().getName().replace(".", "/")
-                + "_EntityExistsException_update.sql";
+        jdbcManager.updateBySql("insert into DEPARTMENT (DEPARTMENT_ID, DEPARTMENT_NO) values (99, 99)").execute();
+        String path = getClass().getName().replace(".", "/") + "_EntityExistsException_update.sql";
         MyDto3 dto = new MyDto3();
         dto.departmentId = 1;
         dto.departmentId2 = 99;
-        try {
-            jdbcManager.updateBySqlFile(path, dto).execute();
-            fail();
-        } catch (EntityExistsException e) {
-        }
+        assertThrows(EntityExistsException.class, () -> jdbcManager.updateBySqlFile(path, dto).execute());
     }
 
     /**
@@ -160,15 +125,10 @@ public class SqlFileUpdateTest {
      */
     @Test
     public void testTemporalType() throws Exception {
-        String path =
-            getClass().getName().replace(".", "/") + "_temporalType.sql";
-        long date =
-            new SimpleDateFormat("yyyy-MM-dd").parse("2005-03-14").getTime();
-        long time =
-            new SimpleDateFormat("HH:mm:ss").parse("13:11:10").getTime();
-        long timestamp =
-            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(
-                "2005-03-14 13:11:10").getTime();
+        String path = getClass().getName().replace(".", "/") + "_temporalType.sql";
+        long date = new SimpleDateFormat("yyyy-MM-dd").parse("2005-03-14").getTime();
+        long time = new SimpleDateFormat("HH:mm:ss").parse("13:11:10").getTime();
+        long timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2005-03-14 13:11:10").getTime();
         Tense tense = new Tense();
         tense.id = 1;
         tense.dateDate = new Date(date);
@@ -183,15 +143,8 @@ public class SqlFileUpdateTest {
         tense.sqlDate = new java.sql.Date(date);
         tense.sqlTime = new Time(time);
         tense.sqlTimestamp = new Timestamp(timestamp);
-
         jdbcManager.updateBySqlFile(path, tense).execute();
-
-        tense =
-            jdbcManager
-                .selectBySql(
-                    Tense.class,
-                    "select DATE_DATE, DATE_TIME, DATE_TIMESTAMP, CAL_DATE, CAL_TIME, CAL_TIMESTAMP, SQL_DATE, SQL_TIME, SQL_TIMESTAMP from TENSE where ID = 1")
-                .getSingleResult();
+        tense = jdbcManager.selectBySql(Tense.class, "select DATE_DATE, DATE_TIME, DATE_TIMESTAMP, CAL_DATE, CAL_TIME, CAL_TIMESTAMP, SQL_DATE, SQL_TIME, SQL_TIMESTAMP from TENSE where ID = 1").getSingleResult();
         assertEquals(date, tense.calDate.getTimeInMillis());
         assertEquals(date, tense.dateDate.getTime());
         assertEquals(date, tense.sqlDate.getTime());

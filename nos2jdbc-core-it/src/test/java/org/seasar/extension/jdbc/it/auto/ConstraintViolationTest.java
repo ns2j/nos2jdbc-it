@@ -16,25 +16,23 @@
 package org.seasar.extension.jdbc.it.auto;
 
 import javax.persistence.EntityExistsException;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIf;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.exception.IdPropertyNotAssignedRuntimeException;
 import org.seasar.extension.jdbc.it.entity.ConstraintChecking;
 import org.seasar.framework.exception.SQLRuntimeException;
-
-import nos2jdbc.core.it.NoS2Jdbc;
-import nos2jdbc.core.it.Prerequisite;
-
-import static org.junit.Assert.*;
+import nos2jdbc.core.it.NoS2JdbcExtension;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(NoS2Jdbc.class)
-@Prerequisite("#ENV not in {'standard'}")
+@ExtendWith(NoS2JdbcExtension.class)
+//@Prerequisite("#ENV not in {'standard'}")
+@DisabledIf("['standard'].indexOf(systemProperty.get('database')) >= 0")
 public class ConstraintViolationTest {
 
     private JdbcManager jdbcManager;
@@ -52,18 +50,13 @@ public class ConstraintViolationTest {
         checking.notNull = 1;
         checking.checkConstraint = 1;
         jdbcManager.insert(checking).execute();
-
         ConstraintChecking checking2 = new ConstraintChecking();
         checking2.primaryKey = 1;
         checking2.uniqueKey = 2;
         checking2.foreignKey = 1;
         checking2.notNull = 1;
         checking2.checkConstraint = 1;
-        try {
-            jdbcManager.insert(checking2).execute();
-            fail();
-        } catch (EntityExistsException e) {
-        }
+        assertThrows(EntityExistsException.class, () -> jdbcManager.insert(checking2).execute());
     }
 
     /**
@@ -79,18 +72,13 @@ public class ConstraintViolationTest {
         checking.notNull = 1;
         checking.checkConstraint = 1;
         jdbcManager.insert(checking).execute();
-
         ConstraintChecking checking2 = new ConstraintChecking();
         checking2.primaryKey = 2;
         checking2.uniqueKey = 1;
         checking2.foreignKey = 1;
         checking2.notNull = 1;
         checking2.checkConstraint = 1;
-        try {
-            jdbcManager.insert(checking2).execute();
-            fail();
-        } catch (EntityExistsException e) {
-        }
+        assertThrows(EntityExistsException.class, () -> jdbcManager.insert(checking2).execute());
     }
 
     /**
@@ -105,11 +93,7 @@ public class ConstraintViolationTest {
         checking.foreignKey = 99;
         checking.notNull = 1;
         checking.checkConstraint = 1;
-        try {
-            jdbcManager.insert(checking).execute();
-            fail();
-        } catch (SQLRuntimeException e) {
-        }
+        assertThrows(SQLRuntimeException.class, () -> jdbcManager.insert(checking).execute());
     }
 
     /**
@@ -124,11 +108,7 @@ public class ConstraintViolationTest {
         checking.foreignKey = 1;
         checking.notNull = null;
         checking.checkConstraint = 1;
-        try {
-            jdbcManager.insert(checking).execute();
-            fail();
-        } catch (SQLRuntimeException e) {
-        }
+        assertThrows(SQLRuntimeException.class, () -> jdbcManager.insert(checking).execute());
     }
 
     /**
@@ -143,18 +123,15 @@ public class ConstraintViolationTest {
         checking.foreignKey = 1;
         checking.notNull = 1;
         checking.checkConstraint = 1;
-        try {
-            jdbcManager.insert(checking).execute();
-            fail();
-        } catch (IdPropertyNotAssignedRuntimeException e) {
-        }
+        assertThrows(IdPropertyNotAssignedRuntimeException.class, () -> jdbcManager.insert(checking).execute());
     }
 
     /**
      * 
      * @throws Exception
      */
-    @Prerequisite("#ENV not in {'mysql'}")
+    //@Prerequisite("#ENV not in {'mysql'}")
+    @DisabledIf("['mysql'].indexOf(systemProperty.get('database')) >= 0")
     @Test
     public void testCheckConstraint() throws Exception {
         ConstraintChecking checking = new ConstraintChecking();
@@ -163,11 +140,6 @@ public class ConstraintViolationTest {
         checking.foreignKey = 1;
         checking.notNull = 1;
         checking.checkConstraint = -1;
-        try {
-            jdbcManager.insert(checking).execute();
-            fail();
-        } catch (SQLRuntimeException e) {
-        }
+        assertThrows(SQLRuntimeException.class, () -> jdbcManager.insert(checking).execute());
     }
-
 }

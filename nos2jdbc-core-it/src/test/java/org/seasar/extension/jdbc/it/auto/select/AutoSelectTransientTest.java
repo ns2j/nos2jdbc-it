@@ -15,23 +15,20 @@
  */
 package org.seasar.extension.jdbc.it.auto.select;
 
-import org.junit.runner.RunWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Department3;
 import org.seasar.extension.jdbc.it.entity.Department4;
 import org.seasar.extension.jdbc.where.SimpleWhere;
-
-import nos2jdbc.core.it.NoS2Jdbc;
-
-import static org.junit.Assert.*;
-
-import org.junit.Test;
+import nos2jdbc.core.it.NoS2JdbcExtension;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(NoS2Jdbc.class)
+@ExtendWith(NoS2JdbcExtension.class)
 public class AutoSelectTransientTest {
 
     private JdbcManager jdbcManager;
@@ -42,9 +39,7 @@ public class AutoSelectTransientTest {
      */
     @Test
     public void testTransientAnnotation() throws Exception {
-        Department3 department =
-            jdbcManager.from(Department3.class).where(
-                new SimpleWhere().eq("departmentId", 1)).getSingleResult();
+        Department3 department = jdbcManager.from(Department3.class).where(new SimpleWhere().eq("departmentId", 1)).getSingleResult();
         assertNull(department.departmentName);
     }
 
@@ -54,9 +49,7 @@ public class AutoSelectTransientTest {
      */
     @Test
     public void testTransientModifier() throws Exception {
-        Department4 department =
-            jdbcManager.from(Department4.class).where(
-                new SimpleWhere().eq("departmentId", 1)).getSingleResult();
+        Department4 department = jdbcManager.from(Department4.class).where(new SimpleWhere().eq("departmentId", 1)).getSingleResult();
         assertNull(department.departmentName);
     }
 }

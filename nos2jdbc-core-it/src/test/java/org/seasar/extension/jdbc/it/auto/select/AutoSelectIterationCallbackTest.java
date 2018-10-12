@@ -16,41 +16,37 @@
 package org.seasar.extension.jdbc.it.auto.select;
 
 import java.math.BigDecimal;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.IterationCallback;
 import org.seasar.extension.jdbc.IterationContext;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Department;
 import org.seasar.extension.jdbc.it.entity.Employee;
 import org.seasar.extension.jdbc.it.entity.NoId;
-
-import nos2jdbc.core.it.NoS2Jdbc;
-
-import static org.junit.Assert.*;
+import nos2jdbc.core.it.NoS2JdbcExtension;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(NoS2Jdbc.class)
+@ExtendWith(NoS2JdbcExtension.class)
 public class AutoSelectIterationCallbackTest {
 
     private JdbcManager jdbcManager;
 
-    private IterationCallback<Employee, BigDecimal> salarySumCallback =
-        new IterationCallback<Employee, BigDecimal>() {
+    private IterationCallback<Employee, BigDecimal> salarySumCallback = new IterationCallback<Employee, BigDecimal>() {
 
-            BigDecimal temp = BigDecimal.ZERO;
+        BigDecimal temp = BigDecimal.ZERO;
 
-            public BigDecimal iterate(Employee entity, IterationContext context) {
-                if (entity.salary != null) {
-                    temp = temp.add(entity.salary);
-                }
-                return temp;
+        public BigDecimal iterate(Employee entity, IterationContext context) {
+            if (entity.salary != null) {
+                temp = temp.add(entity.salary);
             }
-        };
+            return temp;
+        }
+    };
 
     /**
      * 
@@ -58,8 +54,7 @@ public class AutoSelectIterationCallbackTest {
      */
     @Test
     public void testSingleEntity() throws Exception {
-        BigDecimal sum =
-            jdbcManager.from(Employee.class).iterate(salarySumCallback);
+        BigDecimal sum = jdbcManager.from(Employee.class).iterate(salarySumCallback);
         assertTrue(new BigDecimal(29025).compareTo(sum) == 0);
     }
 
@@ -69,12 +64,7 @@ public class AutoSelectIterationCallbackTest {
      */
     @Test
     public void testSingleEntity_limitOnly() throws Exception {
-        BigDecimal sum =
-            jdbcManager
-                .from(Employee.class)
-                .limit(3)
-                .orderBy("employeeId")
-                .iterate(salarySumCallback);
+        BigDecimal sum = jdbcManager.from(Employee.class).limit(3).orderBy("employeeId").iterate(salarySumCallback);
         assertTrue(new BigDecimal(3650).compareTo(sum) == 0);
     }
 
@@ -84,9 +74,7 @@ public class AutoSelectIterationCallbackTest {
      */
     @Test
     public void testSingleEntity_offset_limit() throws Exception {
-        BigDecimal sum =
-            jdbcManager.from(Employee.class).offset(3).limit(5).orderBy(
-                "employeeId").iterate(salarySumCallback);
+        BigDecimal sum = jdbcManager.from(Employee.class).offset(3).limit(5).orderBy("employeeId").iterate(salarySumCallback);
         assertTrue(new BigDecimal(12525).compareTo(sum) == 0);
     }
 
@@ -96,9 +84,7 @@ public class AutoSelectIterationCallbackTest {
      */
     @Test
     public void testSingleEntity_offset_limitZero() throws Exception {
-        BigDecimal sum =
-            jdbcManager.from(Employee.class).offset(3).limit(0).orderBy(
-                "employeeId").iterate(salarySumCallback);
+        BigDecimal sum = jdbcManager.from(Employee.class).offset(3).limit(0).orderBy("employeeId").iterate(salarySumCallback);
         assertTrue(new BigDecimal(25375).compareTo(sum) == 0);
     }
 
@@ -108,12 +94,7 @@ public class AutoSelectIterationCallbackTest {
      */
     @Test
     public void testSingleEntity_offsetOnly() throws Exception {
-        BigDecimal sum =
-            jdbcManager
-                .from(Employee.class)
-                .offset(3)
-                .orderBy("employeeId")
-                .iterate(salarySumCallback);
+        BigDecimal sum = jdbcManager.from(Employee.class).offset(3).orderBy("employeeId").iterate(salarySumCallback);
         assertTrue(new BigDecimal(25375).compareTo(sum) == 0);
     }
 
@@ -123,9 +104,7 @@ public class AutoSelectIterationCallbackTest {
      */
     @Test
     public void testSingleEntity_offsetZero_limit() throws Exception {
-        BigDecimal sum =
-            jdbcManager.from(Employee.class).offset(0).limit(3).orderBy(
-                "employeeId").iterate(salarySumCallback);
+        BigDecimal sum = jdbcManager.from(Employee.class).offset(0).limit(3).orderBy("employeeId").iterate(salarySumCallback);
         assertTrue(new BigDecimal(3650).compareTo(sum) == 0);
     }
 
@@ -135,9 +114,7 @@ public class AutoSelectIterationCallbackTest {
      */
     @Test
     public void testSingleEntity_offsetZero_limitZero() throws Exception {
-        BigDecimal sum =
-            jdbcManager.from(Employee.class).offset(0).limit(0).orderBy(
-                "employeeId").iterate(salarySumCallback);
+        BigDecimal sum = jdbcManager.from(Employee.class).offset(0).limit(0).orderBy("employeeId").iterate(salarySumCallback);
         assertTrue(new BigDecimal(29025).compareTo(sum) == 0);
     }
 
@@ -147,16 +124,14 @@ public class AutoSelectIterationCallbackTest {
      */
     @Test
     public void testNoId() throws Exception {
-        int result =
-            jdbcManager.from(NoId.class).iterate(
-                new IterationCallback<NoId, Integer>() {
+        int result = jdbcManager.from(NoId.class).iterate(new IterationCallback<NoId, Integer>() {
 
-                    private int count;
+            private int count;
 
-                    public Integer iterate(NoId entity, IterationContext context) {
-                        return ++count;
-                    }
-                });
+            public Integer iterate(NoId entity, IterationContext context) {
+                return ++count;
+            }
+        });
         assertEquals(2, result);
     }
 
@@ -166,24 +141,19 @@ public class AutoSelectIterationCallbackTest {
      */
     @Test
     public void testManyToOne() throws Exception {
-        BigDecimal sum =
-            jdbcManager
-                .from(Employee.class)
-                .leftOuterJoin("department")
-                .iterate(new IterationCallback<Employee, BigDecimal>() {
+        BigDecimal sum = jdbcManager.from(Employee.class).leftOuterJoin("department").iterate(new IterationCallback<Employee, BigDecimal>() {
 
-                    BigDecimal temp = BigDecimal.ZERO;
+            BigDecimal temp = BigDecimal.ZERO;
 
-                    public BigDecimal iterate(Employee entity,
-                            IterationContext context) {
-                        if ("SALES".equals(entity.department.departmentName)) {
-                            if (entity.salary != null) {
-                                temp = temp.add(entity.salary);
-                            }
-                        }
-                        return temp;
+            public BigDecimal iterate(Employee entity, IterationContext context) {
+                if ("SALES".equals(entity.department.departmentName)) {
+                    if (entity.salary != null) {
+                        temp = temp.add(entity.salary);
                     }
-                });
+                }
+                return temp;
+            }
+        });
         assertTrue(new BigDecimal(9400).compareTo(sum) == 0);
     }
 
@@ -193,25 +163,19 @@ public class AutoSelectIterationCallbackTest {
      */
     @Test
     public void testOneToMany() throws Exception {
-        BigDecimal sum =
-            jdbcManager
-                .from(Department.class)
-                .leftOuterJoin("employees")
-                .orderBy("departmentId")
-                .iterate(new IterationCallback<Department, BigDecimal>() {
+        BigDecimal sum = jdbcManager.from(Department.class).leftOuterJoin("employees").orderBy("departmentId").iterate(new IterationCallback<Department, BigDecimal>() {
 
-                    BigDecimal temp = BigDecimal.ZERO;
+            BigDecimal temp = BigDecimal.ZERO;
 
-                    public BigDecimal iterate(Department entity,
-                            IterationContext context) {
-                        for (Employee e : entity.employees) {
-                            if (e.salary != null) {
-                                temp = temp.add(e.salary);
-                            }
-                        }
-                        return temp;
+            public BigDecimal iterate(Department entity, IterationContext context) {
+                for (Employee e : entity.employees) {
+                    if (e.salary != null) {
+                        temp = temp.add(e.salary);
                     }
-                });
+                }
+                return temp;
+            }
+        });
         assertTrue(new BigDecimal(29025).compareTo(sum) == 0);
     }
 
@@ -223,19 +187,15 @@ public class AutoSelectIterationCallbackTest {
     public void testManyToOne_innerJoin_emptyResult() throws Exception {
         jdbcManager.updateBySql("DELETE FROM EMPLOYEE").execute();
         assertEquals(0, jdbcManager.from(Employee.class).getCount());
+        Integer count = jdbcManager.from(Employee.class).innerJoin("department").iterate(new IterationCallback<Employee, Integer>() {
 
-        Integer count =
-            jdbcManager.from(Employee.class).innerJoin("department").iterate(
-                new IterationCallback<Employee, Integer>() {
+            int i;
 
-                    int i;
-
-                    public Integer iterate(Employee entity,
-                            IterationContext context) {
-                        i++;
-                        return i;
-                    }
-                });
+            public Integer iterate(Employee entity, IterationContext context) {
+                i++;
+                return i;
+            }
+        });
         assertNull(count);
     }
 
@@ -248,19 +208,15 @@ public class AutoSelectIterationCallbackTest {
         jdbcManager.updateBySql("DELETE FROM EMPLOYEE").execute();
         jdbcManager.updateBySql("DELETE FROM DEPARTMENT").execute();
         assertEquals(0, jdbcManager.from(Department.class).getCount());
+        Integer count = jdbcManager.from(Department.class).innerJoin("employees").iterate(new IterationCallback<Department, Integer>() {
 
-        Integer count =
-            jdbcManager.from(Department.class).innerJoin("employees").iterate(
-                new IterationCallback<Department, Integer>() {
+            int i;
 
-                    int i;
-
-                    public Integer iterate(Department entity,
-                            IterationContext context) {
-                        i++;
-                        return i;
-                    }
-                });
+            public Integer iterate(Department entity, IterationContext context) {
+                i++;
+                return i;
+            }
+        });
         assertNull(count);
     }
 }

@@ -16,13 +16,11 @@
 package org.seasar.extension.jdbc.it.auto;
 
 import javax.persistence.EntityExistsException;
+import nos2jdbc.core.it.NoS2JdbcExtension;
 
-import junitx.framework.ArrayAssert;
-import nos2jdbc.core.it.NoS2Jdbc;
-import nos2jdbc.core.it.Prerequisite;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIf;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.exception.IdGenerationFailedRuntimeException;
 import org.seasar.extension.jdbc.exception.IdGeneratorNotFoundRuntimeException;
@@ -54,14 +52,13 @@ import org.seasar.extension.jdbc.it.entity.TableStrategy4;
 import org.seasar.extension.jdbc.it.entity.TableStrategy5;
 import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
 import org.seasar.extension.jdbc.where.SimpleWhere;
-
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
  * 
  */
-@RunWith(NoS2Jdbc.class)
+@ExtendWith(NoS2JdbcExtension.class)
 public class AutoInsertTest {
 
     private JdbcManager jdbcManager;
@@ -80,9 +77,7 @@ public class AutoInsertTest {
         int result = jdbcManager.insert(department).execute();
         assertEquals(1, result);
         assertEquals(1, department.version);
-        department =
-            jdbcManager.from(Department.class).where(
-                new SimpleWhere().eq("departmentId", 99)).getSingleResult();
+        department = jdbcManager.from(Department.class).where(new SimpleWhere().eq("departmentId", 99)).getSingleResult();
         assertEquals(99, department.departmentId);
         assertEquals(0, department.departmentNo);
         assertEquals("hoge", department.departmentName);
@@ -102,9 +97,7 @@ public class AutoInsertTest {
         int result = jdbcManager.insert(department).excludesNull().execute();
         assertEquals(1, result);
         assertEquals(1, department.version);
-        department =
-            jdbcManager.from(Department.class).where(
-                new SimpleWhere().eq("departmentId", 99)).getSingleResult();
+        department = jdbcManager.from(Department.class).where(new SimpleWhere().eq("departmentId", 99)).getSingleResult();
         assertEquals(99, department.departmentId);
         assertEquals(0, department.departmentNo);
         assertEquals("hoge", department.departmentName);
@@ -124,17 +117,10 @@ public class AutoInsertTest {
         department.departmentName = "hoge";
         department.location = "foo";
         department.version = 1;
-        int result =
-            jdbcManager.insert(department).includes(
-                "departmentId",
-                "departmentNo",
-                "location",
-                "version").execute();
+        int result = jdbcManager.insert(department).includes("departmentId", "departmentNo", "location", "version").execute();
         assertEquals(1, result);
         assertEquals(1, department.version);
-        department =
-            jdbcManager.from(Department.class).where(
-                new SimpleWhere().eq("departmentId", 99)).getSingleResult();
+        department = jdbcManager.from(Department.class).where(new SimpleWhere().eq("departmentId", 99)).getSingleResult();
         assertEquals(99, department.departmentId);
         assertEquals(99, department.departmentNo);
         assertNull(department.departmentName);
@@ -154,15 +140,10 @@ public class AutoInsertTest {
         department.departmentName = "hoge";
         department.location = "foo";
         department.version = 1;
-        int result =
-            jdbcManager.insert(department).excludes(
-                "departmentName",
-                "location").execute();
+        int result = jdbcManager.insert(department).excludes("departmentName", "location").execute();
         assertEquals(1, result);
         assertEquals(1, department.version);
-        department =
-            jdbcManager.from(Department.class).where(
-                new SimpleWhere().eq("departmentId", 99)).getSingleResult();
+        department = jdbcManager.from(Department.class).where(new SimpleWhere().eq("departmentId", 99)).getSingleResult();
         assertEquals(99, department.departmentId);
         assertEquals(99, department.departmentNo);
         assertNull(department.departmentName);
@@ -183,11 +164,7 @@ public class AutoInsertTest {
         int result = jdbcManager.insert(department).execute();
         assertEquals(1, result);
         assertEquals(1, department.version);
-        department =
-            jdbcManager.from(CompKeyDepartment.class).where(
-                new SimpleWhere().eq("departmentId1", 99).eq(
-                    "departmentId2",
-                    99)).getSingleResult();
+        department = jdbcManager.from(CompKeyDepartment.class).where(new SimpleWhere().eq("departmentId1", 99).eq("departmentId2", 99)).getSingleResult();
         assertEquals(99, department.departmentId1);
         assertEquals(99, department.departmentId2);
         assertEquals(0, department.departmentNo);
@@ -208,9 +185,7 @@ public class AutoInsertTest {
         int result = jdbcManager.insert(department).execute();
         assertEquals(1, result);
         assertEquals(1, department.version);
-        department =
-            jdbcManager.from(ConcreteDepartment.class).where(
-                new SimpleWhere().eq("departmentId", 99)).getSingleResult();
+        department = jdbcManager.from(ConcreteDepartment.class).where(new SimpleWhere().eq("departmentId", 99)).getSingleResult();
         assertEquals(99, department.departmentId);
         assertEquals(0, department.departmentNo);
         assertEquals("hoge", department.departmentName);
@@ -224,11 +199,7 @@ public class AutoInsertTest {
      */
     @Test
     public void testId_IdPropertyNotAssignedRuntimeException() throws Exception {
-        try {
-            jdbcManager.insert(new Department5()).execute();
-            fail();
-        } catch (IdPropertyNotAssignedRuntimeException e) {
-        }
+	assertThrows(IdPropertyNotAssignedRuntimeException.class, () -> jdbcManager.insert(new Department5()).execute());
     }
 
     /**
@@ -315,13 +286,8 @@ public class AutoInsertTest {
      * @throws Exception
      */
     @Test
-    public void testId_sequence_IdGeneratorNotFoundRuntimeException()
-            throws Exception {
-        try {
-            jdbcManager.insert(new SequenceStrategy3()).execute();
-            fail();
-        } catch (IdGeneratorNotFoundRuntimeException e) {
-        }
+    public void testId_sequence_IdGeneratorNotFoundRuntimeException() throws Exception {
+	assertThrows(IdGeneratorNotFoundRuntimeException.class, () -> jdbcManager.insert(new SequenceStrategy3()).execute());
     }
 
     /**
@@ -354,8 +320,9 @@ public class AutoInsertTest {
      * 
      * @throws Exception
      */
-    @Prerequisite("#ENV not in {'hsqldb', 'h2', 'standard', 'oracle', 'db2', 'mysql', 'postgre'}")
+    //@Prerequisite("#ENV not in {'hsqldb', 'h2', 'standard', 'oracle', 'db2', 'mysql', 'postgre'}")
     @Test
+    @DisabledIf(value = { "['hsqldb', 'h2', 'standard', 'oracle', 'db2', 'mysql', 'postgre'].indexOf(systemProperty.get('database')) >= 0" })
     public void testId_table_qualifiedGenerator() throws Exception {
         for (int i = 0; i < 110; i++) {
             TableStrategy5 entity = new TableStrategy5();
@@ -369,13 +336,8 @@ public class AutoInsertTest {
      * @throws Exception
      */
     @Test
-    public void testId_table_IdGenerationFailedRuntimeException()
-            throws Exception {
-        try {
-            jdbcManager.insert(new TableStrategy3()).execute();
-            fail();
-        } catch (IdGenerationFailedRuntimeException e) {
-        }
+    public void testId_table_IdGenerationFailedRuntimeException() throws Exception {
+	assertThrows(IdGenerationFailedRuntimeException.class, () -> jdbcManager.insert(new TableStrategy3()).execute());
     }
 
     /**
@@ -383,13 +345,8 @@ public class AutoInsertTest {
      * @throws Exception
      */
     @Test
-    public void testId_table_IdGeneratorNotFoundRuntimeException()
-            throws Exception {
-        try {
-            jdbcManager.insert(new TableStrategy4()).execute();
-            fail();
-        } catch (IdGeneratorNotFoundRuntimeException e) {
-        }
+    public void testId_table_IdGeneratorNotFoundRuntimeException() throws Exception {
+	assertThrows(IdGeneratorNotFoundRuntimeException.class, () -> jdbcManager.insert(new TableStrategy4()).execute());
     }
 
     /**
@@ -404,13 +361,7 @@ public class AutoInsertTest {
         department.departmentName = "hoge";
         int result = jdbcManager.insert(department).execute();
         assertEquals(1, result);
-        String departmentName =
-            jdbcManager
-                .selectBySql(
-                    String.class,
-                    "select DEPARTMENT_NAME from DEPARTMENT where DEPARTMENT_ID = ?",
-                    99)
-                .getSingleResult();
+        String departmentName = jdbcManager.selectBySql(String.class, "select DEPARTMENT_NAME from DEPARTMENT where DEPARTMENT_ID = ?", 99).getSingleResult();
         assertNull(departmentName);
     }
 
@@ -426,13 +377,7 @@ public class AutoInsertTest {
         department.departmentName = "hoge";
         int result = jdbcManager.insert(department).execute();
         assertEquals(1, result);
-        String departmentName =
-            jdbcManager
-                .selectBySql(
-                    String.class,
-                    "select DEPARTMENT_NAME from DEPARTMENT where DEPARTMENT_ID = ?",
-                    99)
-                .getSingleResult();
+        String departmentName = jdbcManager.selectBySql(String.class, "select DEPARTMENT_NAME from DEPARTMENT where DEPARTMENT_ID = ?", 99).getSingleResult();
         assertNull(departmentName);
     }
 
@@ -448,13 +393,7 @@ public class AutoInsertTest {
         department.departmentName = "hoge";
         int result = jdbcManager.insert(department).execute();
         assertEquals(1, result);
-        String departmentName =
-            jdbcManager
-                .selectBySql(
-                    String.class,
-                    "select DEPARTMENT_NAME from DEPARTMENT where DEPARTMENT_ID = ?",
-                    99)
-                .getSingleResult();
+        String departmentName = jdbcManager.selectBySql(String.class, "select DEPARTMENT_NAME from DEPARTMENT where DEPARTMENT_ID = ?", 99).getSingleResult();
         assertNull(departmentName);
     }
 
@@ -485,8 +424,8 @@ public class AutoInsertTest {
         lob = jdbcManager.from(LargeObject.class).id(1).getSingleResult();
         assertEquals("あいうえお", lob.name);
         assertEquals(new String(chars), lob.largeName);
-        ArrayAssert.assertEquals(new byte[] { 'f', 'o', 'o' }, lob.bytes);
-        ArrayAssert.assertEquals(bytes, lob.largeBytes);
+        assertArrayEquals(new byte[] { 'f', 'o', 'o' }, lob.bytes);
+        assertArrayEquals(bytes, lob.largeBytes);
         assertEquals(dto, lob.dto);
         assertEquals(dto, lob.largeDto);
     }
@@ -501,11 +440,7 @@ public class AutoInsertTest {
         department.departmentId = 1;
         department.departmentNo = 50;
         department.departmentName = "hoge";
-        try {
-            jdbcManager.insert(department).execute();
-            fail();
-        } catch (EntityExistsException e) {
-        }
+        assertThrows(EntityExistsException.class, () -> jdbcManager.insert(department).execute());
     }
 
     /**
