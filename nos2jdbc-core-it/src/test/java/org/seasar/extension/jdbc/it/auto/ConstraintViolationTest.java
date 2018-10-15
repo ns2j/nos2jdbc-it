@@ -33,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(NoS2JdbcExtension.class)
 //@Prerequisite("#ENV not in {'standard'}")
 @DisabledIf("['standard'].indexOf(systemProperty.get('database')) >= 0")
-public class ConstraintViolationTest {
+class ConstraintViolationTest {
 
     private JdbcManager jdbcManager;
 

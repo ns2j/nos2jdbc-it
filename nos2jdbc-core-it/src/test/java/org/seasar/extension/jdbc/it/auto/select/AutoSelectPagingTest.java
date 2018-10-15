@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * 
  */
 @ExtendWith(NoS2JdbcExtension.class)
-public class AutoSelectPagingTest {
+class AutoSelectPagingTest {
 
     private JdbcManager jdbcManager;
 

@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * 
  */
 @ExtendWith(NoS2JdbcExtension.class)
-public class AutoSelectHintTest {
+class AutoSelectHintTest {
 
     private JdbcManager jdbcManager;
 

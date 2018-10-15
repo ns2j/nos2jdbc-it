@@ -41,7 +41,7 @@ import static org.seasar.extension.jdbc.operation.Operations.*;
  * 
  */
 @ExtendWith(NoS2JdbcExtension.class)
-public class AutoSelectWhereTest {
+class AutoSelectWhereTest {
 
     private JdbcManager jdbcManager;
 

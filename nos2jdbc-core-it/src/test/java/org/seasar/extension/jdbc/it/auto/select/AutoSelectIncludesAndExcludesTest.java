@@ -29,7 +29,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
  * 
  */
 @ExtendWith(NoS2JdbcExtension.class)
-public class AutoSelectIncludesAndExcludesTest {
+class AutoSelectIncludesAndExcludesTest {
 
     private JdbcManager jdbcManager;
 

@@ -59,7 +59,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * 
  */
 @ExtendWith(NoS2JdbcExtension.class)
-public class AutoInsertTest {
+class AutoInsertTest {
 
     private JdbcManager jdbcManager;
 

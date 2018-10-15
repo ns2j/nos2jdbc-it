@@ -22,7 +22,6 @@ import java.util.List;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledIf;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -43,7 +42,7 @@ import static org.seasar.extension.jdbc.parameter.Parameter.*;
 @ExtendWith(NoS2JdbcExtension.class)
 //@Prerequisite("#ENV not in {'hsqldb', 'h2', 'standard'}")
 @DisabledIf("['hsqldb', 'h2', 'standard'].indexOf(systemProperty.get('database')) >= 0")
-public class AutoProcedureCallTest {
+class AutoProcedureCallTest {
 
     private JdbcManager jdbcManager;
 
