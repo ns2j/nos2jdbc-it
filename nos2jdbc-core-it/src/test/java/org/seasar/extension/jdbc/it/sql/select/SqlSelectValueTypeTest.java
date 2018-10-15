@@ -33,7 +33,7 @@ import static org.seasar.extension.jdbc.parameter.Parameter.*;
  * 
  */
 @ExtendWith(NoS2JdbcExtension.class)
-public class SqlSelectValueTypeTest {
+class SqlSelectValueTypeTest {
 
     private JdbcManager jdbcManager;
 
@@ -42,7 +42,7 @@ public class SqlSelectValueTypeTest {
      * @throws Exception
      */
     @Test
-    public void testBean_temporalType() throws Exception {
+    void testBean_temporalType() throws Exception {
         String sql = "SELECT * FROM TENSE WHERE ID = 1";
         Tense tense = jdbcManager.selectBySql(Tense.class, sql).getSingleResult();
         long date = new SimpleDateFormat("yyyy-MM-dd").parse("2005-02-14").getTime();
@@ -65,7 +65,7 @@ public class SqlSelectValueTypeTest {
      * @throws Exception
      */
     @Test
-    public void testBean_temporalType_Calendar() throws Exception {
+    void testBean_temporalType_Calendar() throws Exception {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new SimpleDateFormat("yyyy-MM-dd").parse("2005-02-14"));
         Tense tense = jdbcManager.selectBySql(Tense.class, "SELECT * FROM TENSE WHERE CAL_DATE = ?", date(calendar)).getSingleResult();
@@ -83,7 +83,7 @@ public class SqlSelectValueTypeTest {
      * @throws Exception
      */
     @Test
-    public void testBean_temporalType_Date() throws Exception {
+    void testBean_temporalType_Date() throws Exception {
         Date date = new SimpleDateFormat("yyyy-MM-dd").parse("2005-02-14");
         Tense tense = jdbcManager.selectBySql(Tense.class, "SELECT * FROM TENSE WHERE DATE_DATE = ?", date(date)).getSingleResult();
         assertNotNull(tense);
@@ -100,7 +100,7 @@ public class SqlSelectValueTypeTest {
      * @throws Exception
      */
     @Test
-    public void testMap_temporalType() throws Exception {
+    void testMap_temporalType() throws Exception {
         String sql = "SELECT * FROM TENSE WHERE ID = 1";
         Map<?, ?> tense = jdbcManager.selectBySql(Map.class, sql).getSingleResult();
         assertNotNull(tense);
@@ -120,7 +120,7 @@ public class SqlSelectValueTypeTest {
      * @throws Exception
      */
     @Test
-    public void testObject_temporalType() throws Exception {
+    void testObject_temporalType() throws Exception {
         String sql = "SELECT CAL_TIMESTAMP FROM TENSE WHERE ID = 1";
         Calendar calTimestamp = jdbcManager.selectBySql(Calendar.class, sql).temporal(TemporalType.TIMESTAMP).getSingleResult();
         assertNotNull(calTimestamp);

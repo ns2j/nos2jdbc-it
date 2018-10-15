@@ -36,7 +36,7 @@ import static org.seasar.extension.jdbc.parameter.Parameter.*;
 @ExtendWith(NoS2JdbcExtension.class)
 //@Prerequisite("#ENV not in {'hsqldb', 'h2', 'db2', 'standard'}\")
 @DisabledIfSystemProperty(named = "database", matches = "(hsqldb|h2|db2|standard)")
-public class SqlFunctionCallTest {
+class SqlFunctionCallTest {
 
     private JdbcManager jdbcManager;
 
@@ -45,7 +45,7 @@ public class SqlFunctionCallTest {
      * @throws Exception
      */
     @Test
-    public void testParameter_none() throws Exception {
+    void testParameter_none() throws Exception {
         Integer result = jdbcManager.callBySql(Integer.class, "{? = call FUNC_NONE_PARAM()}").getSingleResult();
         assertEquals(new Integer(10), result);
     }
@@ -55,7 +55,7 @@ public class SqlFunctionCallTest {
      * @throws Exception
      */
     @Test
-    public void testParameter_simpleType() throws Exception {
+    void testParameter_simpleType() throws Exception {
         Integer result = jdbcManager.callBySql(Integer.class, "{? = call FUNC_SIMPLETYPE_PARAM(?)}", 1).getSingleResult();
         assertEquals(new Integer(20), result);
     }
@@ -65,7 +65,7 @@ public class SqlFunctionCallTest {
      * @throws Exception
      */
     @Test
-    public void testParameter_simpleType_time() throws Exception {
+    void testParameter_simpleType_time() throws Exception {
         Date inparam = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2007-08-08 12:11:10");
         Date result = jdbcManager.callBySql(Date.class, "{? = call FUNC_SIMPLETYPE_TIME_PARAM(?)}", time(inparam)).temporal(TemporalType.TIME).getSingleResult();
         long expected = new SimpleDateFormat("HH:mm:ss").parse("12:11:10").getTime();
@@ -77,7 +77,7 @@ public class SqlFunctionCallTest {
      * @throws Exception
      */
     @Test
-    public void testParameter_dto() throws Exception {
+    void testParameter_dto() throws Exception {
         MyDto dto = new MyDto();
         dto.param1 = 3;
         dto.param2 = 5;
@@ -92,7 +92,7 @@ public class SqlFunctionCallTest {
      * @throws Exception
      */
     @Test
-    public void testParameter_dto_time() throws Exception {
+    void testParameter_dto_time() throws Exception {
         Date date = new SimpleDateFormat("HH:mm:ss").parse("12:11:10");
         MyDto2 dto = new MyDto2();
         dto.param1 = date;
@@ -108,7 +108,7 @@ public class SqlFunctionCallTest {
     @Test
     //@Prerequisite("#ENV not in {'mssql2005', 'mysql'}")
     @DisabledIfSystemProperty(named = "database", matches = "(mssql2005|mysql)")
-    public void testParameter_resultSet() throws Exception {
+    void testParameter_resultSet() throws Exception {
         List<Employee> employees = jdbcManager.callBySql(Employee.class, "{? = call FUNC_RESULTSET(?)}", 10).getResultList();
         assertNotNull(employees);
         assertEquals(4, employees.size());
@@ -125,7 +125,7 @@ public class SqlFunctionCallTest {
     @Test
     //@Prerequisite("#ENV not in {'mssql2005', 'mysql'}")
     @DisabledIfSystemProperty(named = "database", matches = "(mssql2005|mysql)")
-    public void testParameter_resultSetUpdate() throws Exception {
+    void testParameter_resultSetUpdate() throws Exception {
         List<Employee> employees = jdbcManager.callBySql(Employee.class, "{? = call FUNC_RESULTSET_UPDATE(?)}", 10).getResultList();
         assertNotNull(employees);
         assertEquals(4, employees.size());

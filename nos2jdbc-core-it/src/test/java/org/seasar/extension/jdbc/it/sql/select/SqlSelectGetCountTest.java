@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * 
  */
 @ExtendWith(NoS2JdbcExtension.class)
-public class SqlSelectGetCountTest {
+class SqlSelectGetCountTest {
 
     private JdbcManager jdbcManager;
 
@@ -35,7 +35,7 @@ public class SqlSelectGetCountTest {
      * @throws Exception
      */
     @Test
-    public void testGetCount() throws Exception {
+    void testGetCount() throws Exception {
         long count = jdbcManager.getCountBySql("SELECT * FROM EMPLOYEE WHERE MANAGER_ID = ?", 9);
         assertEquals(3L, count);
     }

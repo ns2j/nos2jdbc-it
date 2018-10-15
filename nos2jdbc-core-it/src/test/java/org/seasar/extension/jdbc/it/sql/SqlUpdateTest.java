@@ -35,7 +35,7 @@ import static org.seasar.extension.jdbc.parameter.Parameter.*;
  * 
  */
 @ExtendWith(NoS2JdbcExtension.class)
-public class SqlUpdateTest {
+class SqlUpdateTest {
 
     private JdbcManager jdbcManager;
 
@@ -44,7 +44,7 @@ public class SqlUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testParameter_none() throws Exception {
+    void testParameter_none() throws Exception {
         String sql = "DELETE FROM EMPLOYEE";
         int actual = jdbcManager.updateBySql(sql).execute();
         assertEquals(14, actual);
@@ -55,7 +55,7 @@ public class SqlUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testParameter() throws Exception {
+    void testParameter() throws Exception {
         String sql = "DELETE FROM EMPLOYEE WHERE DEPARTMENT_ID = ? AND SALARY > ?";
         int actual = jdbcManager.updateBySql(sql, int.class, BigDecimal.class).params(3, new BigDecimal(1000)).execute();
         assertEquals(5, actual);
@@ -66,7 +66,7 @@ public class SqlUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testEntityExistsException_insert() throws Exception {
+    void testEntityExistsException_insert() throws Exception {
         String sql = "INSERT INTO DEPARTMENT (DEPARTMENT_ID, DEPARTMENT_NO) VALUES(?, ?)";
         assertThrows(EntityExistsException.class, () -> jdbcManager.updateBySql(sql, int.class, int.class).params(1, 50).execute());
     }
@@ -76,7 +76,7 @@ public class SqlUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testEntityExistsException_update() throws Exception {
+    void testEntityExistsException_update() throws Exception {
         jdbcManager.updateBySql("INSERT INTO DEPARTMENT (DEPARTMENT_ID, DEPARTMENT_NO) VALUES (99, 99)").execute();
         String sql = "UPDATE DEPARTMENT SET DEPARTMENT_ID = ? WHERE DEPARTMENT_ID = ?";
         assertThrows(EntityExistsException.class, () -> jdbcManager.updateBySql(sql, int.class, int.class).params(1, 99).execute());
@@ -87,7 +87,7 @@ public class SqlUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testTemporalType() throws Exception {
+    void testTemporalType() throws Exception {
         String sql = "UPDATE TENSE SET DATE_DATE = ?, DATE_TIME = ?, DATE_TIMESTAMP = ?, CAL_DATE = ?, CAL_TIME = ?, CAL_TIMESTAMP = ?, SQL_DATE = ?, SQL_TIME = ?, SQL_TIMESTAMP = ? WHERE ID = ?";
         long date = new SimpleDateFormat("yyyy-MM-dd").parse("2005-03-14").getTime();
         long time = new SimpleDateFormat("HH:mm:ss").parse("13:11:10").getTime();

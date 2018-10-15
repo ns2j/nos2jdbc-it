@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * 
  */
 @ExtendWith(NoS2JdbcExtension.class)
-public class SqlFileSelectWhereTest {
+class SqlFileSelectWhereTest {
 
     private JdbcManager jdbcManager;
 
@@ -43,7 +43,7 @@ public class SqlFileSelectWhereTest {
      * @throws Exception
      */
     @Test
-    public void testBean_parameter_dto() throws Exception {
+    void testBean_parameter_dto() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_dto.sql";
         Param param = new Param();
         param.departmentId = 3;
@@ -63,7 +63,7 @@ public class SqlFileSelectWhereTest {
      * @throws Exception
      */
     @Test
-    public void testBean_parameter_none() throws Exception {
+    void testBean_parameter_none() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_no.sql";
         List<Employee> list = jdbcManager.selectBySqlFile(Employee.class, path).getResultList();
         assertEquals(14, list.size());
@@ -74,7 +74,7 @@ public class SqlFileSelectWhereTest {
      * @throws Exception
      */
     @Test
-    public void testBean_parameter_simpleType() throws Exception {
+    void testBean_parameter_simpleType() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_simpleType.sql";
         List<Employee> list = jdbcManager.selectBySqlFile(Employee.class, path, 3).getResultList();
         assertEquals(6, list.size());
@@ -91,7 +91,7 @@ public class SqlFileSelectWhereTest {
      * @throws Exception
      */
     @Test
-    public void testMap_parameter_dto() throws Exception {
+    void testMap_parameter_dto() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_dto.sql";
         Param param = new Param();
         param.departmentId = 3;
@@ -111,7 +111,7 @@ public class SqlFileSelectWhereTest {
      * @throws Exception
      */
     @Test
-    public void testMap_parameter_none() throws Exception {
+    void testMap_parameter_none() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_no.sql";
         @SuppressWarnings("unchecked") List<Map> list = jdbcManager.selectBySqlFile(Map.class, path).getResultList();
         assertEquals(14, list.size());
@@ -122,7 +122,7 @@ public class SqlFileSelectWhereTest {
      * @throws Exception
      */
     @Test
-    public void testMap_parameter_simpleType() throws Exception {
+    void testMap_parameter_simpleType() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_simpleType.sql";
         @SuppressWarnings("unchecked") List<Map> list = jdbcManager.selectBySqlFile(Map.class, path, 3).getResultList();
         assertEquals(6, list.size());
@@ -139,7 +139,7 @@ public class SqlFileSelectWhereTest {
      * @throws Exception
      */
     @Test
-    public void testObject_parameter_dto() throws Exception {
+    void testObject_parameter_dto() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_dto2.sql";
         Param param = new Param();
         param.departmentId = 3;
@@ -159,7 +159,7 @@ public class SqlFileSelectWhereTest {
      * @throws Exception
      */
     @Test
-    public void testObject_parameter_none() throws Exception {
+    void testObject_parameter_none() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_no2.sql";
         List<Integer> list = jdbcManager.selectBySqlFile(Integer.class, path).getResultList();
         assertEquals(14, list.size());
@@ -170,7 +170,7 @@ public class SqlFileSelectWhereTest {
      * @throws Exception
      */
     @Test
-    public void testObject_parameter_simpleType() throws Exception {
+    void testObject_parameter_simpleType() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_simpleType2.sql";
         List<Integer> list = jdbcManager.selectBySqlFile(Integer.class, path, 3).getResultList();
         assertEquals(6, list.size());

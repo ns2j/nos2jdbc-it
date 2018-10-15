@@ -33,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * 
  */
 @ExtendWith(NoS2JdbcExtension.class)
-public class SqlFileSelectValueTypeTest {
+class SqlFileSelectValueTypeTest {
 
     private JdbcManager jdbcManager;
 
@@ -42,7 +42,7 @@ public class SqlFileSelectValueTypeTest {
      * @throws Exception
      */
     @Test
-    public void testBean_temporalType() throws Exception {
+    void testBean_temporalType() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_temporalType.sql";
         Tense tense = jdbcManager.selectBySqlFile(Tense.class, path).getSingleResult();
         long date = new SimpleDateFormat("yyyy-MM-dd").parse("2005-02-14").getTime();
@@ -65,7 +65,7 @@ public class SqlFileSelectValueTypeTest {
      * @throws Exception
      */
     @Test
-    public void testBean_temporalType_Calendar() throws Exception {
+    void testBean_temporalType_Calendar() throws Exception {
         Param2 param = new Param2();
         param.calDate = Calendar.getInstance();
         param.calDate.setTime(new SimpleDateFormat("yyyy-MM-dd").parse("2005-02-14"));
@@ -89,7 +89,7 @@ public class SqlFileSelectValueTypeTest {
      * @throws Exception
      */
     @Test
-    public void testBean_temporalType_Date() throws Exception {
+    void testBean_temporalType_Date() throws Exception {
         Param3 param = new Param3();
         param.dateDate = new SimpleDateFormat("yyyy-MM-dd").parse("2005-02-14");
         param.dateTime = new SimpleDateFormat("HH:mm:ss").parse("12:11:10");
@@ -110,7 +110,7 @@ public class SqlFileSelectValueTypeTest {
      * @throws Exception
      */
     @Test
-    public void testMap_temporalType() throws Exception {
+    void testMap_temporalType() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_temporalType.sql";
         Map<?, ?> tense = jdbcManager.selectBySqlFile(Map.class, path).getSingleResult();
         assertNotNull(tense);
@@ -130,7 +130,7 @@ public class SqlFileSelectValueTypeTest {
      * @throws Exception
      */
     @Test
-    public void testObject_temporalType() throws Exception {
+    void testObject_temporalType() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_Object_temporalType.sql";
         Calendar calTimestamp = jdbcManager.selectBySqlFile(Calendar.class, path).temporal(TemporalType.TIMESTAMP).getSingleResult();
         assertNotNull(calTimestamp);

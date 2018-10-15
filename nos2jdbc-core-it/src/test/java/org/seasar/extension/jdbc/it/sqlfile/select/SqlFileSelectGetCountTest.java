@@ -26,7 +26,7 @@ import nos2jdbc.core.it.NoS2JdbcExtension;
  * 
  */
 @ExtendWith(NoS2JdbcExtension.class)
-public class SqlFileSelectGetCountTest {
+class SqlFileSelectGetCountTest {
 
     private JdbcManager jdbcManager;
 
@@ -35,7 +35,7 @@ public class SqlFileSelectGetCountTest {
      * @throws Exception
      */
     @Test
-    public void testGetCount() throws Exception {
+    void testGetCount() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_getCount.sql";
         long count = jdbcManager.getCountBySqlFile(path, 9);
         assertEquals(3L, count);
