@@ -40,7 +40,7 @@ public class AutoSelectGetResultTest {
      * @throws Exception
      */
     @Test
-    public void testGetSingleResult() throws Exception {
+    void testGetSingleResult() throws Exception {
         Employee employee = jdbcManager.from(Employee.class).where(new SimpleWhere().eq("employeeId", 1)).getSingleResult();
         assertNotNull(employee);
     }
@@ -50,7 +50,7 @@ public class AutoSelectGetResultTest {
      * @throws Exception
      */
     @Test
-    public void testGetSingleResult_NonUniqueResultException() throws Exception {
+    void testGetSingleResult_NonUniqueResultException() throws Exception {
 	assertThrows(NonUniqueResultException.class, () -> jdbcManager.from(Employee.class).where(new SimpleWhere().eq("departmentId", 1)).getSingleResult());
     }
 
@@ -59,7 +59,7 @@ public class AutoSelectGetResultTest {
      * @throws Exception
      */
     @Test
-    public void testGetSingleResult_NoResultException() throws Exception {
+    void testGetSingleResult_NoResultException() throws Exception {
 	assertThrows(NoResultException.class, () -> jdbcManager.from(Employee.class).where(new SimpleWhere().eq("employeeId", 100)).disallowNoResult().getSingleResult());
     }
 
@@ -68,7 +68,7 @@ public class AutoSelectGetResultTest {
      * @throws Exception
      */
     @Test
-    public void testGetSingleResult_null() throws Exception {
+    void testGetSingleResult_null() throws Exception {
         Employee employee = jdbcManager.from(Employee.class).where(new SimpleWhere().eq("employeeId", 100)).getSingleResult();
         assertNull(employee);
     }
@@ -78,7 +78,7 @@ public class AutoSelectGetResultTest {
      * @throws Exception
      */
     @Test
-    public void testGetSingleResult_oneToMany() throws Exception {
+    void testGetSingleResult_oneToMany() throws Exception {
         Department department = jdbcManager.from(Department.class).leftOuterJoin("employees").where(new SimpleWhere().eq("departmentId", 1)).getSingleResult();
         assertNotNull(department);
     }

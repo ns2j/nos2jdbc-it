@@ -37,7 +37,7 @@ public class MappedSuperclassManyToOneTest {
      * @throws Exception
      */
     @Test
-    public void testLeftOuterJoin() throws Exception {
+    void testLeftOuterJoin() throws Exception {
         List<ConcreteEmployee> list = jdbcManager.from(ConcreteEmployee.class).leftOuterJoin("department").getResultList();
         assertEquals(14, list.size());
         for (ConcreteEmployee e : list) {
@@ -51,7 +51,7 @@ public class MappedSuperclassManyToOneTest {
      * @throws Exception
      */
     @Test
-    public void testLeftOuterJoin_noFetch() throws Exception {
+    void testLeftOuterJoin_noFetch() throws Exception {
         List<ConcreteEmployee> list = jdbcManager.from(ConcreteEmployee.class).leftOuterJoin("department", false).getResultList();
         assertEquals(14, list.size());
         for (ConcreteEmployee e : list) {
@@ -65,7 +65,7 @@ public class MappedSuperclassManyToOneTest {
      * @throws Exception
      */
     @Test
-    public void testInnerJoin() throws Exception {
+    void testInnerJoin() throws Exception {
         List<ConcreteEmployee> list = jdbcManager.from(ConcreteEmployee.class).innerJoin("department").getResultList();
         assertEquals(14, list.size());
         for (ConcreteEmployee e : list) {
@@ -79,7 +79,7 @@ public class MappedSuperclassManyToOneTest {
      * @throws Exception
      */
     @Test
-    public void testInnerJoin_noFetch() throws Exception {
+    void testInnerJoin_noFetch() throws Exception {
         List<ConcreteEmployee> list = jdbcManager.from(ConcreteEmployee.class).innerJoin("department", false).getResultList();
         assertEquals(14, list.size());
         for (ConcreteEmployee e : list) {
@@ -93,7 +93,7 @@ public class MappedSuperclassManyToOneTest {
      * @throws Exception
      */
     @Test
-    public void testInnerJoin_self() throws Exception {
+    void testInnerJoin_self() throws Exception {
         List<ConcreteEmployee> list = jdbcManager.from(ConcreteEmployee.class).innerJoin("manager").getResultList();
         assertEquals(13, list.size());
         for (ConcreteEmployee e : list) {

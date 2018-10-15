@@ -39,7 +39,7 @@ public class AutoSelectNoIdTest {
      * @throws Exception
      */
     @Test
-    public void testNoId() throws Exception {
+    void testNoId() throws Exception {
         List<NoId> list = jdbcManager.from(NoId.class).getResultList();
         assertEquals(2, list.size());
     }
@@ -49,7 +49,7 @@ public class AutoSelectNoIdTest {
      * @throws Exception
      */
     @Test
-    public void testOwnerOfNoId() throws Exception {
+    void testOwnerOfNoId() throws Exception {
 	assertThrows(JoinColumnNotFoundRuntimeException.class, () -> jdbcManager.from(OwnerOfNoId.class).innerJoin("noId").getResultList());
     }
 }

@@ -49,7 +49,7 @@ public class AutoBatchUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testExecute() throws Exception {
+    void testExecute() throws Exception {
         List<Department> list = new ArrayList<Department>();
         Department department = new Department();
         department.departmentId = 1;
@@ -86,7 +86,7 @@ public class AutoBatchUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testExecute_includesVersion() throws Exception {
+    void testExecute_includesVersion() throws Exception {
         List<Department> list = new ArrayList<Department>();
         Department department = new Department();
         department.departmentId = 1;
@@ -123,7 +123,7 @@ public class AutoBatchUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testExecute_includes() throws Exception {
+    void testExecute_includes() throws Exception {
         List<Department> list = new ArrayList<Department>();
         Department department = new Department();
         department.departmentId = 1;
@@ -162,7 +162,7 @@ public class AutoBatchUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testExecute_excludes() throws Exception {
+    void testExecute_excludes() throws Exception {
         List<Department> list = new ArrayList<Department>();
         Department department = new Department();
         department.departmentId = 1;
@@ -201,7 +201,7 @@ public class AutoBatchUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testExecute_compKey() throws Exception {
+    void testExecute_compKey() throws Exception {
         List<CompKeyDepartment> list = new ArrayList<CompKeyDepartment>();
         CompKeyDepartment department = new CompKeyDepartment();
         department.departmentId1 = 1;
@@ -242,7 +242,7 @@ public class AutoBatchUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testExecute_mappedSuperclass() throws Exception {
+    void testExecute_mappedSuperclass() throws Exception {
         List<ConcreteDepartment> list = new ArrayList<ConcreteDepartment>();
         ConcreteDepartment department = new ConcreteDepartment();
         department.departmentId = 1;
@@ -279,7 +279,7 @@ public class AutoBatchUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testOptimisticLockException() throws Exception {
+    void testOptimisticLockException() throws Exception {
         Employee employee1 = jdbcManager.from(Employee.class).where("employeeId = ?", 1).getSingleResult();
         Employee employee2 = jdbcManager.from(Employee.class).where("employeeId = ?", 1).getSingleResult();
         Employee employee3 = jdbcManager.from(Employee.class).where("employeeId = ?", 2).getSingleResult();
@@ -292,7 +292,7 @@ public class AutoBatchUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testOptimisticLockException_includesVersion() throws Exception {
+    void testOptimisticLockException_includesVersion() throws Exception {
         Employee employee1 = jdbcManager.from(Employee.class).where("employeeId = ?", 1).getSingleResult();
         Employee employee2 = jdbcManager.from(Employee.class).where("employeeId = ?", 1).getSingleResult();
         Employee employee3 = jdbcManager.from(Employee.class).where("employeeId = ?", 2).getSingleResult();
@@ -305,7 +305,7 @@ public class AutoBatchUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testSuppresOptimisticLockException() throws Exception {
+    void testSuppresOptimisticLockException() throws Exception {
         Employee employee1 = jdbcManager.from(Employee.class).where("employeeId = ?", 1).getSingleResult();
         Employee employee2 = jdbcManager.from(Employee.class).where("employeeId = ?", 1).getSingleResult();
         Employee employee3 = jdbcManager.from(Employee.class).where("employeeId = ?", 2).getSingleResult();
@@ -318,7 +318,7 @@ public class AutoBatchUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testColumnAnnotation() throws Exception {
+    void testColumnAnnotation() throws Exception {
         List<Department2> list = new ArrayList<Department2>();
         Department2 department = new Department2();
         department.departmentId = 1;
@@ -344,7 +344,7 @@ public class AutoBatchUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testTransientAnnotation() throws Exception {
+    void testTransientAnnotation() throws Exception {
         List<Department3> list = new ArrayList<Department3>();
         Department3 department = new Department3();
         department.departmentId = 1;
@@ -370,7 +370,7 @@ public class AutoBatchUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testTransientModifier() throws Exception {
+    void testTransientModifier() throws Exception {
         List<Department4> list = new ArrayList<Department4>();
         Department4 department = new Department4();
         department.departmentId = 1;
@@ -397,7 +397,7 @@ public class AutoBatchUpdateTest {
      */
     //@Prerequisite("#ENV != 'hsqldb'")
     @Test
-    public void testEntityExistsException() throws Exception {
+    void testEntityExistsException() throws Exception {
         Department department = jdbcManager.from(Department.class).where("departmentId = ?", 1).getSingleResult();
         department.departmentNo = 20;
         assertThrows(EntityExistsException.class, () -> jdbcManager.updateBatch(department).execute());
@@ -408,7 +408,7 @@ public class AutoBatchUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testNoId() throws Exception {
+    void testNoId() throws Exception {
         NoId noId1 = new NoId();
         noId1.value1 = 1;
         noId1.value1 = 2;

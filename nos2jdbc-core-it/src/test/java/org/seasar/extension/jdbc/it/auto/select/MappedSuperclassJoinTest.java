@@ -40,7 +40,7 @@ public class MappedSuperclassJoinTest {
      * @throws Exception
      */
     @Test
-    public void testJoin_nest() throws Exception {
+    void testJoin_nest() throws Exception {
         List<ConcreteDepartment> list = jdbcManager.from(ConcreteDepartment.class).leftOuterJoin("employees").leftOuterJoin("employees.address").orderBy("departmentId").getResultList();
         assertEquals(4, list.size());
         assertNotNull(list.get(0).employees);
@@ -52,7 +52,7 @@ public class MappedSuperclassJoinTest {
      * @throws Exception
      */
     @Test
-    public void testJoin_star() throws Exception {
+    void testJoin_star() throws Exception {
         List<ConcreteEmployee> list = jdbcManager.from(ConcreteEmployee.class).innerJoin("manager").leftOuterJoin("department").leftOuterJoin("address").orderBy("departmentId").getResultList();
         assertEquals(13, list.size());
         assertNotNull(list.get(0).department);
@@ -65,7 +65,7 @@ public class MappedSuperclassJoinTest {
      * @throws Exception
      */
     @Test
-    public void testJoin_condition() throws Exception {
+    void testJoin_condition() throws Exception {
         List<ConcreteEmployee> list = jdbcManager.from(ConcreteEmployee.class).innerJoin("department", "managerId = ?", 9).where("salary > ?", new BigDecimal(2000)).getResultList();
         assertEquals(3, list.size());
     }
@@ -75,7 +75,7 @@ public class MappedSuperclassJoinTest {
      * @throws Exception
      */
     @Test
-    public void testJoin_condition_where() throws Exception {
+    void testJoin_condition_where() throws Exception {
         List<ConcreteEmployee> list = jdbcManager.from(ConcreteEmployee.class).innerJoin("department", new SimpleWhere().eq("managerId", 9)).where(new SimpleWhere().gt("salary", new BigDecimal(2000))).getResultList();
         assertEquals(3, list.size());
     }

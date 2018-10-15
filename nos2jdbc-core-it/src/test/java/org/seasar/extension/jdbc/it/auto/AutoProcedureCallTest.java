@@ -52,7 +52,7 @@ public class AutoProcedureCallTest {
      * @throws Exception
      */
     @Test
-    public void testParameter_none() throws Exception {
+    void testParameter_none() throws Exception {
         jdbcManager.call("PROC_NONE_PARAM").execute();
     }
 
@@ -61,7 +61,7 @@ public class AutoProcedureCallTest {
      * @throws Exception
      */
     @Test
-    public void testParameter_simpleType() throws Exception {
+    void testParameter_simpleType() throws Exception {
         jdbcManager.call("PROC_SIMPLETYPE_PARAM", 1).execute();
     }
 
@@ -70,7 +70,7 @@ public class AutoProcedureCallTest {
      * @throws Exception
      */
     @Test
-    public void testParameter_simpleType_time() throws Exception {
+    void testParameter_simpleType_time() throws Exception {
         Date date = new Date();
         jdbcManager.call("PROC_SIMPLETYPE_TIME_PARAM", time(date)).execute();
     }
@@ -80,7 +80,7 @@ public class AutoProcedureCallTest {
      * @throws Exception
      */
     @Test
-    public void testParameter_dto() throws Exception {
+    void testParameter_dto() throws Exception {
         MyDto dto = new MyDto();
         dto.param1 = 3;
         dto.param2 = 5;
@@ -95,7 +95,7 @@ public class AutoProcedureCallTest {
      * @throws Exception
      */
     @Test
-    public void testParameter_dto_null() throws Exception {
+    void testParameter_dto_null() throws Exception {
         MyDto dto = new MyDto();
         dto.param1 = null;
         dto.param2 = 5;
@@ -110,7 +110,7 @@ public class AutoProcedureCallTest {
      * @throws Exception
      */
     @Test
-    public void testParameter_dto_time() throws Exception {
+    void testParameter_dto_time() throws Exception {
         Date date = new SimpleDateFormat("HH:mm:ss").parse("12:11:10");
         MyDto2 dto = new MyDto2();
         dto.param1 = date;
@@ -126,7 +126,7 @@ public class AutoProcedureCallTest {
      * @throws Exception
      */
     @Test
-    public void testParameter_resultSet() throws Exception {
+    void testParameter_resultSet() throws Exception {
         ResultSetDto dto = new ResultSetDto();
         dto.employeeId = 10;
         jdbcManager.call("PROC_RESULTSET", dto).execute();
@@ -148,7 +148,7 @@ public class AutoProcedureCallTest {
      * @throws Exception
      */
     @Test
-    public void testParameter_resultSetOut() throws Exception {
+    void testParameter_resultSetOut() throws Exception {
         ResultSetOutDto dto = new ResultSetOutDto();
         dto.employeeId = 10;
         jdbcManager.call("PROC_RESULTSET_OUT", dto).execute();
@@ -167,7 +167,7 @@ public class AutoProcedureCallTest {
      * @throws Exception
      */
     @Test
-    public void testParameter_resultSetUpdate() throws Exception {
+    void testParameter_resultSetUpdate() throws Exception {
         ResultSetUpdateDto dto = new ResultSetUpdateDto();
         dto.employeeId = 10;
         jdbcManager.call("PROC_RESULTSET_UPDATE", dto).execute();
@@ -187,7 +187,7 @@ public class AutoProcedureCallTest {
      * @throws Exception
      */
     @Test
-    public void testParameter_resultSetUpdate2() throws Exception {
+    void testParameter_resultSetUpdate2() throws Exception {
         ResultSetUpdateDto dto = new ResultSetUpdateDto();
         dto.employeeId = 10;
         jdbcManager.call("PROC_RESULTSET_UPDATE2", dto).execute();
@@ -207,7 +207,7 @@ public class AutoProcedureCallTest {
      * @throws Exception
      */
     @Test
-    public void testParameter_resultSets() throws Exception {
+    void testParameter_resultSets() throws Exception {
         ResultSetsDto dto = new ResultSetsDto();
         dto.employeeId = 10;
         dto.departmentId = 2;
@@ -231,7 +231,7 @@ public class AutoProcedureCallTest {
      * @throws Exception
      */
     @Test
-    public void testParameter_resultSetsUpdatesOut() throws Exception {
+    void testParameter_resultSetsUpdatesOut() throws Exception {
         ResultSetsUpdatesOutDto dto = new ResultSetsUpdatesOutDto();
         dto.employeeId = 10;
         dto.departmentId = 2;

@@ -42,7 +42,7 @@ public class AutoDeleteTest {
      * @throws Exception
      */
     @Test
-    public void testExecute() throws Exception {
+    void testExecute() throws Exception {
         Employee employee = new Employee();
         employee.employeeId = 1;
         employee.version = 1;
@@ -57,7 +57,7 @@ public class AutoDeleteTest {
      * @throws Exception
      */
     @Test
-    public void testExecute_ignoreVersion() throws Exception {
+    void testExecute_ignoreVersion() throws Exception {
         Employee employee = new Employee();
         employee.employeeId = 1;
         employee.version = 99;
@@ -72,7 +72,7 @@ public class AutoDeleteTest {
      * @throws Exception
      */
     @Test
-    public void testExecute_compKey() throws Exception {
+    void testExecute_compKey() throws Exception {
         CompKeyEmployee employee = new CompKeyEmployee();
         employee.employeeId1 = 1;
         employee.employeeId2 = 1;
@@ -88,7 +88,7 @@ public class AutoDeleteTest {
      * @throws Exception
      */
     @Test
-    public void testExecute_mappedSuperclass() throws Exception {
+    void testExecute_mappedSuperclass() throws Exception {
         ConcreteEmployee employee = new ConcreteEmployee();
         employee.employeeId = 1;
         employee.version = 1;
@@ -103,7 +103,7 @@ public class AutoDeleteTest {
      * @throws Exception
      */
     @Test
-    public void testOptimisticLockException() throws Exception {
+    void testOptimisticLockException() throws Exception {
         Employee employee1 = jdbcManager.from(Employee.class).where("employeeId = ?", 1).getSingleResult();
         Employee employee2 = jdbcManager.from(Employee.class).where("employeeId = ?", 1).getSingleResult();
         jdbcManager.delete(employee1).execute();
@@ -115,7 +115,7 @@ public class AutoDeleteTest {
      * @throws Exception
      */
     @Test
-    public void testSuppresOptimisticLockException() throws Exception {
+    void testSuppresOptimisticLockException() throws Exception {
         Employee employee1 = jdbcManager.from(Employee.class).where("employeeId = ?", 1).getSingleResult();
         Employee employee2 = jdbcManager.from(Employee.class).where("employeeId = ?", 1).getSingleResult();
         jdbcManager.delete(employee1).execute();
@@ -128,7 +128,7 @@ public class AutoDeleteTest {
      * @throws Exception
      */
     @Test
-    public void testNoId() throws Exception {
+    void testNoId() throws Exception {
         NoId noId = new NoId();
         noId.value1 = 1;
         noId.value1 = 2;
