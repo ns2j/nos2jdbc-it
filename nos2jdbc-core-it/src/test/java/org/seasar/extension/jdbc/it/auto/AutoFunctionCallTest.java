@@ -45,7 +45,7 @@ public class AutoFunctionCallTest {
      * @throws Exception
      */
     @Test
-    public void testParameter_none() throws Exception {
+    void testParameter_none() throws Exception {
         Integer result = jdbcManager.call(Integer.class, "FUNC_NONE_PARAM").getSingleResult();
         assertEquals(new Integer(10), result);
     }
@@ -55,7 +55,7 @@ public class AutoFunctionCallTest {
      * @throws Exception
      */
     @Test
-    public void testParameter_simpleType() throws Exception {
+    void testParameter_simpleType() throws Exception {
         Integer result = jdbcManager.call(Integer.class, "FUNC_SIMPLETYPE_PARAM", 1).getSingleResult();
         assertEquals(new Integer(20), result);
     }
@@ -65,7 +65,7 @@ public class AutoFunctionCallTest {
      * @throws Exception
      */
     @Test
-    public void testParameter_simpleType_time() throws Exception {
+    void testParameter_simpleType_time() throws Exception {
         Date inparam = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2007-08-08 12:11:10");
         Date result = jdbcManager.call(Date.class, "FUNC_SIMPLETYPE_TIME_PARAM", time(inparam)).temporal(TemporalType.TIME).getSingleResult();
         long expected = new SimpleDateFormat("HH:mm:ss").parse("12:11:10").getTime();
@@ -77,7 +77,7 @@ public class AutoFunctionCallTest {
      * @throws Exception
      */
     @Test
-    public void testParameter_dto() throws Exception {
+    void testParameter_dto() throws Exception {
         MyDto dto = new MyDto();
         dto.param1 = 3;
         dto.param2 = 5;
@@ -92,7 +92,7 @@ public class AutoFunctionCallTest {
      * @throws Exception
      */
     @Test
-    public void testParameter_dto_time() throws Exception {
+    void testParameter_dto_time() throws Exception {
         Date date = new SimpleDateFormat("HH:mm:ss").parse("12:11:10");
         MyDto2 dto = new MyDto2();
         dto.param1 = date;
@@ -108,7 +108,7 @@ public class AutoFunctionCallTest {
     //@Prerequisite("#ENV not in {'mssql2005', 'mysql'}")
     @DisabledIf("['mssql2005', 'mysql'].indexOf(systemProperty.get('database')) >= 0")
     @Test
-    public void testParameter_resultSet() throws Exception {
+    void testParameter_resultSet() throws Exception {
         List<Employee> employees = jdbcManager.call(Employee.class, "FUNC_RESULTSET", 10).getResultList();
         assertNotNull(employees);
         assertEquals(4, employees.size());
@@ -125,7 +125,7 @@ public class AutoFunctionCallTest {
     //@Prerequisite("#ENV not in {'mssql2005', 'mysql'}")
     @DisabledIf("['mssql2005', 'mysql'].indexOf(systemProperty.get('database')) >= 0")
     @Test
-    public void testParameter_resultSetUpdate() throws Exception {
+    void testParameter_resultSetUpdate() throws Exception {
         List<Employee> employees = jdbcManager.call(Employee.class, "FUNC_RESULTSET_UPDATE", 10).getResultList();
         assertNotNull(employees);
         assertEquals(4, employees.size());
@@ -144,7 +144,7 @@ public class AutoFunctionCallTest {
     //@Prerequisite("#ENV not in {'mssql2005', 'mysql'}\")"
     @DisabledIf("['mssql2005', 'mysql'].indexOf(systemProperty.get('database')) >= 0")
     @Test
-    public void testParameter_resultSetUpdate2() throws Exception {
+    void testParameter_resultSetUpdate2() throws Exception {
         List<Employee> employees = jdbcManager.call(Employee.class, "FUNC_RESULTSET_UPDATE2", 10).getResultList();
         assertNotNull(employees);
         assertEquals(4, employees.size());

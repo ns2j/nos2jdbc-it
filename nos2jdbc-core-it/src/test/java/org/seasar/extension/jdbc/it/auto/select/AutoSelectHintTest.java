@@ -38,7 +38,7 @@ public class AutoSelectHintTest {
      * @throws Exception
      */
     @Test
-    public void testHint() throws Exception {
+    void testHint() throws Exception {
         List<Employee> list = jdbcManager.from(Employee.class).where("employeeName like 'S%'").orderBy("employeeName").hint("index (Employee IX_EMPLOYEE_1)").getResultList();
         assertEquals(2, list.size());
         assertEquals("SCOTT", list.get(0).employeeName);
@@ -50,7 +50,7 @@ public class AutoSelectHintTest {
      * @throws Exception
      */
     @Test
-    public void testHint_withJoin() throws Exception {
+    void testHint_withJoin() throws Exception {
         List<Department> list = jdbcManager.from(Department.class).innerJoin("employees").where("employees.employeeName like 'S%'").orderBy("departmentId").hint("index (employees IX_EMPLOYEE_1)").getResultList();
         assertEquals(1, list.size());
         assertEquals("RESEARCH", list.get(0).departmentName);

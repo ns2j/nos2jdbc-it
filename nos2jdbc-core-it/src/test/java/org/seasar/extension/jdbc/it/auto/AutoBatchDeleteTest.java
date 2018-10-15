@@ -47,7 +47,7 @@ public class AutoBatchDeleteTest {
      * @throws Exception
      */
     @Test
-    public void testExecute() throws Exception {
+    void testExecute() throws Exception {
         List<Employee> list = new ArrayList<Employee>();
         Employee employee = new Employee();
         employee.employeeId = 1;
@@ -70,7 +70,7 @@ public class AutoBatchDeleteTest {
      * @throws Exception
      */
     @Test
-    public void testExecute_ignoreVersion() throws Exception {
+    void testExecute_ignoreVersion() throws Exception {
         List<Employee> list = new ArrayList<Employee>();
         Employee employee = new Employee();
         employee.employeeId = 1;
@@ -93,7 +93,7 @@ public class AutoBatchDeleteTest {
      * @throws Exception
      */
     @Test
-    public void testExecute_compKey() throws Exception {
+    void testExecute_compKey() throws Exception {
         List<CompKeyEmployee> list = new ArrayList<CompKeyEmployee>();
         CompKeyEmployee employee = new CompKeyEmployee();
         employee.employeeId1 = 1;
@@ -118,7 +118,7 @@ public class AutoBatchDeleteTest {
      * @throws Exception
      */
     @Test
-    public void testExecute_mappedSuperclass() throws Exception {
+    void testExecute_mappedSuperclass() throws Exception {
         List<ConcreteEmployee> list = new ArrayList<ConcreteEmployee>();
         ConcreteEmployee employee = new ConcreteEmployee();
         employee.employeeId = 1;
@@ -141,7 +141,7 @@ public class AutoBatchDeleteTest {
      * @throws Exception
      */
     @Test
-    public void testOptimisticLockException() throws Exception {
+    void testOptimisticLockException() throws Exception {
         Employee employee1 = jdbcManager.from(Employee.class).where("employeeId = ?", 1).getSingleResult();
         Employee employee2 = jdbcManager.from(Employee.class).where("employeeId = ?", 1).getSingleResult();
         Employee employee3 = jdbcManager.from(Employee.class).where("employeeId = ?", 2).getSingleResult();
@@ -154,7 +154,7 @@ public class AutoBatchDeleteTest {
      * @throws Exception
      */
     @Test
-    public void testOptimisticLockException_ignoreVersion() throws Exception {
+    void testOptimisticLockException_ignoreVersion() throws Exception {
         Employee employee1 = jdbcManager.from(Employee.class).where("employeeId = ?", 1).getSingleResult();
         Employee employee2 = jdbcManager.from(Employee.class).where("employeeId = ?", 1).getSingleResult();
         Employee employee3 = jdbcManager.from(Employee.class).where("employeeId = ?", 2).getSingleResult();
@@ -167,7 +167,7 @@ public class AutoBatchDeleteTest {
      * @throws Exception
      */
     @Test
-    public void testSuppresOptimisticLockException() throws Exception {
+    void testSuppresOptimisticLockException() throws Exception {
         Employee employee1 = jdbcManager.from(Employee.class).where("employeeId = ?", 1).getSingleResult();
         Employee employee2 = jdbcManager.from(Employee.class).where("employeeId = ?", 1).getSingleResult();
         Employee employee3 = jdbcManager.from(Employee.class).where("employeeId = ?", 2).getSingleResult();
@@ -180,7 +180,7 @@ public class AutoBatchDeleteTest {
      * @throws Exception
      */
     @Test
-    public void testNoId() throws Exception {
+    void testNoId() throws Exception {
         NoId noId1 = new NoId();
         noId1.value1 = 1;
         noId1.value2 = 1;

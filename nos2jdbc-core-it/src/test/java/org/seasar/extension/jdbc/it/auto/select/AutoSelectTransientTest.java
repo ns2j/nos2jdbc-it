@@ -38,7 +38,7 @@ public class AutoSelectTransientTest {
      * @throws Exception
      */
     @Test
-    public void testTransientAnnotation() throws Exception {
+    void testTransientAnnotation() throws Exception {
         Department3 department = jdbcManager.from(Department3.class).where(new SimpleWhere().eq("departmentId", 1)).getSingleResult();
         assertNull(department.departmentName);
     }
@@ -48,7 +48,7 @@ public class AutoSelectTransientTest {
      * @throws Exception
      */
     @Test
-    public void testTransientModifier() throws Exception {
+    void testTransientModifier() throws Exception {
         Department4 department = jdbcManager.from(Department4.class).where(new SimpleWhere().eq("departmentId", 1)).getSingleResult();
         assertNull(department.departmentName);
     }

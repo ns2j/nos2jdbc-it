@@ -42,7 +42,7 @@ public class ConstraintViolationTest {
      * @throws Exception
      */
     @Test
-    public void testUniqueConstraint_primaryKey() throws Exception {
+    void testUniqueConstraint_primaryKey() throws Exception {
         ConstraintChecking checking = new ConstraintChecking();
         checking.primaryKey = 1;
         checking.uniqueKey = 1;
@@ -64,7 +64,7 @@ public class ConstraintViolationTest {
      * @throws Exception
      */
     @Test
-    public void testUniqueConstraint_uniqueKey() throws Exception {
+    void testUniqueConstraint_uniqueKey() throws Exception {
         ConstraintChecking checking = new ConstraintChecking();
         checking.primaryKey = 1;
         checking.uniqueKey = 1;
@@ -86,7 +86,7 @@ public class ConstraintViolationTest {
      * @throws Exception
      */
     @Test
-    public void testReferentialIntegrityConstraint() throws Exception {
+    void testReferentialIntegrityConstraint() throws Exception {
         ConstraintChecking checking = new ConstraintChecking();
         checking.primaryKey = 1;
         checking.uniqueKey = 1;
@@ -101,7 +101,7 @@ public class ConstraintViolationTest {
      * @throws Exception
      */
     @Test
-    public void testNotNullConstraint() throws Exception {
+    void testNotNullConstraint() throws Exception {
         ConstraintChecking checking = new ConstraintChecking();
         checking.primaryKey = 1;
         checking.uniqueKey = 1;
@@ -116,7 +116,7 @@ public class ConstraintViolationTest {
      * @throws Exception
      */
     @Test
-    public void testNotNullConstraint_primaryKey() throws Exception {
+    void testNotNullConstraint_primaryKey() throws Exception {
         ConstraintChecking checking = new ConstraintChecking();
         checking.primaryKey = null;
         checking.uniqueKey = 1;
@@ -133,7 +133,7 @@ public class ConstraintViolationTest {
     //@Prerequisite("#ENV not in {'mysql'}")
     @DisabledIf("['mysql'].indexOf(systemProperty.get('database')) >= 0")
     @Test
-    public void testCheckConstraint() throws Exception {
+    void testCheckConstraint() throws Exception {
         ConstraintChecking checking = new ConstraintChecking();
         checking.primaryKey = 1;
         checking.uniqueKey = 1;

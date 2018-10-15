@@ -45,7 +45,7 @@ public class SingleKeyJoinTest {
      * @throws Exception
      */
     @Test
-    public void testJoin_nest() throws Exception {
+    void testJoin_nest() throws Exception {
         List<Department> list = jdbcManager.from(Department.class).leftOuterJoin("employees").leftOuterJoin("employees.address").orderBy("departmentId").getResultList();
         assertEquals(4, list.size());
         assertNotNull(list.get(0).employees);
@@ -57,7 +57,7 @@ public class SingleKeyJoinTest {
      * @throws Exception
      */
     @Test
-    public void testJoin_nest_simpleWhere() throws Exception {
+    void testJoin_nest_simpleWhere() throws Exception {
         List<Department> list = jdbcManager.from(Department.class).leftOuterJoin("employees").leftOuterJoin("employees.address").where(new SimpleWhere().eq("employees.addressId", 3)).getResultList();
         assertEquals(1, list.size());
     }
@@ -67,7 +67,7 @@ public class SingleKeyJoinTest {
      * @throws Exception
      */
     @Test
-    public void testJoin_nest_condition() throws Exception {
+    void testJoin_nest_condition() throws Exception {
         List<Department> list = jdbcManager.from(Department.class).leftOuterJoin("employees").leftOuterJoin("employees.address").where(new DepartmentCondition().employees().addressId.eq(3)).getResultList();
         assertEquals(1, list.size());
     }
@@ -77,7 +77,7 @@ public class SingleKeyJoinTest {
      * @throws Exception
      */
     @Test
-    public void testJoin_star() throws Exception {
+    void testJoin_star() throws Exception {
         List<Employee> list = jdbcManager.from(Employee.class).innerJoin("manager").leftOuterJoin("department").leftOuterJoin("address").getResultList();
         assertEquals(13, list.size());
         assertNotNull(list.get(0).department);
@@ -90,7 +90,7 @@ public class SingleKeyJoinTest {
      * @throws Exception
      */
     @Test
-    public void testJoin_star_simpleWhere() throws Exception {
+    void testJoin_star_simpleWhere() throws Exception {
         List<Employee> list = jdbcManager.from(Employee.class).innerJoin("manager").leftOuterJoin("department").leftOuterJoin("address").where(new SimpleWhere().eq("department.departmentName", "RESEARCH").starts("address.street", "STREET").ge("salary", 2000)).getResultList();
         assertEquals(3, list.size());
     }
@@ -100,7 +100,7 @@ public class SingleKeyJoinTest {
      * @throws Exception
      */
     @Test
-    public void testJoin_star_condition() throws Exception {
+    void testJoin_star_condition() throws Exception {
         List<Employee> list = jdbcManager.from(Employee.class).innerJoin("manager").leftOuterJoin("department").leftOuterJoin("address").where(new EmployeeCondition().salary.ge(new BigDecimal("2000")).department().departmentName.eq("RESEARCH").and(new EmployeeCondition().address().street.starts("STREET"))).getResultList();
         assertEquals(3, list.size());
     }
@@ -110,7 +110,7 @@ public class SingleKeyJoinTest {
      * @throws Exception
      */
     @Test
-    public void testJoin_star_names() throws Exception {
+    void testJoin_star_names() throws Exception {
         List<Employee> list = jdbcManager.from(Employee.class).innerJoin(manager()).leftOuterJoin(department()).leftOuterJoin(address()).where(ge(salary(), new BigDecimal("2000")), eq(department().departmentName(), "RESEARCH"), starts(address().street(), "STREET")).getResultList();
         assertEquals(3, list.size());
     }
@@ -120,7 +120,7 @@ public class SingleKeyJoinTest {
      * @throws Exception
      */
     @Test
-    public void testJoin_illegalPropertyName() throws Exception {
+    void testJoin_illegalPropertyName() throws Exception {
 	assertThrows(PropertyNotFoundRuntimeException.class, () -> jdbcManager.from(Department.class).leftOuterJoin("illegal").getResultList());
     }
 
@@ -129,7 +129,7 @@ public class SingleKeyJoinTest {
      * @throws Exception
      */
     @Test
-    public void testJoin_illegalPropertyName2() throws Exception {
+    void testJoin_illegalPropertyName2() throws Exception {
 	assertThrows(PropertyNotFoundRuntimeException.class, () -> jdbcManager.from(Department.class).leftOuterJoin("employees").leftOuterJoin("employees.illegal").getResultList());
     }
 
@@ -138,7 +138,7 @@ public class SingleKeyJoinTest {
      * @throws Exception
      */
     @Test
-    public void testJoin_condition() throws Exception {
+    void testJoin_condition() throws Exception {
         List<Employee> list = jdbcManager.from(Employee.class).innerJoin("department", "managerId = ?", 9).where("salary > ?", new BigDecimal(2000)).getResultList();
         assertEquals(3, list.size());
     }
@@ -148,7 +148,7 @@ public class SingleKeyJoinTest {
      * @throws Exception
      */
     @Test
-    public void testJoin_names() throws Exception {
+    void testJoin_names() throws Exception {
         List<Employee> list = jdbcManager.from(Employee.class).innerJoin(department(), eq(managerId(), 9)).where(gt(salary(), new BigDecimal(2000))).getResultList();
         assertEquals(3, list.size());
     }
@@ -158,7 +158,7 @@ public class SingleKeyJoinTest {
      * @throws Exception
      */
     @Test
-    public void testJoin_condition_where() throws Exception {
+    void testJoin_condition_where() throws Exception {
         List<Employee> list = jdbcManager.from(Employee.class).innerJoin("department", new SimpleWhere().eq("managerId", 9)).where(new SimpleWhere().gt("salary", new BigDecimal(2000))).getResultList();
         assertEquals(3, list.size());
     }
@@ -168,7 +168,7 @@ public class SingleKeyJoinTest {
      * @throws Exception
      */
     @Test
-    public void testJoin_condition_where_names() throws Exception {
+    void testJoin_condition_where_names() throws Exception {
         List<Employee> list = jdbcManager.from(Employee.class).innerJoin(department(), eq(managerId(), 9)).where(gt(salary(), new BigDecimal(2000))).getResultList();
         assertEquals(3, list.size());
     }

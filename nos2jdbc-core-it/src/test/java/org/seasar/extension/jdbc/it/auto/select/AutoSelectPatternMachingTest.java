@@ -40,7 +40,7 @@ public class AutoSelectPatternMachingTest {
     @Test
     //@Prerequisite("#ENV != 'hsqldb'")
     @DisabledIf("['hsqldb'].indexOf(systemProperty.get('database')) >= 0")
-    public void testLike_escape() throws Exception {
+    void testLike_escape() throws Exception {
         Pattern pattern = new Pattern();
         pattern.value = "xABCy%z$";
         jdbcManager.insert(pattern).execute();
@@ -53,7 +53,7 @@ public class AutoSelectPatternMachingTest {
      * @throws Exception
      */
     @Test
-    public void testStarts() throws Exception {
+    void testStarts() throws Exception {
         Pattern pattern = new Pattern();
         pattern.value = "%$x";
         jdbcManager.insert(pattern).execute();
@@ -66,7 +66,7 @@ public class AutoSelectPatternMachingTest {
      * @throws Exception
      */
     @Test
-    public void testEnds() throws Exception {
+    void testEnds() throws Exception {
         Pattern pattern = new Pattern();
         pattern.value = "x%$";
         jdbcManager.insert(pattern).execute();
@@ -79,7 +79,7 @@ public class AutoSelectPatternMachingTest {
      * @throws Exception
      */
     @Test
-    public void testContains() throws Exception {
+    void testContains() throws Exception {
         Pattern pattern = new Pattern();
         pattern.value = "x%$y";
         jdbcManager.insert(pattern).execute();

@@ -37,7 +37,7 @@ public class CompKeyOneToManyTest {
      * @throws Exception
      */
     @Test
-    public void testLeftOuterJoin() throws Exception {
+    void testLeftOuterJoin() throws Exception {
         List<CompKeyDepartment> list = jdbcManager.from(CompKeyDepartment.class).leftOuterJoin("employees").getResultList();
         assertEquals(4, list.size());
         assertNotNull(list.get(0).employees);
@@ -51,7 +51,7 @@ public class CompKeyOneToManyTest {
      * @throws Exception
      */
     @Test
-    public void testLeftOuterJoin_noFetch() throws Exception {
+    void testLeftOuterJoin_noFetch() throws Exception {
         List<CompKeyDepartment> list = jdbcManager.from(CompKeyDepartment.class).leftOuterJoin("employees", false).getResultList();
         assertEquals(4, list.size());
         assertNull(list.get(0).employees);
@@ -65,7 +65,7 @@ public class CompKeyOneToManyTest {
      * @throws Exception
      */
     @Test
-    public void testInnerJoin() throws Exception {
+    void testInnerJoin() throws Exception {
         List<CompKeyDepartment> list = jdbcManager.from(CompKeyDepartment.class).innerJoin("employees").getResultList();
         assertEquals(3, list.size());
         assertNotNull(list.get(0).employees);
@@ -78,7 +78,7 @@ public class CompKeyOneToManyTest {
      * @throws Exception
      */
     @Test
-    public void testInnerJoin_noFetch() throws Exception {
+    void testInnerJoin_noFetch() throws Exception {
         List<CompKeyDepartment> list = jdbcManager.from(CompKeyDepartment.class).innerJoin("employees", false).getResultList();
         assertEquals(3, list.size());
         assertNull(list.get(0).employees);

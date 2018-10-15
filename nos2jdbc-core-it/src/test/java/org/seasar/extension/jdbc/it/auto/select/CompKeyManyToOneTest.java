@@ -37,7 +37,7 @@ public class CompKeyManyToOneTest {
      * @throws Exception
      */
     @Test
-    public void testLeftOuterJoin() throws Exception {
+    void testLeftOuterJoin() throws Exception {
         List<CompKeyEmployee> list = jdbcManager.from(CompKeyEmployee.class).leftOuterJoin("department").getResultList();
         assertEquals(14, list.size());
         for (CompKeyEmployee e : list) {
@@ -51,7 +51,7 @@ public class CompKeyManyToOneTest {
      * @throws Exception
      */
     @Test
-    public void testLeftOuterJoin_noFetch() throws Exception {
+    void testLeftOuterJoin_noFetch() throws Exception {
         List<CompKeyEmployee> list = jdbcManager.from(CompKeyEmployee.class).leftOuterJoin("department", false).getResultList();
         assertEquals(14, list.size());
         for (CompKeyEmployee e : list) {
@@ -65,7 +65,7 @@ public class CompKeyManyToOneTest {
      * @throws Exception
      */
     @Test
-    public void testInnerJoin() throws Exception {
+    void testInnerJoin() throws Exception {
         List<CompKeyEmployee> list = jdbcManager.from(CompKeyEmployee.class).innerJoin("department").getResultList();
         assertEquals(14, list.size());
         for (CompKeyEmployee e : list) {
@@ -79,7 +79,7 @@ public class CompKeyManyToOneTest {
      * @throws Exception
      */
     @Test
-    public void testInnerJoin_noFetch() throws Exception {
+    void testInnerJoin_noFetch() throws Exception {
         List<CompKeyEmployee> list = jdbcManager.from(CompKeyEmployee.class).innerJoin("department", false).getResultList();
         assertEquals(14, list.size());
         for (CompKeyEmployee e : list) {
@@ -93,7 +93,7 @@ public class CompKeyManyToOneTest {
      * @throws Exception
      */
     @Test
-    public void testInnerJoin_self() throws Exception {
+    void testInnerJoin_self() throws Exception {
         List<CompKeyEmployee> list = jdbcManager.from(CompKeyEmployee.class).innerJoin("manager").getResultList();
         assertEquals(13, list.size());
         for (CompKeyEmployee e : list) {

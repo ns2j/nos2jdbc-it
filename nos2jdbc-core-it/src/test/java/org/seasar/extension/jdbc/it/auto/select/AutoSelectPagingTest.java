@@ -37,7 +37,7 @@ public class AutoSelectPagingTest {
      * @throws Exception
      */
     @Test
-    public void testPaging() throws Exception {
+    void testPaging() throws Exception {
         List<Employee> list = jdbcManager.from(Employee.class).orderBy("employeeId").getResultList();
         assertEquals(14, list.size());
     }
@@ -47,7 +47,7 @@ public class AutoSelectPagingTest {
      * @throws Exception
      */
     @Test
-    public void testPaging_limitOnly() throws Exception {
+    void testPaging_limitOnly() throws Exception {
         List<Employee> list = jdbcManager.from(Employee.class).limit(3).orderBy("employeeId").getResultList();
         assertEquals(3, list.size());
         assertEquals(1, list.get(0).employeeId);
@@ -59,7 +59,7 @@ public class AutoSelectPagingTest {
      * @throws Exception
      */
     @Test
-    public void testPaging_limitOnly_leftOuterJoin() throws Exception {
+    void testPaging_limitOnly_leftOuterJoin() throws Exception {
         List<Employee> list = jdbcManager.from(Employee.class).leftOuterJoin("manager").limit(3).orderBy("employeeId").getResultList();
         assertEquals(3, list.size());
         assertEquals(1, list.get(0).employeeId);
@@ -71,7 +71,7 @@ public class AutoSelectPagingTest {
      * @throws Exception
      */
     @Test
-    public void testPaging_offset_limit() throws Exception {
+    void testPaging_offset_limit() throws Exception {
         List<Employee> list = jdbcManager.from(Employee.class).offset(3).limit(5).orderBy("employeeId").getResultList();
         assertEquals(5, list.size());
         assertEquals(4, list.get(0).employeeId);
@@ -83,7 +83,7 @@ public class AutoSelectPagingTest {
      * @throws Exception
      */
     @Test
-    public void testPaging_offset_limit_leftOuterJoin() throws Exception {
+    void testPaging_offset_limit_leftOuterJoin() throws Exception {
         List<Employee> list = jdbcManager.from(Employee.class).leftOuterJoin("manager").offset(3).limit(5).orderBy("employeeId").getResultList();
         assertEquals(5, list.size());
         assertEquals(4, list.get(0).employeeId);
@@ -95,7 +95,7 @@ public class AutoSelectPagingTest {
      * @throws Exception
      */
     @Test
-    public void testPaging_offset_limitZero() throws Exception {
+    void testPaging_offset_limitZero() throws Exception {
         List<Employee> list = jdbcManager.from(Employee.class).offset(3).limit(0).orderBy("employeeId").getResultList();
         assertEquals(11, list.size());
         assertEquals(4, list.get(0).employeeId);
@@ -107,7 +107,7 @@ public class AutoSelectPagingTest {
      * @throws Exception
      */
     @Test
-    public void testPaging_offset_limitZero_leftOuterJoin() throws Exception {
+    void testPaging_offset_limitZero_leftOuterJoin() throws Exception {
         List<Employee> list = jdbcManager.from(Employee.class).leftOuterJoin("manager").offset(3).limit(0).orderBy("employeeId").getResultList();
         assertEquals(11, list.size());
         assertEquals(4, list.get(0).employeeId);
@@ -119,7 +119,7 @@ public class AutoSelectPagingTest {
      * @throws Exception
      */
     @Test
-    public void testPaging_offsetOnly() throws Exception {
+    void testPaging_offsetOnly() throws Exception {
         List<Employee> list = jdbcManager.from(Employee.class).offset(3).orderBy("employeeId").getResultList();
         assertEquals(11, list.size());
         assertEquals(4, list.get(0).employeeId);
@@ -131,7 +131,7 @@ public class AutoSelectPagingTest {
      * @throws Exception
      */
     @Test
-    public void testPaging_offsetOnly_leftOuterJoin() throws Exception {
+    void testPaging_offsetOnly_leftOuterJoin() throws Exception {
         List<Employee> list = jdbcManager.from(Employee.class).leftOuterJoin("manager").offset(3).orderBy("employeeId").getResultList();
         assertEquals(11, list.size());
         assertEquals(4, list.get(0).employeeId);
@@ -143,7 +143,7 @@ public class AutoSelectPagingTest {
      * @throws Exception
      */
     @Test
-    public void testPaging_offsetZero_limit() throws Exception {
+    void testPaging_offsetZero_limit() throws Exception {
         List<Employee> list = jdbcManager.from(Employee.class).offset(0).limit(3).orderBy("employeeId").getResultList();
         assertEquals(3, list.size());
         assertEquals(1, list.get(0).employeeId);
@@ -155,7 +155,7 @@ public class AutoSelectPagingTest {
      * @throws Exception
      */
     @Test
-    public void testPaging_offsetZero_limit_leftOuterJoin() throws Exception {
+    void testPaging_offsetZero_limit_leftOuterJoin() throws Exception {
         List<Employee> list = jdbcManager.from(Employee.class).leftOuterJoin("manager").offset(0).limit(3).orderBy("employeeId").getResultList();
         assertEquals(3, list.size());
         assertEquals(1, list.get(0).employeeId);
@@ -167,7 +167,7 @@ public class AutoSelectPagingTest {
      * @throws Exception
      */
     @Test
-    public void testPaging_offsetZero_limitZero() throws Exception {
+    void testPaging_offsetZero_limitZero() throws Exception {
         List<Employee> list = jdbcManager.from(Employee.class).offset(0).limit(0).orderBy("employeeId").getResultList();
         assertEquals(14, list.size());
     }
@@ -177,7 +177,7 @@ public class AutoSelectPagingTest {
      * @throws Exception
      */
     @Test
-    public void testPaging_offsetZero_limitZero_leftOuterJoin() throws Exception {
+    void testPaging_offsetZero_limitZero_leftOuterJoin() throws Exception {
         List<Employee> list = jdbcManager.from(Employee.class).leftOuterJoin("manager").offset(0).limit(0).orderBy("employeeId").getResultList();
         assertEquals(14, list.size());
     }

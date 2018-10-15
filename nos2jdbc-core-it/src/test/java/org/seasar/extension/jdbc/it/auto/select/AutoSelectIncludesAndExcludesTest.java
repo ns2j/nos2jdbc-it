@@ -38,7 +38,7 @@ public class AutoSelectIncludesAndExcludesTest {
      * @throws Exception
      */
     @Test
-    public void testIncludes() throws Exception {
+    void testIncludes() throws Exception {
         Employee employee = jdbcManager.from(Employee.class).where(new SimpleWhere().eq("employeeId", 1)).includes("employeeName", "hiredate").getSingleResult();
         assertNotNull(employee);
         assertNotSame(0, employee.employeeId);
@@ -57,7 +57,7 @@ public class AutoSelectIncludesAndExcludesTest {
      * @throws Exception
      */
     @Test
-    public void testExcludes() throws Exception {
+    void testExcludes() throws Exception {
         Employee employee = jdbcManager.from(Employee.class).where(new SimpleWhere().eq("employeeId", 1)).excludes("employeeId", "employeeName", "hiredate").getSingleResult();
         assertNotNull(employee);
         assertNotSame(0, employee.employeeId);
@@ -76,7 +76,7 @@ public class AutoSelectIncludesAndExcludesTest {
      * @throws Exception
      */
     @Test
-    public void testIncludesAndExcludes() throws Exception {
+    void testIncludesAndExcludes() throws Exception {
         Employee employee = jdbcManager.from(Employee.class).leftOuterJoin("address").where(new SimpleWhere().eq("employeeId", 1)).includes("employeeName", "hiredate", "address.street").excludes("employeeName", "address", "address.street").getSingleResult();
         assertNotNull(employee);
         assertNotSame(0, employee.employeeId);
@@ -99,7 +99,7 @@ public class AutoSelectIncludesAndExcludesTest {
      * @throws Exception
      */
     @Test
-    public void testIncludesAndExcludes_oneToMany() throws Exception {
+    void testIncludesAndExcludes_oneToMany() throws Exception {
         Department department = jdbcManager.from(Department.class).leftOuterJoin("employees").leftOuterJoin("employees.address").where(new SimpleWhere().eq("departmentId", 1)).includes("departmentNo", "departmentName", "employees.employeeName", "employees.hiredate", "employees.address.street").excludes("employees.employeeName", "employees.address", "employees.address.street").getSingleResult();
         assertNotNull(department);
         assertNotSame(0, department.departmentId);
@@ -129,7 +129,7 @@ public class AutoSelectIncludesAndExcludesTest {
      * @throws Exception
      */
     @Test
-    public void testIncludesAndExcludes_oneToMany_joinName() throws Exception {
+    void testIncludesAndExcludes_oneToMany_joinName() throws Exception {
         Department department = jdbcManager.from(Department.class).leftOuterJoin("employees").leftOuterJoin("employees.address").where(new SimpleWhere().eq("departmentId", 1)).includes("departmentNo", "departmentName", "employees.address").excludes("employees", "employees.address").getSingleResult();
         assertNotNull(department);
         assertNotSame(0, department.departmentId);

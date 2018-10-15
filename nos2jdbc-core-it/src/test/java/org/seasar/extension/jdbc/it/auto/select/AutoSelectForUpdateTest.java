@@ -43,7 +43,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdate() throws Exception {
+    void testForUpdate() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, false)) {
             return;
         }
@@ -57,7 +57,7 @@ public class AutoSelectForUpdateTest {
     @Test
     //@Prerequisite("#ENV != 'standard'")
     @DisabledIf("['standard'].indexOf(systemProperty.get('database')) >= 0")
-    public void testForUpdate_innerJoin() throws Exception {
+    void testForUpdate_innerJoin() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, false) || !jdbcManagerImplementor.getDialect().supportsInnerJoinForUpdate()) {
             return;
         }
@@ -71,7 +71,7 @@ public class AutoSelectForUpdateTest {
     @Test
     //@Prerequisite("#ENV != 'standard'")
     @DisabledIf("['standard'].indexOf(systemProperty.get('database')) >= 0")
-    public void testForUpdate_leftOuterJoin() throws Exception {
+    void testForUpdate_leftOuterJoin() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, false) || !jdbcManagerImplementor.getDialect().supportsOuterJoinForUpdate()) {
             return;
         }
@@ -83,7 +83,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdate_paging_UnsupportedOperationException() throws Exception {
+    void testForUpdate_paging_UnsupportedOperationException() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, false)) {
             return;
         }
@@ -95,7 +95,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdate_UnsupportedOperationException() throws Exception {
+    void testForUpdate_UnsupportedOperationException() throws Exception {
         if (jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, false)) {
             return;
         }
@@ -107,7 +107,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateNowait() throws Exception {
+    void testForUpdateNowait() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, false)) {
             return;
         }
@@ -119,7 +119,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateNowait_innerJoin() throws Exception {
+    void testForUpdateNowait_innerJoin() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, false)) {
             return;
         }
@@ -131,7 +131,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateNowait_leftOuterJoin() throws Exception {
+    void testForUpdateNowait_leftOuterJoin() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, false) || !jdbcManagerImplementor.getDialect().supportsOuterJoinForUpdate()) {
             return;
         }
@@ -143,7 +143,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateNowait_paging_UnsupportedOperationException() throws Exception {
+    void testForUpdateNowait_paging_UnsupportedOperationException() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, false)) {
             return;
         }
@@ -155,7 +155,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateNowait_UnsupportedOperationException() throws Exception {
+    void testForUpdateNowait_UnsupportedOperationException() throws Exception {
         if (jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, false)) {
             return;
         }
@@ -167,7 +167,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateNowaitWithTarget() throws Exception {
+    void testForUpdateNowaitWithTarget() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, true)) {
             return;
         }
@@ -179,7 +179,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateNowaitWithTarget_innerJoin() throws Exception {
+    void testForUpdateNowaitWithTarget_innerJoin() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, true)) {
             return;
         }
@@ -191,7 +191,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateNowaitWithTarget_innerJoin2() throws Exception {
+    void testForUpdateNowaitWithTarget_innerJoin2() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, true)) {
             return;
         }
@@ -203,7 +203,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateNowaitWithTarget_leftOuterJoin() throws Exception {
+    void testForUpdateNowaitWithTarget_leftOuterJoin() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, true) || !jdbcManagerImplementor.getDialect().supportsOuterJoinForUpdate()) {
             return;
         }
@@ -215,7 +215,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateNowaitWithTarget_leftOuterJoin2() throws Exception {
+    void testForUpdateNowaitWithTarget_leftOuterJoin2() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, true) || !jdbcManagerImplementor.getDialect().supportsOuterJoinForUpdate()) {
             return;
         }
@@ -227,7 +227,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateNowaitWithTarget_paging_UnsupportedOperationException() throws Exception {
+    void testForUpdateNowaitWithTarget_paging_UnsupportedOperationException() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, true)) {
             return;
         }
@@ -239,7 +239,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateNowaitWithTarget_UnsupportedOperationException() throws Exception {
+    void testForUpdateNowaitWithTarget_UnsupportedOperationException() throws Exception {
         if (jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, true)) {
             return;
         }
@@ -251,7 +251,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateNowaitWithTargets() throws Exception {
+    void testForUpdateNowaitWithTargets() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, true)) {
             return;
         }
@@ -263,7 +263,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateNowaitWithTargets_innerJoin() throws Exception {
+    void testForUpdateNowaitWithTargets_innerJoin() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, true)) {
             return;
         }
@@ -275,7 +275,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateNowaitWithTargets_leftOuterJoin() throws Exception {
+    void testForUpdateNowaitWithTargets_leftOuterJoin() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, true) || !jdbcManagerImplementor.getDialect().supportsOuterJoinForUpdate()) {
             return;
         }
@@ -287,7 +287,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateNowaitWithTargets_pagingOffsetLimit() throws Exception {
+    void testForUpdateNowaitWithTargets_pagingOffsetLimit() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, true)) {
             return;
         }
@@ -299,7 +299,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateNowaitWithTargets_UnsupportedOperationException() throws Exception {
+    void testForUpdateNowaitWithTargets_UnsupportedOperationException() throws Exception {
         if (jdbcManagerImplementor.getDialect().supportsForUpdate(NOWAIT, true)) {
             return;
         }
@@ -311,7 +311,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWait() throws Exception {
+    void testForUpdateWait() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, false)) {
             return;
         }
@@ -323,7 +323,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWait_innerJoin() throws Exception {
+    void testForUpdateWait_innerJoin() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, false)) {
             return;
         }
@@ -335,7 +335,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWait_leftOuterJoin() throws Exception {
+    void testForUpdateWait_leftOuterJoin() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, false) || !jdbcManagerImplementor.getDialect().supportsOuterJoinForUpdate()) {
             return;
         }
@@ -347,7 +347,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWait_paging_UnsupportedOperationException() throws Exception {
+    void testForUpdateWait_paging_UnsupportedOperationException() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, false)) {
             return;
         }
@@ -359,7 +359,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWait_UnsupportedOperationException() throws Exception {
+    void testForUpdateWait_UnsupportedOperationException() throws Exception {
         if (jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, false)) {
             return;
         }
@@ -371,7 +371,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWaitWithTarget() throws Exception {
+    void testForUpdateWaitWithTarget() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, true)) {
             return;
         }
@@ -383,7 +383,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWaitWithTarget_innerJoin() throws Exception {
+    void testForUpdateWaitWithTarget_innerJoin() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, true)) {
             return;
         }
@@ -395,7 +395,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWaitWithTarget_innerJoin2() throws Exception {
+    void testForUpdateWaitWithTarget_innerJoin2() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, true)) {
             return;
         }
@@ -407,7 +407,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWaitWithTarget_leftOuterJoin() throws Exception {
+    void testForUpdateWaitWithTarget_leftOuterJoin() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, true)) {
             return;
         }
@@ -419,7 +419,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWaitWithTarget_leftOuterJoin2() throws Exception {
+    void testForUpdateWaitWithTarget_leftOuterJoin2() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, true)) {
             return;
         }
@@ -431,7 +431,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWaitWithTarget_paging_UnsupportedOperationException() throws Exception {
+    void testForUpdateWaitWithTarget_paging_UnsupportedOperationException() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, true)) {
             return;
         }
@@ -443,7 +443,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWaitWithTarget_UnsupportedOperationException() throws Exception {
+    void testForUpdateWaitWithTarget_UnsupportedOperationException() throws Exception {
         if (jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, true)) {
             return;
         }
@@ -455,7 +455,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWaitWithTargets() throws Exception {
+    void testForUpdateWaitWithTargets() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, true)) {
             return;
         }
@@ -467,7 +467,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWaitWithTargets_innerJoin() throws Exception {
+    void testForUpdateWaitWithTargets_innerJoin() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, true)) {
             return;
         }
@@ -479,7 +479,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWaitWithTargets_leftOuterJoin() throws Exception {
+    void testForUpdateWaitWithTargets_leftOuterJoin() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, true)) {
             return;
         }
@@ -491,7 +491,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWaitWithTargets_paging_UnsupportedOperationException() throws Exception {
+    void testForUpdateWaitWithTargets_paging_UnsupportedOperationException() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, true)) {
             return;
         }
@@ -503,7 +503,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWaitWithTargets_UnsupportedOperationException() throws Exception {
+    void testForUpdateWaitWithTargets_UnsupportedOperationException() throws Exception {
         if (jdbcManagerImplementor.getDialect().supportsForUpdate(WAIT, true)) {
             return;
         }
@@ -515,7 +515,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWithTarget() throws Exception {
+    void testForUpdateWithTarget() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true)) {
             return;
         }
@@ -527,7 +527,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWithTarget_innerJoin() throws Exception {
+    void testForUpdateWithTarget_innerJoin() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true)) {
             return;
         }
@@ -539,7 +539,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWithTarget_innerJoin2() throws Exception {
+    void testForUpdateWithTarget_innerJoin2() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true)) {
             return;
         }
@@ -551,7 +551,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWithTarget_leftOuterJoin() throws Exception {
+    void testForUpdateWithTarget_leftOuterJoin() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true) || !jdbcManagerImplementor.getDialect().supportsOuterJoinForUpdate()) {
             return;
         }
@@ -563,7 +563,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWithTarget_leftOuterJoin2() throws Exception {
+    void testForUpdateWithTarget_leftOuterJoin2() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true) || !jdbcManagerImplementor.getDialect().supportsOuterJoinForUpdate()) {
             return;
         }
@@ -575,7 +575,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWithTarget_paging_UnsupportedOperationException() throws Exception {
+    void testForUpdateWithTarget_paging_UnsupportedOperationException() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true)) {
             return;
         }
@@ -587,7 +587,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWithTarget_UnsupportedOperationException() throws Exception {
+    void testForUpdateWithTarget_UnsupportedOperationException() throws Exception {
         if (jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true)) {
             return;
         }
@@ -599,7 +599,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWithTargets() throws Exception {
+    void testForUpdateWithTargets() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true)) {
             return;
         }
@@ -611,7 +611,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWithTargets_illegalPropertyName() throws Exception {
+    void testForUpdateWithTargets_illegalPropertyName() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true)) {
             return;
         }
@@ -623,7 +623,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWithTargets_illegalPropertyName2() throws Exception {
+    void testForUpdateWithTargets_illegalPropertyName2() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true)) {
             return;
         }
@@ -635,7 +635,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWithTargets_illegalPropertyName3() throws Exception {
+    void testForUpdateWithTargets_illegalPropertyName3() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true)) {
             return;
         }
@@ -652,7 +652,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWithTargets_innerJoin() throws Exception {
+    void testForUpdateWithTargets_innerJoin() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true)) {
             return;
         }
@@ -664,7 +664,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWithTargets_leftOuterJoin() throws Exception {
+    void testForUpdateWithTargets_leftOuterJoin() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true) || !jdbcManagerImplementor.getDialect().supportsOuterJoinForUpdate()) {
             return;
         }
@@ -676,7 +676,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWithTargets_paging_UnsupportedOperationException() throws Exception {
+    void testForUpdateWithTargets_paging_UnsupportedOperationException() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true)) {
             return;
         }
@@ -688,7 +688,7 @@ public class AutoSelectForUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testForUpdateWithTargets_UnsupportedOperationException() throws Exception {
+    void testForUpdateWithTargets_UnsupportedOperationException() throws Exception {
         if (jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, true)) {
             return;
         }

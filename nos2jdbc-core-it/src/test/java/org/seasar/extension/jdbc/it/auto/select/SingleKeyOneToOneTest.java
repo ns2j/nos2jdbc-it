@@ -39,7 +39,7 @@ public class SingleKeyOneToOneTest {
      * @throws Exception
      */
     @Test
-    public void testLeftOuterJoin_fromOwnerToInverse() throws Exception {
+    void testLeftOuterJoin_fromOwnerToInverse() throws Exception {
         List<Employee> list = jdbcManager.from(Employee.class).leftOuterJoin("address").getResultList();
         assertEquals(14, list.size());
         for (Employee e : list) {
@@ -52,7 +52,7 @@ public class SingleKeyOneToOneTest {
      * @throws Exception
      */
     @Test
-    public void testLeftOuterJoin_fromOwnerToInverse_names() throws Exception {
+    void testLeftOuterJoin_fromOwnerToInverse_names() throws Exception {
         List<Employee> list = jdbcManager.from(Employee.class).leftOuterJoin(address()).getResultList();
         assertEquals(14, list.size());
         for (Employee e : list) {
@@ -65,7 +65,7 @@ public class SingleKeyOneToOneTest {
      * @throws Exception
      */
     @Test
-    public void testLeftOuterJoin_fromOwnerToInverse_noFetch() throws Exception {
+    void testLeftOuterJoin_fromOwnerToInverse_noFetch() throws Exception {
         List<Employee> list = jdbcManager.from(Employee.class).leftOuterJoin("address", false).getResultList();
         assertEquals(14, list.size());
         for (Employee e : list) {
@@ -78,7 +78,7 @@ public class SingleKeyOneToOneTest {
      * @throws Exception
      */
     @Test
-    public void testInnerJoin_fromOwnerToInverse() throws Exception {
+    void testInnerJoin_fromOwnerToInverse() throws Exception {
         List<Employee> list = jdbcManager.from(Employee.class).innerJoin("address").getResultList();
         assertEquals(14, list.size());
         for (Employee e : list) {
@@ -91,7 +91,7 @@ public class SingleKeyOneToOneTest {
      * @throws Exception
      */
     @Test
-    public void testInnerJoin_fromOwnerToInverse_noFetch() throws Exception {
+    void testInnerJoin_fromOwnerToInverse_noFetch() throws Exception {
         List<Employee> list = jdbcManager.from(Employee.class).innerJoin("address", false).getResultList();
         assertEquals(14, list.size());
         for (Employee e : list) {
@@ -104,7 +104,7 @@ public class SingleKeyOneToOneTest {
      * @throws Exception
      */
     @Test
-    public void testLeftOuterJoin_fromInverseToOwner() throws Exception {
+    void testLeftOuterJoin_fromInverseToOwner() throws Exception {
         List<Address> list = jdbcManager.from(Address.class).leftOuterJoin("employee").getResultList();
         assertEquals(14, list.size());
         for (Address e : list) {
@@ -117,7 +117,7 @@ public class SingleKeyOneToOneTest {
      * @throws Exception
      */
     @Test
-    public void testLeftOuterJoin_fromInverseToOwner_noFetch() throws Exception {
+    void testLeftOuterJoin_fromInverseToOwner_noFetch() throws Exception {
         List<Address> list = jdbcManager.from(Address.class).leftOuterJoin("employee", false).getResultList();
         assertEquals(14, list.size());
         for (Address e : list) {
@@ -130,7 +130,7 @@ public class SingleKeyOneToOneTest {
      * @throws Exception
      */
     @Test
-    public void testInnerJoin_fromInverseToOwner() throws Exception {
+    void testInnerJoin_fromInverseToOwner() throws Exception {
         List<Address> list = jdbcManager.from(Address.class).innerJoin("employee").getResultList();
         assertEquals(14, list.size());
         for (Address e : list) {
@@ -143,7 +143,7 @@ public class SingleKeyOneToOneTest {
      * @throws Exception
      */
     @Test
-    public void testInnerJoin_fromInverseToOwner_noFetch() throws Exception {
+    void testInnerJoin_fromInverseToOwner_noFetch() throws Exception {
         List<Address> list = jdbcManager.from(Address.class).innerJoin("employee", false).getResultList();
         assertEquals(14, list.size());
         for (Address e : list) {
