@@ -19,7 +19,7 @@ import javax.persistence.EntityExistsException;
 import nos2jdbc.core.it.NoS2JdbcExtension;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.DisabledIf;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.exception.IdGenerationFailedRuntimeException;
@@ -322,7 +322,7 @@ class AutoInsertTest {
      */
     //@Prerequisite("#ENV not in {'hsqldb', 'h2', 'standard', 'oracle', 'db2', 'mysql', 'postgre'}")
     @Test
-    @DisabledIf(value = { "['hsqldb', 'h2', 'standard', 'oracle', 'db2', 'mysql', 'postgre'].indexOf(systemProperty.get('database')) >= 0" })
+    @DisabledIfSystemProperty(named="database", matches="(hsqldb|h2|standard|oracle|db2|mysql|postgre)")
     void testId_table_qualifiedGenerator() throws Exception {
         for (int i = 0; i < 110; i++) {
             TableStrategy5 entity = new TableStrategy5();

@@ -17,7 +17,7 @@ package org.seasar.extension.jdbc.it.auto;
 
 import javax.persistence.EntityExistsException;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.DisabledIf;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.exception.IdPropertyNotAssignedRuntimeException;
@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 @ExtendWith(NoS2JdbcExtension.class)
 //@Prerequisite("#ENV not in {'standard'}")
-@DisabledIf("['standard'].indexOf(systemProperty.get('database')) >= 0")
+@DisabledIfSystemProperty(named = "database", matches = "standard")
 class ConstraintViolationTest {
 
     private JdbcManager jdbcManager;
@@ -131,7 +131,7 @@ class ConstraintViolationTest {
      * @throws Exception
      */
     //@Prerequisite("#ENV not in {'mysql'}")
-    @DisabledIf("['mysql'].indexOf(systemProperty.get('database')) >= 0")
+    @DisabledIfSystemProperty(named = "database", matches = "mysql")
     @Test
     void testCheckConstraint() throws Exception {
         ConstraintChecking checking = new ConstraintChecking();

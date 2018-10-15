@@ -21,7 +21,7 @@ import java.util.List;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.DisabledIf;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Employee;
@@ -35,7 +35,7 @@ import static org.seasar.extension.jdbc.parameter.Parameter.*;
  */
 @ExtendWith(NoS2JdbcExtension.class)
 //@Prerequisite("#ENV not in {'hsqldb', 'h2', 'db2', 'standard'}\")
-@DisabledIf("['hsqldb', 'h2', 'db2', 'standard'].indexOf(systemProperty.get('database')) >= 0")
+@DisabledIfSystemProperty(named = "database", matches = "(hsqldb|h2|db2|standard)")
 public class SqlFunctionCallTest {
 
     private JdbcManager jdbcManager;
@@ -107,7 +107,7 @@ public class SqlFunctionCallTest {
      */
     @Test
     //@Prerequisite("#ENV not in {'mssql2005', 'mysql'}")
-    @DisabledIf("['mssql2005', 'mysql'].indexOf(systemProperty.get('database')) >= 0")
+    @DisabledIfSystemProperty(named = "database", matches = "(mssql2005|mysql)")
     public void testParameter_resultSet() throws Exception {
         List<Employee> employees = jdbcManager.callBySql(Employee.class, "{? = call FUNC_RESULTSET(?)}", 10).getResultList();
         assertNotNull(employees);
@@ -124,7 +124,7 @@ public class SqlFunctionCallTest {
      */
     @Test
     //@Prerequisite("#ENV not in {'mssql2005', 'mysql'}")
-    @DisabledIf("['mssql2005', 'mysql'].indexOf(systemProperty.get('database')) >= 0")
+    @DisabledIfSystemProperty(named = "database", matches = "(mssql2005|mysql)")
     public void testParameter_resultSetUpdate() throws Exception {
         List<Employee> employees = jdbcManager.callBySql(Employee.class, "{? = call FUNC_RESULTSET_UPDATE(?)}", 10).getResultList();
         assertNotNull(employees);
