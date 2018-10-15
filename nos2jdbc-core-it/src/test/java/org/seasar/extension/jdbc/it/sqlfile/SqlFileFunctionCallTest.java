@@ -36,7 +36,7 @@ import static org.seasar.extension.jdbc.parameter.Parameter.*;
 @ExtendWith(NoS2JdbcExtension.class)
 //@Prerequisite("#ENV not in {'hsqldb', 'h2', 'db2', 'standard'}")
 @DisabledIfSystemProperty(named = "database", matches = "(hsqldb|h2|db2|standard)")
-public class SqlFileFunctionCallTest {
+class SqlFileFunctionCallTest {
 
     private JdbcManager jdbcManager;
 
@@ -45,7 +45,7 @@ public class SqlFileFunctionCallTest {
      * @throws Exception
      */
     @Test
-    public void testParameter_none() throws Exception {
+    void testParameter_none() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_no" + ".sql";
         Integer result = jdbcManager.callBySqlFile(Integer.class, path).getSingleResult();
         assertEquals(new Integer(10), result);
@@ -56,7 +56,7 @@ public class SqlFileFunctionCallTest {
      * @throws Exception
      */
     @Test
-    public void testParameter_simpleType() throws Exception {
+    void testParameter_simpleType() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_simpleType" + ".sql";
         Integer result = jdbcManager.callBySqlFile(Integer.class, path, 1).getSingleResult();
         assertEquals(new Integer(20), result);
@@ -67,7 +67,7 @@ public class SqlFileFunctionCallTest {
      * @throws Exception
      */
     @Test
-    public void testParameter_simpleType_time() throws Exception {
+    void testParameter_simpleType_time() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_simpleType_time" + ".sql";
         Date inparam = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2007-08-08 12:11:10");
         Date result = jdbcManager.callBySqlFile(Date.class, path, time(inparam)).temporal(TemporalType.TIME).getSingleResult();
@@ -80,7 +80,7 @@ public class SqlFileFunctionCallTest {
      * @throws Exception
      */
     @Test
-    public void testParameter_dto() throws Exception {
+    void testParameter_dto() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_dto" + ".sql";
         MyDto dto = new MyDto();
         dto.param1 = 3;
@@ -96,7 +96,7 @@ public class SqlFileFunctionCallTest {
      * @throws Exception
      */
     @Test
-    public void testParameter_dtoTx_time() throws Exception {
+    void testParameter_dtoTx_time() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_dto_time" + ".sql";
         Date date = new SimpleDateFormat("HH:mm:ss").parse("12:11:10");
         MyDto2 dto = new MyDto2();
@@ -113,7 +113,7 @@ public class SqlFileFunctionCallTest {
     @Test
     //@Prerequisite("#ENV not in {'mssql2005', 'mysql'}")
     @DisabledIfSystemProperty(named = "database", matches = "(mssql2005|mysql)")
-    public void testParameter_resultSet() throws Exception {
+    void testParameter_resultSet() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_resultSet" + ".sql";
         List<Employee> employees = jdbcManager.callBySqlFile(Employee.class, path, 10).getResultList();
         assertNotNull(employees);
@@ -131,7 +131,7 @@ public class SqlFileFunctionCallTest {
     @Test
     //@Prerequisite("#ENV not in {'mssql2005', 'mysql'}")
     @DisabledIfSystemProperty(named = "database", matches = "(mssql2005|mysql)")
-    public void testParameter_resultSetUpdate() throws Exception {
+    void testParameter_resultSetUpdate() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_resultSetUpdate" + ".sql";
         List<Employee> employees = jdbcManager.callBySqlFile(Employee.class, path, 10).getResultList();
         assertNotNull(employees);

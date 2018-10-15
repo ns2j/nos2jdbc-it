@@ -37,7 +37,7 @@ import static org.seasar.extension.jdbc.parameter.Parameter.*;
  * 
  */
 @ExtendWith(NoS2JdbcExtension.class)
-public class SqlBatchUpdateTest {
+class SqlBatchUpdateTest {
 
     private JdbcManager jdbcManager;
 
@@ -46,7 +46,7 @@ public class SqlBatchUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testParameter_none() throws Exception {
+    void testParameter_none() throws Exception {
         String sql = "UPDATE EMPLOYEE SET SALARY = SALARY * 2 WHERE EMPLOYEE_ID = 1";
         int[] result = jdbcManager.updateBatchBySql(sql).params().params().execute();
         assertEquals(2, result.length);
@@ -57,7 +57,7 @@ public class SqlBatchUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testParameter() throws Exception {
+    void testParameter() throws Exception {
         String sql = "DELETE FROM EMPLOYEE WHERE DEPARTMENT_ID = ? AND SALARY > ?";
         int[] result = jdbcManager.updateBatchBySql(sql, int.class, BigDecimal.class).params(1, new BigDecimal(3000)).params(2, new BigDecimal(2000)).execute();
         assertEquals(2, result.length);
@@ -71,7 +71,7 @@ public class SqlBatchUpdateTest {
      */
     //@Prerequisite("#ENV != 'hsqldb'")
     @Test
-    public void testEntityExistsException_insert() throws Exception {
+    void testEntityExistsException_insert() throws Exception {
         String sql = "INSERT INTO DEPARTMENT (DEPARTMENT_ID, DEPARTMENT_NO) VALUES(?, ?)";
         assertThrows(EntityExistsException.class, () -> jdbcManager.updateBatchBySql(sql, int.class, int.class).params(1, 50).execute());
     }
@@ -82,7 +82,7 @@ public class SqlBatchUpdateTest {
      */
     //@Prerequisite("#ENV != 'hsqldb'")
     @Test
-    public void testEntityExistsException_update() throws Exception {
+    void testEntityExistsException_update() throws Exception {
         String sql = "UPDATE DEPARTMENT SET DEPARTMENT_ID = ? WHERE DEPARTMENT_ID = ?";
         assertThrows(EntityExistsException.class, () -> jdbcManager.updateBatchBySql(sql, int.class, int.class).params(1, 4).execute());
     }
@@ -92,7 +92,7 @@ public class SqlBatchUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testTemporalType() throws Exception {
+    void testTemporalType() throws Exception {
         String sql = "UPDATE TENSE SET DATE_DATE = ?, DATE_TIME = ?, DATE_TIMESTAMP = ?, CAL_DATE = ?, CAL_TIME = ?, CAL_TIMESTAMP = ?, SQL_DATE = ?, SQL_TIME = ?, SQL_TIMESTAMP = ? WHERE ID = ?";
         long date = new SimpleDateFormat("yyyy-MM-dd").parse("2005-03-14").getTime();
         long time = new SimpleDateFormat("HH:mm:ss").parse("13:11:10").getTime();

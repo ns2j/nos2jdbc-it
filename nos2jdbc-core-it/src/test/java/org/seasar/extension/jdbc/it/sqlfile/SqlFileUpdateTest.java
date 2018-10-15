@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * 
  */
 @ExtendWith(NoS2JdbcExtension.class)
-public class SqlFileUpdateTest {
+class SqlFileUpdateTest {
 
     private JdbcManager jdbcManager;
 
@@ -43,7 +43,7 @@ public class SqlFileUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testParameter_none() throws Exception {
+    void testParameter_none() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_no.sql";
         int result = jdbcManager.updateBySqlFile(path, null).execute();
         assertEquals(1, result);
@@ -60,7 +60,7 @@ public class SqlFileUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testParamter_simpleType() throws Exception {
+    void testParamter_simpleType() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_simpleType.sql";
         int result = jdbcManager.updateBySqlFile(path, 2).execute();
         assertEquals(1, result);
@@ -77,7 +77,7 @@ public class SqlFileUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testParamter_dto() throws Exception {
+    void testParamter_dto() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_dto.sql";
         MyDto myDto = new MyDto();
         myDto.departmentId = 2;
@@ -97,7 +97,7 @@ public class SqlFileUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testEntityExistsException_insert() throws Exception {
+    void testEntityExistsException_insert() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_EntityExistsException_insert.sql";
         MyDto2 dto = new MyDto2();
         dto.departmentId = 1;
@@ -110,7 +110,7 @@ public class SqlFileUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testEntityExistsException_update() throws Exception {
+    void testEntityExistsException_update() throws Exception {
         jdbcManager.updateBySql("insert into DEPARTMENT (DEPARTMENT_ID, DEPARTMENT_NO) values (99, 99)").execute();
         String path = getClass().getName().replace(".", "/") + "_EntityExistsException_update.sql";
         MyDto3 dto = new MyDto3();
@@ -124,7 +124,7 @@ public class SqlFileUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testTemporalType() throws Exception {
+    void testTemporalType() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_temporalType.sql";
         long date = new SimpleDateFormat("yyyy-MM-dd").parse("2005-03-14").getTime();
         long time = new SimpleDateFormat("HH:mm:ss").parse("13:11:10").getTime();

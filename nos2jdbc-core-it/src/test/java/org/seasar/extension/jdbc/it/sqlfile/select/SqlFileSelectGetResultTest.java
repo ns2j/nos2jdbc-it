@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * 
  */
 @ExtendWith(NoS2JdbcExtension.class)
-public class SqlFileSelectGetResultTest {
+class SqlFileSelectGetResultTest {
 
     private JdbcManager jdbcManager;
 
@@ -39,7 +39,7 @@ public class SqlFileSelectGetResultTest {
      * @throws Exception
      */
     @Test
-    public void testBean_getResultList_NoResultException() throws Exception {
+    void testBean_getResultList_NoResultException() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_getResultList_NoResultException.sql";
         assertThrows(NoResultException.class, () -> jdbcManager.selectBySqlFile(Employee.class, path).disallowNoResult().getResultList());
     }
@@ -49,7 +49,7 @@ public class SqlFileSelectGetResultTest {
      * @throws Exception
      */
     @Test
-    public void testBean_getSingleResult() throws Exception {
+    void testBean_getSingleResult() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_getSingleResult.sql";
         Employee employee = jdbcManager.selectBySqlFile(Employee.class, path).getSingleResult();
         assertNotNull(employee);
@@ -60,7 +60,7 @@ public class SqlFileSelectGetResultTest {
      * @throws Exception
      */
     @Test
-    public void testBean_getSingleResult_NonUniqueResultException() throws Exception {
+    void testBean_getSingleResult_NonUniqueResultException() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_getSingleResult_NonUniqueResultException.sql";
         assertThrows(NonUniqueResultException.class, () -> jdbcManager.selectBySqlFile(Employee.class, path).getSingleResult());
     }
@@ -70,7 +70,7 @@ public class SqlFileSelectGetResultTest {
      * @throws Exception
      */
     @Test
-    public void testBean_getSingleResult_NoResultException() throws Exception {
+    void testBean_getSingleResult_NoResultException() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_getSingleResult_NoResultException.sql";
         assertThrows(NoResultException.class, () -> jdbcManager.selectBySqlFile(Employee.class, path).disallowNoResult().getSingleResult());
     }
@@ -80,7 +80,7 @@ public class SqlFileSelectGetResultTest {
      * @throws Exception
      */
     @Test
-    public void testBean_getSingleResult_null() throws Exception {
+    void testBean_getSingleResult_null() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_getSingleResult_null.sql";
         Employee employee = jdbcManager.selectBySqlFile(Employee.class, path).getSingleResult();
         assertNull(employee);
@@ -91,7 +91,7 @@ public class SqlFileSelectGetResultTest {
      * @throws Exception
      */
     @Test
-    public void testMap_getResultList_NoResultException() throws Exception {
+    void testMap_getResultList_NoResultException() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_getResultList_NoResultException.sql";
         assertThrows(NoResultException.class, () -> jdbcManager.selectBySqlFile(Map.class, path).disallowNoResult().getResultList());
     }
@@ -101,7 +101,7 @@ public class SqlFileSelectGetResultTest {
      * @throws Exception
      */
     @Test
-    public void testMap_getSingleResult() throws Exception {
+    void testMap_getSingleResult() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_getSingleResult.sql";
         Map<?, ?> employee = jdbcManager.selectBySqlFile(Map.class, path).getSingleResult();
         assertNotNull(employee);
@@ -112,7 +112,7 @@ public class SqlFileSelectGetResultTest {
      * @throws Exception
      */
     @Test
-    public void testMap_getSingleResult_NonUniqueResultException() throws Exception {
+    void testMap_getSingleResult_NonUniqueResultException() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_getSingleResult_NonUniqueResultException.sql";
         assertThrows(NonUniqueResultException.class, () -> jdbcManager.selectBySqlFile(Map.class, path).getSingleResult());
     }
@@ -122,7 +122,7 @@ public class SqlFileSelectGetResultTest {
      * @throws Exception
      */
     @Test
-    public void testMap_getSingleResult_NoResultException() throws Exception {
+    void testMap_getSingleResult_NoResultException() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_getSingleResult_NoResultException.sql";
         assertThrows(NoResultException.class, () -> jdbcManager.selectBySqlFile(Map.class, path).disallowNoResult().getSingleResult());
     }
@@ -132,7 +132,7 @@ public class SqlFileSelectGetResultTest {
      * @throws Exception
      */
     @Test
-    public void testMap_getSingleResult_null() throws Exception {
+    void testMap_getSingleResult_null() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_getSingleResult_null.sql";
         Map<?, ?> employee = jdbcManager.selectBySqlFile(Map.class, path).getSingleResult();
         assertNull(employee);
@@ -143,7 +143,7 @@ public class SqlFileSelectGetResultTest {
      * @throws Exception
      */
     @Test
-    public void testObject_getResultList_NoResultException() throws Exception {
+    void testObject_getResultList_NoResultException() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_getResultList_NoResultException2.sql";
         assertThrows(NoResultException.class, () -> jdbcManager.selectBySqlFile(Integer.class, path).disallowNoResult().getResultList());
     }
@@ -153,7 +153,7 @@ public class SqlFileSelectGetResultTest {
      * @throws Exception
      */
     @Test
-    public void testObject_getSingleResult() throws Exception {
+    void testObject_getSingleResult() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_getSingleResult2.sql";
         Integer employeeId = jdbcManager.selectBySqlFile(Integer.class, path).getSingleResult();
         assertNotNull(employeeId);
@@ -164,7 +164,7 @@ public class SqlFileSelectGetResultTest {
      * @throws Exception
      */
     @Test
-    public void testObject_getSingleResult_NonUniqueResultException() throws Exception {
+    void testObject_getSingleResult_NonUniqueResultException() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_getSingleResult_NonUniqueResultException2.sql";
         assertThrows(NonUniqueResultException.class, () -> jdbcManager.selectBySqlFile(Integer.class, path).getSingleResult());
     }
@@ -174,7 +174,7 @@ public class SqlFileSelectGetResultTest {
      * @throws Exception
      */
     @Test
-    public void testObject_getSingleResult_NoResultException() throws Exception {
+    void testObject_getSingleResult_NoResultException() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_getSingleResult_NoResultException2.sql";
         assertThrows(NoResultException.class, () -> jdbcManager.selectBySqlFile(Integer.class, path).disallowNoResult().getSingleResult());
     }
@@ -184,7 +184,7 @@ public class SqlFileSelectGetResultTest {
      * @throws Exception
      */
     @Test
-    public void testObject_getSingleResult_null() throws Exception {
+    void testObject_getSingleResult_null() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_getSingleResult_null2.sql";
         Integer employeeId = jdbcManager.selectBySqlFile(Integer.class, path).getSingleResult();
         assertNull(employeeId);

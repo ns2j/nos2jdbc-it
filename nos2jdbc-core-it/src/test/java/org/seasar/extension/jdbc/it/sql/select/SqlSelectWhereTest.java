@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * 
  */
 @ExtendWith(NoS2JdbcExtension.class)
-public class SqlSelectWhereTest {
+class SqlSelectWhereTest {
 
     private JdbcManager jdbcManager;
 
@@ -38,7 +38,7 @@ public class SqlSelectWhereTest {
      * @throws Exception
      */
     @Test
-    public void testBean_parameter() throws Exception {
+    void testBean_parameter() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE DEPARTMENT_ID = ? AND SALARY = ?";
         List<Employee> list = jdbcManager.selectBySql(Employee.class, sql, 2, 3000).getResultList();
         assertEquals(2, list.size());
@@ -49,7 +49,7 @@ public class SqlSelectWhereTest {
      * @throws Exception
      */
     @Test
-    public void testBean_parameter_none() throws Exception {
+    void testBean_parameter_none() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE";
         List<Employee> list = jdbcManager.selectBySql(Employee.class, sql).getResultList();
         assertEquals(14, list.size());
@@ -60,7 +60,7 @@ public class SqlSelectWhereTest {
      * @throws Exception
      */
     @Test
-    public void testMap_parameter() throws Exception {
+    void testMap_parameter() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE DEPARTMENT_ID = ? AND SALARY = ?";
         @SuppressWarnings("unchecked") List<Map> list = jdbcManager.selectBySql(Map.class, sql, 2, 3000).getResultList();
         assertEquals(2, list.size());
@@ -71,7 +71,7 @@ public class SqlSelectWhereTest {
      * @throws Exception
      */
     @Test
-    public void testMap_parameter_none() throws Exception {
+    void testMap_parameter_none() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE";
         @SuppressWarnings("unchecked") List<Map> list = jdbcManager.selectBySql(Map.class, sql).getResultList();
         assertEquals(14, list.size());
@@ -82,7 +82,7 @@ public class SqlSelectWhereTest {
      * @throws Exception
      */
     @Test
-    public void testObject_parameter() throws Exception {
+    void testObject_parameter() throws Exception {
         String sql = "SELECT EMPLOYEE_ID FROM EMPLOYEE WHERE DEPARTMENT_ID = ? AND SALARY = ?";
         List<Integer> list = jdbcManager.selectBySql(Integer.class, sql, 2, 3000).getResultList();
         assertEquals(2, list.size());
@@ -93,7 +93,7 @@ public class SqlSelectWhereTest {
      * @throws Exception
      */
     @Test
-    public void testObject_parameter_none() throws Exception {
+    void testObject_parameter_none() throws Exception {
         String sql = "SELECT EMPLOYEE_ID FROM EMPLOYEE";
         List<Integer> list = jdbcManager.selectBySql(Integer.class, sql).getResultList();
         assertEquals(14, list.size());

@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * 
  */
 @ExtendWith(NoS2JdbcExtension.class)
-public class SqlFileBatchUpdateTest {
+class SqlFileBatchUpdateTest {
 
     private JdbcManager jdbcManager;
 
@@ -43,7 +43,7 @@ public class SqlFileBatchUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testParamter_none() throws Exception {
+    void testParamter_none() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_no.sql";
         int[] result = jdbcManager.updateBatchBySqlFile(path, null, null).execute();
         assertEquals(2, result.length);
@@ -54,7 +54,7 @@ public class SqlFileBatchUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testParamter_simpleType() throws Exception {
+    void testParamter_simpleType() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_simpleType.sql";
         int[] result = jdbcManager.updateBatchBySqlFile(path, 2, 3).execute();
         assertEquals(2, result.length);
@@ -77,7 +77,7 @@ public class SqlFileBatchUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testParamter_dto() throws Exception {
+    void testParamter_dto() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_dto.sql";
         MyDto dto = new MyDto();
         dto.departmentId = 2;
@@ -134,7 +134,7 @@ public class SqlFileBatchUpdateTest {
      * @throws Exception
      */
     @Test
-    public void testTemporalType() throws Exception {
+    void testTemporalType() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_temporalType.sql";
         long date = new SimpleDateFormat("yyyy-MM-dd").parse("2005-03-14").getTime();
         long time = new SimpleDateFormat("HH:mm:ss").parse("13:11:10").getTime();

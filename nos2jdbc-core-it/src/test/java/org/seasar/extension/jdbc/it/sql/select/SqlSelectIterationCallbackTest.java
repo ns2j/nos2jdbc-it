@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * 
  */
 @ExtendWith(NoS2JdbcExtension.class)
-public class SqlSelectIterationCallbackTest {
+class SqlSelectIterationCallbackTest {
 
     private static final String SQL = "SELECT * FROM EMPLOYEE ORDER BY EMPLOYEE_ID";
 
@@ -82,7 +82,7 @@ public class SqlSelectIterationCallbackTest {
      * @throws Exception
      */
     @Test
-    public void testBean() throws Exception {
+    void testBean() throws Exception {
         BigDecimal sum = jdbcManager.selectBySql(Employee.class, SQL).iterate(beanSalarySumCallBack);
         assertTrue(new BigDecimal(29025).compareTo(sum) == 0);
     }
@@ -92,7 +92,7 @@ public class SqlSelectIterationCallbackTest {
      * @throws Exception
      */
     @Test
-    public void testBean_limitOnly() throws Exception {
+    void testBean_limitOnly() throws Exception {
         BigDecimal sum = jdbcManager.selectBySql(Employee.class, SQL).limit(3).iterate(beanSalarySumCallBack);
         assertTrue(new BigDecimal(3650).compareTo(sum) == 0);
     }
@@ -102,7 +102,7 @@ public class SqlSelectIterationCallbackTest {
      * @throws Exception
      */
     @Test
-    public void testBean_offset_limit() throws Exception {
+    void testBean_offset_limit() throws Exception {
         BigDecimal sum = jdbcManager.selectBySql(Employee.class, SQL).offset(3).limit(5).iterate(beanSalarySumCallBack);
         assertTrue(new BigDecimal(12525).compareTo(sum) == 0);
     }
@@ -112,7 +112,7 @@ public class SqlSelectIterationCallbackTest {
      * @throws Exception
      */
     @Test
-    public void testBean_offsetOnly() throws Exception {
+    void testBean_offsetOnly() throws Exception {
         BigDecimal sum = jdbcManager.selectBySql(Employee.class, SQL).offset(3).iterate(beanSalarySumCallBack);
         assertTrue(new BigDecimal(25375).compareTo(sum) == 0);
     }
@@ -122,7 +122,7 @@ public class SqlSelectIterationCallbackTest {
      * @throws Exception
      */
     @Test
-    public void testMap() throws Exception {
+    void testMap() throws Exception {
         BigDecimal sum = jdbcManager.selectBySql(Map.class, SQL).iterate(mapSalarySumCallBack);
         assertTrue(new BigDecimal(29025).compareTo(sum) == 0);
     }
@@ -132,7 +132,7 @@ public class SqlSelectIterationCallbackTest {
      * @throws Exception
      */
     @Test
-    public void testMap_limitOnly() throws Exception {
+    void testMap_limitOnly() throws Exception {
         BigDecimal sum = jdbcManager.selectBySql(Map.class, SQL).limit(3).iterate(mapSalarySumCallBack);
         assertTrue(new BigDecimal(3650).compareTo(sum) == 0);
     }
@@ -142,7 +142,7 @@ public class SqlSelectIterationCallbackTest {
      * @throws Exception
      */
     @Test
-    public void testMap_offset_limit() throws Exception {
+    void testMap_offset_limit() throws Exception {
         BigDecimal sum = jdbcManager.selectBySql(Map.class, SQL).offset(3).limit(5).iterate(mapSalarySumCallBack);
         assertTrue(new BigDecimal(12525).compareTo(sum) == 0);
     }
@@ -152,7 +152,7 @@ public class SqlSelectIterationCallbackTest {
      * @throws Exception
      */
     @Test
-    public void testMap_offsetOnly() throws Exception {
+    void testMap_offsetOnly() throws Exception {
         BigDecimal sum = jdbcManager.selectBySql(Map.class, SQL).offset(3).iterate(mapSalarySumCallBack);
         assertTrue(new BigDecimal(25375).compareTo(sum) == 0);
     }
@@ -162,7 +162,7 @@ public class SqlSelectIterationCallbackTest {
      * @throws Exception
      */
     @Test
-    public void testObject() throws Exception {
+    void testObject() throws Exception {
         BigDecimal sum = jdbcManager.selectBySql(BigDecimal.class, SQL2).iterate(objectSalarySumCallBack);
         assertTrue(new BigDecimal(29025).compareTo(sum) == 0);
     }
@@ -172,7 +172,7 @@ public class SqlSelectIterationCallbackTest {
      * @throws Exception
      */
     @Test
-    public void testObject_limitOnly() throws Exception {
+    void testObject_limitOnly() throws Exception {
         BigDecimal sum = jdbcManager.selectBySql(BigDecimal.class, SQL2).limit(3).iterate(objectSalarySumCallBack);
         assertTrue(new BigDecimal(3650).compareTo(sum) == 0);
     }
@@ -182,7 +182,7 @@ public class SqlSelectIterationCallbackTest {
      * @throws Exception
      */
     @Test
-    public void testObject_offset_limit() throws Exception {
+    void testObject_offset_limit() throws Exception {
         BigDecimal sum = jdbcManager.selectBySql(BigDecimal.class, SQL2).offset(3).limit(5).iterate(objectSalarySumCallBack);
         assertTrue(new BigDecimal(12525).compareTo(sum) == 0);
     }
@@ -192,7 +192,7 @@ public class SqlSelectIterationCallbackTest {
      * @throws Exception
      */
     @Test
-    public void testObject_offsetOnly() throws Exception {
+    void testObject_offsetOnly() throws Exception {
         BigDecimal sum = jdbcManager.selectBySql(BigDecimal.class, SQL2).offset(3).iterate(objectSalarySumCallBack);
         assertTrue(new BigDecimal(25375).compareTo(sum) == 0);
     }
