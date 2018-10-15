@@ -16,7 +16,7 @@
 package org.seasar.extension.jdbc.it.auto.select;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.DisabledIf;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Pattern;
@@ -39,7 +39,7 @@ class AutoSelectPatternMachingTest {
      */
     @Test
     //@Prerequisite("#ENV != 'hsqldb'")
-    @DisabledIf("['hsqldb'].indexOf(systemProperty.get('database')) >= 0")
+    @DisabledIfSystemProperty(named = "database", matches = "hsqldb")
     void testLike_escape() throws Exception {
         Pattern pattern = new Pattern();
         pattern.value = "xABCy%z$";

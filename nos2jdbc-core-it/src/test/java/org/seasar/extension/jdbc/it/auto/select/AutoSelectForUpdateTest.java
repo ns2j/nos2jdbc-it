@@ -16,7 +16,7 @@
 package org.seasar.extension.jdbc.it.auto.select;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.DisabledIf;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.exception.BaseJoinNotFoundRuntimeException;
@@ -56,7 +56,7 @@ class AutoSelectForUpdateTest {
      */
     @Test
     //@Prerequisite("#ENV != 'standard'")
-    @DisabledIf("['standard'].indexOf(systemProperty.get('database')) >= 0")
+    @DisabledIfSystemProperty(named = "database", matches = "standard")
     void testForUpdate_innerJoin() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, false) || !jdbcManagerImplementor.getDialect().supportsInnerJoinForUpdate()) {
             return;
@@ -70,7 +70,7 @@ class AutoSelectForUpdateTest {
      */
     @Test
     //@Prerequisite("#ENV != 'standard'")
-    @DisabledIf("['standard'].indexOf(systemProperty.get('database')) >= 0")
+    @DisabledIfSystemProperty(named = "database", matches = "standard")
     void testForUpdate_leftOuterJoin() throws Exception {
         if (!jdbcManagerImplementor.getDialect().supportsForUpdate(NORMAL, false) || !jdbcManagerImplementor.getDialect().supportsOuterJoinForUpdate()) {
             return;
