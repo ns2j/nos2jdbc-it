@@ -18,9 +18,6 @@ package org.seasar.extension.jdbc.it.auto;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.OptimisticLockException;
-import javax.transaction.UserTransaction;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
@@ -38,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * 
  */
 @ExtendWith(NoS2JdbcExtension.class)
-public class AutoBatchDeleteTest {
+class AutoBatchDeleteTest {
 
     private JdbcManager jdbcManager;
 

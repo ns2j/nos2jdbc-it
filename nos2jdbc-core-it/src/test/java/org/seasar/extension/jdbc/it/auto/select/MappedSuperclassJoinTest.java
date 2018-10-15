@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * 
  */
 @ExtendWith(NoS2JdbcExtension.class)
-public class MappedSuperclassJoinTest {
+class MappedSuperclassJoinTest {
 
     private JdbcManager jdbcManager;
 

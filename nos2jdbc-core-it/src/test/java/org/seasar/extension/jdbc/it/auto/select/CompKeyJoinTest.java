@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * 
  */
 @ExtendWith(NoS2JdbcExtension.class)
-public class CompKeyJoinTest {
+class CompKeyJoinTest {
 
     private JdbcManager jdbcManager;
 

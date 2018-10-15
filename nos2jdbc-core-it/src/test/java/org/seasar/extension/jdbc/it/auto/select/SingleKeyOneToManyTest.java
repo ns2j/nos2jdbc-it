@@ -30,7 +30,7 @@ import static org.seasar.extension.jdbc.it.name.DepartmentNames.*;
  * 
  */
 @ExtendWith(NoS2JdbcExtension.class)
-public class SingleKeyOneToManyTest {
+class SingleKeyOneToManyTest {
 
     private JdbcManager jdbcManager;
 

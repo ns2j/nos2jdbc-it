@@ -38,7 +38,7 @@ import static org.seasar.extension.jdbc.parameter.Parameter.*;
  * 
  */
 @ExtendWith(NoS2JdbcExtension.class)
-public class AutoSelectValueTypeTest {
+class AutoSelectValueTypeTest {
 
     private JdbcManager jdbcManager;
 
