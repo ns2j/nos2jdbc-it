@@ -111,8 +111,8 @@ class SqlFileFunctionCallTest {
      * @throws Exception
      */
     @Test
-    //@Prerequisite("#ENV not in {'mssql2005', 'mysql'}")
-    @DisabledIfSystemProperty(named = "database", matches = "(mssql2005|mysql)")
+    //@Prerequisite("#ENV not in {'mssql', 'mysql'}")
+    @DisabledIfSystemProperty(named = "database", matches = "(mssql|mysql)")
     void testParameter_resultSet() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_resultSet" + ".sql";
         List<Employee> employees = jdbcManager.callBySqlFile(Employee.class, path, 10).getResultList();
@@ -129,8 +129,8 @@ class SqlFileFunctionCallTest {
      * @throws Exception
      */
     @Test
-    //@Prerequisite("#ENV not in {'mssql2005', 'mysql'}")
-    @DisabledIfSystemProperty(named = "database", matches = "(mssql2005|mysql)")
+    //@Prerequisite("#ENV not in {'mssql', 'mysql'}")
+    @DisabledIfSystemProperty(named = "database", matches = "(mssql|mysql)")
     void testParameter_resultSetUpdate() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_resultSetUpdate" + ".sql";
         List<Employee> employees = jdbcManager.callBySqlFile(Employee.class, path, 10).getResultList();

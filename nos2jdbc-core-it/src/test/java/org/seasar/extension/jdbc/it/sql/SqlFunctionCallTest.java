@@ -106,8 +106,8 @@ class SqlFunctionCallTest {
      * @throws Exception
      */
     @Test
-    //@Prerequisite("#ENV not in {'mssql2005', 'mysql'}")
-    @DisabledIfSystemProperty(named = "database", matches = "(mssql2005|mysql)")
+    //@Prerequisite("#ENV not in {'mssql', 'mysql'}")
+    @DisabledIfSystemProperty(named = "database", matches = "(mssql|mysql)")
     void testParameter_resultSet() throws Exception {
         List<Employee> employees = jdbcManager.callBySql(Employee.class, "{? = call FUNC_RESULTSET(?)}", 10).getResultList();
         assertNotNull(employees);
@@ -123,8 +123,8 @@ class SqlFunctionCallTest {
      * @throws Exception
      */
     @Test
-    //@Prerequisite("#ENV not in {'mssql2005', 'mysql'}")
-    @DisabledIfSystemProperty(named = "database", matches = "(mssql2005|mysql)")
+    //@Prerequisite("#ENV not in {'mssql', 'mysql'}")
+    @DisabledIfSystemProperty(named = "database", matches = "(mssql|mysql)")
     void testParameter_resultSetUpdate() throws Exception {
         List<Employee> employees = jdbcManager.callBySql(Employee.class, "{? = call FUNC_RESULTSET_UPDATE(?)}", 10).getResultList();
         assertNotNull(employees);

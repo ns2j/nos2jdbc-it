@@ -105,8 +105,8 @@ class AutoFunctionCallTest {
      * 
      * @throws Exception
      */
-    //@Prerequisite("#ENV not in {'mssql2005', 'mysql'}")
-    @DisabledIfSystemProperty(named = "database", matches = "(mssql2005|mysql)")
+    //@Prerequisite("#ENV not in {'mssql', 'mysql'}")
+    @DisabledIfSystemProperty(named = "database", matches = "(mssql|mysql)")
     @Test
     void testParameter_resultSet() throws Exception {
         List<Employee> employees = jdbcManager.call(Employee.class, "FUNC_RESULTSET", 10).getResultList();
@@ -122,8 +122,8 @@ class AutoFunctionCallTest {
      * 
      * @throws Exception
      */
-    //@Prerequisite("#ENV not in {'mssql2005', 'mysql'}")
-    @DisabledIfSystemProperty(named = "database", matches = "(mssql2005|mysql)")
+    //@Prerequisite("#ENV not in {'mssql', 'mysql'}")
+    @DisabledIfSystemProperty(named = "database", matches = "(mssql|mysql)")
     @Test
     void testParameter_resultSetUpdate() throws Exception {
         List<Employee> employees = jdbcManager.call(Employee.class, "FUNC_RESULTSET_UPDATE", 10).getResultList();
@@ -141,8 +141,8 @@ class AutoFunctionCallTest {
      * 
      * @throws Exception
      */
-    //@Prerequisite("#ENV not in {'mssql2005', 'mysql'}\")"
-    @DisabledIfSystemProperty(named = "database", matches = "(mssql2005|mysql)")
+    //@Prerequisite("#ENV not in {'mssql', 'mysql'}\")"
+    @DisabledIfSystemProperty(named = "database", matches = "(mssql|mysql)")
     @Test
     void testParameter_resultSetUpdate2() throws Exception {
         List<Employee> employees = jdbcManager.call(Employee.class, "FUNC_RESULTSET_UPDATE2", 10).getResultList();
