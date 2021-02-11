@@ -48,7 +48,7 @@ class SqlFileFunctionCallTest {
     void testParameter_none() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_no" + ".sql";
         Integer result = jdbcManager.callBySqlFile(Integer.class, path).getSingleResult();
-        assertEquals(new Integer(10), result);
+        assertEquals(Integer.valueOf(10), result);
     }
 
     /**
@@ -59,7 +59,7 @@ class SqlFileFunctionCallTest {
     void testParameter_simpleType() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_simpleType" + ".sql";
         Integer result = jdbcManager.callBySqlFile(Integer.class, path, 1).getSingleResult();
-        assertEquals(new Integer(20), result);
+        assertEquals(Integer.valueOf(20), result);
     }
 
     /**
@@ -86,9 +86,9 @@ class SqlFileFunctionCallTest {
         dto.param1 = 3;
         dto.param2 = 5;
         Integer result = jdbcManager.callBySqlFile(Integer.class, path, dto).getSingleResult();
-        assertEquals(new Integer(3), dto.param1);
-        assertEquals(new Integer(5), dto.param2);
-        assertEquals(new Integer(8), result);
+        assertEquals(Integer.valueOf(3), dto.param1);
+        assertEquals(Integer.valueOf(5), dto.param2);
+        assertEquals(Integer.valueOf(8), result);
     }
 
     /**
