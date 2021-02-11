@@ -322,7 +322,7 @@ class AutoInsertTest {
      */
     //@Prerequisite("#ENV not in {'hsqldb', 'h2', 'standard', 'oracle', 'db2', 'mysql', 'postgre'}")
     @Test
-    @DisabledIfSystemProperty(named="database", matches="(hsqldb|h2|standard|oracle|db2|mysql|postgre)")
+    @DisabledIfSystemProperty(named="database", matches="(hsqldb|h2|standard|oracle|db2|mssql|mysql|postgre)")
     void testId_table_qualifiedGenerator() throws Exception {
         for (int i = 0; i < 110; i++) {
             TableStrategy5 entity = new TableStrategy5();
