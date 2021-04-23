@@ -16,6 +16,10 @@
 package org.seasar.extension.jdbc.it.sqlfile.select;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -240,5 +244,12 @@ class SqlFileSelectWhereTest {
         /** */
         @Temporal(TemporalType.TIMESTAMP)
         public Date dateTimestamp;
+    }
+
+    public static class Param4 {
+        public LocalDate localDate;
+        public LocalTime localTime;
+        public LocalDateTime localDateTime;
+        public OffsetDateTime offsetDateTime;
     }
 }

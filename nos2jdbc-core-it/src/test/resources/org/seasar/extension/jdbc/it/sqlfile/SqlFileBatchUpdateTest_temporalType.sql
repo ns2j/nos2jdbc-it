@@ -8,6 +8,10 @@ CAL_TIME = /*calTime*/'2000-01-01',
 CAL_TIMESTAMP = /*calTimestamp*/'2000-01-01', 
 SQL_DATE = /*sqlDate*/'2000-01-01', 
 SQL_TIME = /*sqlTime*/'2000-01-01', 
-SQL_TIMESTAMP = /*sqlTimestamp*/'2000-01-01' 
+SQL_TIMESTAMP = /*sqlTimestamp*/'2000-01-01',
+LOCAL_DATE = /*localDate*/'2000-01-01', 
+LOCAL_TIME = /*localTime*/'2000-01-01', 
+LOCAL_DATE_TIME = /*localDateTime*/'2000-01-01', 
+OFFSET_DATE_TIME = /*offsetDateTime*/'2000-01-01' 
 WHERE 
 ID = /*id*/'99'

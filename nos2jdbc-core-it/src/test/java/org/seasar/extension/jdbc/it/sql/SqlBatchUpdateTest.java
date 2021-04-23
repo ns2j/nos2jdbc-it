@@ -18,7 +18,13 @@ package org.seasar.extension.jdbc.it.sql;
 import java.math.BigDecimal;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -42,22 +48,18 @@ class SqlBatchUpdateTest {
     private JdbcManager jdbcManager;
 
     /**
-     * 
-     * @throws Exception
      */
     @Test
-    void testParameter_none() throws Exception {
+    void parameter_none()  {
         String sql = "UPDATE EMPLOYEE SET SALARY = SALARY * 2 WHERE EMPLOYEE_ID = 1";
         int[] result = jdbcManager.updateBatchBySql(sql).params().params().execute();
         assertEquals(2, result.length);
     }
 
     /**
-     * 
-     * @throws Exception
      */
     @Test
-    void testParameter() throws Exception {
+    void parameter()  {
         String sql = "DELETE FROM EMPLOYEE WHERE DEPARTMENT_ID = ? AND SALARY > ?";
         int[] result = jdbcManager.updateBatchBySql(sql, int.class, BigDecimal.class).params(1, new BigDecimal(3000)).params(2, new BigDecimal(2000)).execute();
         assertEquals(2, result.length);
@@ -66,34 +68,32 @@ class SqlBatchUpdateTest {
     }
 
     /**
-     * 
-     * @throws Exception
      */
     //@Prerequisite("#ENV != 'hsqldb'")
     @Test
-    void testEntityExistsException_insert() throws Exception {
+    void entityExistsException_insert()  {
         String sql = "INSERT INTO DEPARTMENT (DEPARTMENT_ID, DEPARTMENT_NO) VALUES(?, ?)";
         assertThrows(EntityExistsException.class, () -> jdbcManager.updateBatchBySql(sql, int.class, int.class).params(1, 50).execute());
     }
 
     /**
-     * 
-     * @throws Exception
      */
     //@Prerequisite("#ENV != 'hsqldb'")
     @Test
-    void testEntityExistsException_update() throws Exception {
+    void entityExistsException_update()  {
         String sql = "UPDATE DEPARTMENT SET DEPARTMENT_ID = ? WHERE DEPARTMENT_ID = ?";
         assertThrows(EntityExistsException.class, () -> jdbcManager.updateBatchBySql(sql, int.class, int.class).params(1, 4).execute());
     }
 
     /**
-     * 
-     * @throws Exception
+     * @throws ParseException 
      */
     @Test
-    void testTemporalType() throws Exception {
-        String sql = "UPDATE TENSE SET DATE_DATE = ?, DATE_TIME = ?, DATE_TIMESTAMP = ?, CAL_DATE = ?, CAL_TIME = ?, CAL_TIMESTAMP = ?, SQL_DATE = ?, SQL_TIME = ?, SQL_TIMESTAMP = ? WHERE ID = ?";
+    void temporalType() throws ParseException  {
+        String sql = "UPDATE TENSE SET DATE_DATE = ?, DATE_TIME = ?, DATE_TIMESTAMP = ?, CAL_DATE = ?, CAL_TIME = ?, CAL_TIMESTAMP = ?,"
+                + " SQL_DATE = ?, SQL_TIME = ?, SQL_TIMESTAMP = ?,"
+                + " LOCAL_DATE = ?, LOCAL_TIME = ?, LOCAL_DATE_TIME = ?, OFFSET_DATE_TIME = ?"
+                + " WHERE ID = ?";
         long date = new SimpleDateFormat("yyyy-MM-dd").parse("2005-03-14").getTime();
         long time = new SimpleDateFormat("HH:mm:ss").parse("13:11:10").getTime();
         long timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2005-03-14 13:11:10").getTime();
@@ -103,8 +103,23 @@ class SqlBatchUpdateTest {
         calTime.setTimeInMillis(time);
         Calendar calTimestamp = Calendar.getInstance();
         calTimestamp.setTimeInMillis(timestamp);
-        jdbcManager.updateBatchBySql(sql, Date.class, Date.class, Date.class, Calendar.class, Calendar.class, Calendar.class, java.sql.Date.class, Time.class, Timestamp.class, int.class).params(date(new Date(date)), time(new Date(time)), timestamp(new Date(timestamp)), calDate, calTime, calTimestamp, new java.sql.Date(date), new Time(time), new Timestamp(timestamp), 1).execute();
-        Tense tense = jdbcManager.selectBySql(Tense.class, "SELECT DATE_DATE, DATE_TIME, DATE_TIMESTAMP, CAL_DATE, CAL_TIME, CAL_TIMESTAMP, SQL_DATE, SQL_TIME, SQL_TIMESTAMP FROM TENSE WHERE ID = 1").getSingleResult();
+        LocalDate ld = LocalDate.of(2005, 3, 14);
+        LocalTime lt = LocalTime.of(13, 11, 10); 
+        LocalDateTime ldt = LocalDateTime.of(ld, lt);
+        OffsetDateTime odt = OffsetDateTime.of(ldt, ZoneOffset.UTC);
+        jdbcManager.updateBatchBySql(sql, Date.class, Date.class, Date.class, Calendar.class, Calendar.class, Calendar.class,
+        	java.sql.Date.class, Time.class, Timestamp.class,
+        	LocalDate.class, LocalTime.class, LocalDateTime.class, OffsetDateTime.class,
+        	int.class).params(date(new Date(date)), time(new Date(time)), timestamp(new Date(timestamp)),
+                calDate, calTime, calTimestamp,
+                new java.sql.Date(date), new Time(time), new Timestamp(timestamp),
+                ld, lt, ldt, odt, 
+                1).execute();
+        Tense tense = jdbcManager.selectBySql(Tense.class, "SELECT DATE_DATE, DATE_TIME, DATE_TIMESTAMP, CAL_DATE, CAL_TIME, CAL_TIMESTAMP,"
+        	+ " SQL_DATE, SQL_TIME, SQL_TIMESTAMP,"
+        	+ " LOCAL_DATE, LOCAL_TIME, LOCAL_DATE_TIME, OFFSET_DATE_TIME"
+        	+ " FROM TENSE "
+        	+ " WHERE ID = 1").getSingleResult();
         assertEquals(date, tense.calDate.getTimeInMillis());
         assertEquals(date, tense.dateDate.getTime());
         assertEquals(date, tense.sqlDate.getTime());
@@ -114,5 +129,9 @@ class SqlBatchUpdateTest {
         assertEquals(timestamp, tense.calTimestamp.getTimeInMillis());
         assertEquals(timestamp, tense.dateTimestamp.getTime());
         assertEquals(timestamp, tense.sqlTimestamp.getTime());
+        assertEquals(ld, tense.localDate);
+        assertEquals(lt, tense.localTime);
+        assertEquals(ldt, tense.localDateTime);
+        assertEquals(odt, tense.offsetDateTime);
     }
 }

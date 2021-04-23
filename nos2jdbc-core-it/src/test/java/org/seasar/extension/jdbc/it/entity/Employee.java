@@ -16,15 +16,12 @@
 package org.seasar.extension.jdbc.it.entity;
 
 import java.math.BigDecimal;
-import java.util.Date;
-
+import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 /**
@@ -53,8 +50,9 @@ public class Employee {
     public Employee manager;
 
     /** */
-    @Temporal(TemporalType.DATE)
-    public Date hiredate;
+    //@Temporal(TemporalType.DATE)
+    //public Date hiredate;
+    public LocalDate hiredate;
 
     /** */
     public BigDecimal salary;

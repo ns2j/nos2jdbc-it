@@ -17,7 +17,13 @@ package org.seasar.extension.jdbc.it.sqlfile;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.EntityExistsException;
@@ -39,22 +45,18 @@ class SqlFileBatchUpdateTest {
     private JdbcManager jdbcManager;
 
     /**
-     * 
-     * @throws Exception
      */
     @Test
-    void testParamter_none() throws Exception {
+    void paramter_none()  {
         String path = getClass().getName().replace(".", "/") + "_no.sql";
         int[] result = jdbcManager.updateBatchBySqlFile(path, null, null).execute();
         assertEquals(2, result.length);
     }
 
     /**
-     * 
-     * @throws Exception
      */
     @Test
-    void testParamter_simpleType() throws Exception {
+    void paramter_simpleType()  {
         String path = getClass().getName().replace(".", "/") + "_simpleType.sql";
         int[] result = jdbcManager.updateBatchBySqlFile(path, 2, 3).execute();
         assertEquals(2, result.length);
@@ -73,11 +75,9 @@ class SqlFileBatchUpdateTest {
     }
 
     /**
-     * 
-     * @throws Exception
      */
     @Test
-    void testParamter_dto() throws Exception {
+    void paramter_dto()  {
         String path = getClass().getName().replace(".", "/") + "_dto.sql";
         MyDto dto = new MyDto();
         dto.departmentId = 2;
@@ -102,12 +102,10 @@ class SqlFileBatchUpdateTest {
     }
 
     /**
-     * 
-     * @throws Exception
      */
     @Test
     public //@Prerequisite("#ENV != 'hsqldb'")
-    void testEntityExistsException_insert() throws Exception {
+    void entityExistsException_insert()  {
         String path = getClass().getName().replace(".", "/") + "_EntityExistsException_insert.sql";
         MyDto2 dto = new MyDto2();
         dto.departmentId = 1;
@@ -116,12 +114,10 @@ class SqlFileBatchUpdateTest {
     }
 
     /**
-     * 
-     * @throws Exception
      */
     @Test
     public //@Prerequisite("#ENV != 'hsqldb'")
-    void testEntityExistsException_update() throws Exception {
+    void entityExistsException_update()  {
         String path = getClass().getName().replace(".", "/") + "_EntityExistsException_update.sql";
         MyDto3 dto = new MyDto3();
         dto.departmentId = 1;
@@ -130,11 +126,10 @@ class SqlFileBatchUpdateTest {
     }
 
     /**
-     * 
-     * @throws Exception
+     * @throws ParseException 
      */
     @Test
-    void testTemporalType() throws Exception {
+    void temporalType() throws ParseException  {
         String path = getClass().getName().replace(".", "/") + "_temporalType.sql";
         long date = new SimpleDateFormat("yyyy-MM-dd").parse("2005-03-14").getTime();
         long time = new SimpleDateFormat("HH:mm:ss").parse("13:11:10").getTime();
@@ -153,8 +148,20 @@ class SqlFileBatchUpdateTest {
         tense.sqlDate = new java.sql.Date(date);
         tense.sqlTime = new Time(time);
         tense.sqlTimestamp = new Timestamp(timestamp);
+        LocalDate ld = LocalDate.of(2005, 3, 14);
+        LocalTime lt = LocalTime.of(13, 11, 10); 
+        LocalDateTime ldt = LocalDateTime.of(ld, lt);
+        OffsetDateTime odt = OffsetDateTime.of(ldt, ZoneOffset.UTC);
+        tense.localDate = ld;
+        tense.localTime = lt;
+        tense.localDateTime = ldt;
+        tense.offsetDateTime = odt;
         jdbcManager.updateBatchBySqlFile(path, tense).execute();
-        tense = jdbcManager.selectBySql(Tense.class, "select DATE_DATE, DATE_TIME, DATE_TIMESTAMP, CAL_DATE, CAL_TIME, CAL_TIMESTAMP, SQL_DATE, SQL_TIME, SQL_TIMESTAMP from TENSE where ID = 1").getSingleResult();
+        tense = jdbcManager.selectBySql(Tense.class, "SELECT DATE_DATE, DATE_TIME, DATE_TIMESTAMP, CAL_DATE, CAL_TIME, CAL_TIMESTAMP,"
+        	+ " SQL_DATE, SQL_TIME, SQL_TIMESTAMP,"
+        	+ " LOCAL_DATE, LOCAL_TIME, LOCAL_DATE_TIME, OFFSET_DATE_TIME"
+        	+ " FROM TENSE "
+        	+ " WHERE ID = 1").getSingleResult();
         assertEquals(date, tense.calDate.getTimeInMillis());
         assertEquals(date, tense.dateDate.getTime());
         assertEquals(date, tense.sqlDate.getTime());
@@ -164,6 +171,10 @@ class SqlFileBatchUpdateTest {
         assertEquals(timestamp, tense.calTimestamp.getTimeInMillis());
         assertEquals(timestamp, tense.dateTimestamp.getTime());
         assertEquals(timestamp, tense.sqlTimestamp.getTime());
+        assertEquals(ld, tense.localDate);
+        assertEquals(lt, tense.localTime);
+        assertEquals(ldt, tense.localDateTime);
+        assertEquals(odt, tense.offsetDateTime);
     }
 
     /**

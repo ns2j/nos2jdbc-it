@@ -17,7 +17,13 @@ package org.seasar.extension.jdbc.it.auto;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -51,11 +57,9 @@ class AutoUpdateTest {
     private JdbcManager jdbcManager;
 
     /**
-     * 
-     * @throws Exception
      */
     @Test
-    void testExecute() throws Exception {
+    void execute()  {
         Department department = new Department();
         department.departmentId = 1;
         department.departmentName = "hoge";
@@ -72,11 +76,9 @@ class AutoUpdateTest {
     }
 
     /**
-     * 
-     * @throws Exception
      */
     @Test
-    void testExecute_includesVersion() throws Exception {
+    void execute_includesVersion()  {
         Department department = new Department();
         department.departmentId = 1;
         department.departmentName = "hoge";
@@ -93,11 +95,9 @@ class AutoUpdateTest {
     }
 
     /**
-     * 
-     * @throws Exception
      */
     @Test
-    void testExecute_excludesNull() throws Exception {
+    void execute_excludesNull()  {
         Department department = new Department();
         department.departmentId = 1;
         department.departmentName = "hoge";
@@ -114,11 +114,9 @@ class AutoUpdateTest {
     }
 
     /**
-     * 
-     * @throws Exception
      */
     @Test
-    void testExecute_includes() throws Exception {
+    void execute_includes()  {
         Department department = new Department();
         department.departmentId = 1;
         department.departmentNo = 99;
@@ -137,11 +135,9 @@ class AutoUpdateTest {
     }
 
     /**
-     * 
-     * @throws Exception
      */
     @Test
-    void testExecute_excludes() throws Exception {
+    void execute_excludes()  {
         Department department = new Department();
         department.departmentId = 1;
         department.departmentNo = 99;
@@ -160,11 +156,9 @@ class AutoUpdateTest {
     }
 
     /**
-     * 
-     * @throws Exception
      */
     @Test
-    void testExecute_changeFrom() throws Exception {
+    void execute_changeFrom()  {
         Department before = jdbcManager.from(Department.class).where(new SimpleWhere().eq("departmentId", 1)).getSingleResult();
         Department department = new Department();
         department.departmentId = before.departmentId;
@@ -184,11 +178,9 @@ class AutoUpdateTest {
     }
 
     /**
-     * 
-     * @throws Exception
      */
     @Test
-    void testExecute_compKey() throws Exception {
+    void execute_compKey()  {
         CompKeyDepartment department = new CompKeyDepartment();
         department.departmentId1 = 1;
         department.departmentId2 = 1;
@@ -210,11 +202,9 @@ class AutoUpdateTest {
     }
 
     /**
-     * 
-     * @throws Exception
      */
     @Test
-    void testExecute_mappedSuperclass() throws Exception {
+    void execute_mappedSuperclass()  {
         ConcreteDepartment department = new ConcreteDepartment();
         department.departmentId = 1;
         department.departmentName = "hoge";
@@ -231,11 +221,9 @@ class AutoUpdateTest {
     }
 
     /**
-     * 
-     * @throws Exception
      */
     @Test
-    void testOptimisticLockException() throws Exception {
+    void optimisticLockException()  {
         Employee employee1 = jdbcManager.from(Employee.class).where("employeeId = ?", 1).getSingleResult();
         Employee employee2 = jdbcManager.from(Employee.class).where("employeeId = ?", 1).getSingleResult();
         jdbcManager.update(employee1).execute();
@@ -243,11 +231,9 @@ class AutoUpdateTest {
     }
 
     /**
-     * 
-     * @throws Exception
      */
     @Test
-    void testSuppresOptimisticLockException() throws Exception {
+    void suppresOptimisticLockException()  {
         Employee employee1 = jdbcManager.from(Employee.class).where("employeeId = ?", 1).getSingleResult();
         Employee employee2 = jdbcManager.from(Employee.class).where("employeeId = ?", 1).getSingleResult();
         jdbcManager.update(employee1).execute();
@@ -256,11 +242,9 @@ class AutoUpdateTest {
     }
 
     /**
-     * 
-     * @throws Exception
      */
     @Test
-    void testColumnAnnotation() throws Exception {
+    void columnAnnotation()  {
         Department2 department = new Department2();
         department.departmentId = 1;
         department.departmentName = "hoge";
@@ -271,11 +255,9 @@ class AutoUpdateTest {
     }
 
     /**
-     * 
-     * @throws Exception
      */
     @Test
-    void testTransientAnnotation() throws Exception {
+    void transientAnnotation()  {
         Department3 department = new Department3();
         department.departmentId = 1;
         department.departmentName = "hoge";
@@ -286,11 +268,9 @@ class AutoUpdateTest {
     }
 
     /**
-     * 
-     * @throws Exception
      */
     @Test
-    void testTransientModifier() throws Exception {
+    void transientModifier()  {
         Department4 department = new Department4();
         department.departmentId = 1;
         department.departmentName = "hoge";
@@ -301,11 +281,9 @@ class AutoUpdateTest {
     }
 
     /**
-     * 
-     * @throws Exception
      */
     @Test
-    void testEntityExistsException() throws Exception {
+    void entityExistsException()  {
         Department department = jdbcManager.from(Department.class).where("departmentId = ?", 1).getSingleResult();
         department.departmentNo = 20;
         assertThrows(EntityExistsException.class, () -> jdbcManager.update(department).execute());
@@ -313,10 +291,9 @@ class AutoUpdateTest {
 
     /**
      * 
-     * @throws Exception
      */
     @Test
-    void testTemporalType() throws Exception {
+    void temporalType() throws ParseException  {
         Tense tense = new Tense();
         tense.id = 1;
         long date = new SimpleDateFormat("yyyy-MM-dd").parse("2005-03-14").getTime();
@@ -334,6 +311,14 @@ class AutoUpdateTest {
         tense.sqlDate = new java.sql.Date(date);
         tense.sqlTime = new Time(time);
         tense.sqlTimestamp = new Timestamp(timestamp);
+        LocalDate ld = LocalDate.of(2005, 3, 14);
+        LocalTime lt = LocalTime.of(13, 11, 10); 
+        LocalDateTime ldt = LocalDateTime.of(ld, lt);
+        OffsetDateTime odt = OffsetDateTime.of(ldt, ZoneOffset.UTC);
+        tense.localDate = ld;
+        tense.localTime = lt;
+        tense.localDateTime = ldt;
+        tense.offsetDateTime = odt; 
         jdbcManager.update(tense).execute();
         tense = jdbcManager.from(Tense.class).id(1).getSingleResult();
         assertEquals(date, tense.calDate.getTimeInMillis());
@@ -345,14 +330,16 @@ class AutoUpdateTest {
         assertEquals(timestamp, tense.calTimestamp.getTimeInMillis());
         assertEquals(timestamp, tense.dateTimestamp.getTime());
         assertEquals(timestamp, tense.sqlTimestamp.getTime());
+        assertEquals(ld, tense.localDate);
+        assertEquals(lt, tense.localTime);
+        assertEquals(ldt, tense.localDateTime);
+        assertEquals(odt, tense.offsetDateTime);
     }
 
     /**
-     * 
-     * @throws Exception
      */
     @Test
-    void testNoId() throws Exception {
+    void testNoId()  {
         NoId noId = new NoId();
         noId.value1 = 1;
         noId.value1 = 2;

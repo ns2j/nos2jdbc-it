@@ -15,7 +15,13 @@
  */
 package org.seasar.extension.jdbc.it.sql.select;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
@@ -39,15 +45,19 @@ class SqlSelectValueTypeTest {
 
     /**
      * 
-     * @throws Exception
+     * @throws ParseException 
      */
     @Test
-    void testBean_temporalType() throws Exception {
+    void bean_temporalType() throws ParseException  {
         String sql = "SELECT * FROM TENSE WHERE ID = 1";
         Tense tense = jdbcManager.selectBySql(Tense.class, sql).getSingleResult();
         long date = new SimpleDateFormat("yyyy-MM-dd").parse("2005-02-14").getTime();
         long time = new SimpleDateFormat("HH:mm:ss").parse("12:11:10").getTime();
         long timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2005-02-14 12:11:10").getTime();
+        LocalDate ld = LocalDate.of(2005, 2, 14);
+        LocalTime lt = LocalTime.of(12, 11, 10); 
+        LocalDateTime ldt = LocalDateTime.of(ld, lt);
+        OffsetDateTime odt = OffsetDateTime.of(ldt, ZoneOffset.UTC);
         assertNotNull(tense);
         assertEquals(date, tense.calDate.getTimeInMillis());
         assertEquals(date, tense.dateDate.getTime());
@@ -58,14 +68,18 @@ class SqlSelectValueTypeTest {
         assertEquals(timestamp, tense.calTimestamp.getTimeInMillis());
         assertEquals(timestamp, tense.dateTimestamp.getTime());
         assertEquals(timestamp, tense.sqlTimestamp.getTime());
-    }
+        assertEquals(ld, tense.localDate);
+        assertEquals(lt, tense.localTime);
+        assertEquals(ldt, tense.localDateTime);
+        assertEquals(odt, tense.offsetDateTime);
+   }
 
     /**
      * 
-     * @throws Exception
+     * @throws ParseException 
      */
     @Test
-    void testBean_temporalType_Calendar() throws Exception {
+    void bean_temporalType_Calendar() throws ParseException  {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new SimpleDateFormat("yyyy-MM-dd").parse("2005-02-14"));
         Tense tense = jdbcManager.selectBySql(Tense.class, "SELECT * FROM TENSE WHERE CAL_DATE = ?", date(calendar)).getSingleResult();
@@ -80,10 +94,10 @@ class SqlSelectValueTypeTest {
 
     /**
      * 
-     * @throws Exception
+     * @throws ParseException 
      */
     @Test
-    void testBean_temporalType_Date() throws Exception {
+    void bean_temporalType_Date() throws ParseException  {
         Date date = new SimpleDateFormat("yyyy-MM-dd").parse("2005-02-14");
         Tense tense = jdbcManager.selectBySql(Tense.class, "SELECT * FROM TENSE WHERE DATE_DATE = ?", date(date)).getSingleResult();
         assertNotNull(tense);
@@ -96,11 +110,24 @@ class SqlSelectValueTypeTest {
     }
 
     /**
-     * 
-     * @throws Exception
      */
     @Test
-    void testMap_temporalType() throws Exception {
+    void bean_temporalType_Jdbc42() throws ParseException  {
+        Date date = new SimpleDateFormat("yyyy-MM-dd").parse("2005-02-14");
+        Tense tense = jdbcManager.selectBySql(Tense.class, "SELECT * FROM TENSE WHERE LOCAL_DATE = ?", date(date)).getSingleResult();
+        assertNotNull(tense);
+        date = new SimpleDateFormat("HH:mm:ss").parse("12:11:10");
+        tense = jdbcManager.selectBySql(Tense.class, "SELECT * FROM TENSE WHERE LOCAL_TIME = ?", time(date)).getSingleResult();
+        assertNotNull(tense);
+        date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2005-02-14 12:11:10");
+        tense = jdbcManager.selectBySql(Tense.class, "SELECT * FROM TENSE WHERE LOCAL_DATE_TIME = ?", timestamp(date)).getSingleResult();
+        assertNotNull(tense);
+    }
+
+    /**
+     */
+    @Test
+    void map_temporalType()  {
         String sql = "SELECT * FROM TENSE WHERE ID = 1";
         Map<?, ?> tense = jdbcManager.selectBySql(Map.class, sql).getSingleResult();
         assertNotNull(tense);
@@ -113,14 +140,17 @@ class SqlSelectValueTypeTest {
         assertNotNull(tense.get("calTimestamp"));
         assertNotNull(tense.get("dateTimestamp"));
         assertNotNull(tense.get("sqlTimestamp"));
+        assertNotNull(tense.get("localDate"));
+        assertNotNull(tense.get("localTime"));
+        assertNotNull(tense.get("localDateTime"));
+        assertNotNull(tense.get("offsetDateTime"));
     }
 
     /**
-     * 
-     * @throws Exception
-     */
+     * @throws ParseException 
+    */
     @Test
-    void testObject_temporalType() throws Exception {
+    void object_temporalType() throws ParseException   {
         String sql = "SELECT CAL_TIMESTAMP FROM TENSE WHERE ID = 1";
         Calendar calTimestamp = jdbcManager.selectBySql(Calendar.class, sql).temporal(TemporalType.TIMESTAMP).getSingleResult();
         assertNotNull(calTimestamp);
