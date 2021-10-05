@@ -89,9 +89,9 @@ class SqlFileProcedureCallTest {
         dto.param1 = 3;
         dto.param2 = 5;
         jdbcManager.callBySqlFile(path, dto).execute();
-        assertEquals(new Integer(3), dto.param1);
-        assertEquals(new Integer(8), dto.param2);
-        assertEquals(new Integer(3), dto.param3);
+        assertEquals(Integer.valueOf(3), dto.param1);
+        assertEquals(Integer.valueOf(8), dto.param2);
+        assertEquals(Integer.valueOf(3), dto.param3);
     }
 
     /**

@@ -47,7 +47,7 @@ class SqlFunctionCallTest {
     @Test
     void testParameter_none() throws Exception {
         Integer result = jdbcManager.callBySql(Integer.class, "{? = call FUNC_NONE_PARAM()}").getSingleResult();
-        assertEquals(new Integer(10), result);
+        assertEquals(Integer.valueOf(10), result);
     }
 
     /**
@@ -57,7 +57,7 @@ class SqlFunctionCallTest {
     @Test
     void testParameter_simpleType() throws Exception {
         Integer result = jdbcManager.callBySql(Integer.class, "{? = call FUNC_SIMPLETYPE_PARAM(?)}", 1).getSingleResult();
-        assertEquals(new Integer(20), result);
+        assertEquals(Integer.valueOf(20), result);
     }
 
     /**
@@ -82,9 +82,9 @@ class SqlFunctionCallTest {
         dto.param1 = 3;
         dto.param2 = 5;
         Integer result = jdbcManager.callBySql(Integer.class, "{? = call FUNC_DTO_PARAM(?, ?)}", dto).getSingleResult();
-        assertEquals(new Integer(3), dto.param1);
-        assertEquals(new Integer(5), dto.param2);
-        assertEquals(new Integer(8), result);
+        assertEquals(Integer.valueOf(3), dto.param1);
+        assertEquals(Integer.valueOf(5), dto.param2);
+        assertEquals(Integer.valueOf(8), result);
     }
 
     /**
