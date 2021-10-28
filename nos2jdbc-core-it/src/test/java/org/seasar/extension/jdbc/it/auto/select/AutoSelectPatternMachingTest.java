@@ -39,7 +39,7 @@ class AutoSelectPatternMachingTest {
      */
     @Test
     //@Prerequisite("#ENV != 'hsqldb'")
-    @DisabledIfSystemProperty(named = "database", matches = "hsqldb")
+    //@DisabledIfSystemProperty(named = "database", matches = "hsqldb")
     void testLike_escape() throws Exception {
         Pattern pattern = new Pattern();
         pattern.value = "xABCy%z$";
