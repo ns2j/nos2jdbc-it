@@ -41,7 +41,8 @@ import static org.seasar.extension.jdbc.parameter.Parameter.*;
  */
 @ExtendWith(NoS2JdbcExtension.class)
 //@Prerequisite("#ENV not in {'hsqldb','h2', 'standard'}")
-@DisabledIfSystemProperty(named = "database", matches = "(hsqldb|h2|standard)")
+//@DisabledIfSystemProperty(named = "database", matches = "(hsqldb|h2|standard)")
+@DisabledIfSystemProperty(named = "database", matches = "(h2|standard)")
 class SqlProcedureCallTest {
 
     private JdbcManager jdbcManager;

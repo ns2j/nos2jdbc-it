@@ -43,7 +43,7 @@ import static org.seasar.extension.jdbc.parameter.Parameter.*;
 @ExtendWith(NoS2JdbcExtension.class)
 //@Prerequisite("#ENV not in {'hsqldb', 'h2', 'standard'}")
 //@DisabledIf("['hsqldb', 'h2', 'standard'].indexOf(systemProperty.get('database')) >= 0")
-@DisabledIfSystemProperty(named="database", matches="(hsqldb|h2|standard)")
+//@DisabledIfSystemProperty(named="database", matches="(hsqldb|h2|standard)")
 class AutoProcedureCallTest {
 
     private JdbcManager jdbcManager;
