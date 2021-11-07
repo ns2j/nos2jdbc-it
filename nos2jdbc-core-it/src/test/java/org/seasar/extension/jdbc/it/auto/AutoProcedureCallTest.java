@@ -15,15 +15,18 @@
  */
 package org.seasar.extension.jdbc.it.auto;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.seasar.extension.jdbc.parameter.Parameter.*;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
@@ -32,9 +35,8 @@ import org.seasar.extension.jdbc.annotation.Out;
 import org.seasar.extension.jdbc.annotation.ResultSet;
 import org.seasar.extension.jdbc.it.entity.Department;
 import org.seasar.extension.jdbc.it.entity.Employee;
+
 import nos2jdbc.core.it.NoS2JdbcExtension;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.seasar.extension.jdbc.parameter.Parameter.*;
 
 /**
  * @author taedium
@@ -43,7 +45,7 @@ import static org.seasar.extension.jdbc.parameter.Parameter.*;
 @ExtendWith(NoS2JdbcExtension.class)
 //@Prerequisite("#ENV not in {'hsqldb', 'h2', 'standard'}")
 //@DisabledIf("['hsqldb', 'h2', 'standard'].indexOf(systemProperty.get('database')) >= 0")
-//@DisabledIfSystemProperty(named="database", matches="(hsqldb|h2|standard)")
+@DisabledIfSystemProperty(named="database", matches="(h2|standard)")
 class AutoProcedureCallTest {
 
     private JdbcManager jdbcManager;
