@@ -20,9 +20,10 @@ import org.junit.jupiter.api.extension.TestExecutionExceptionHandler;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
 import org.seasar.extension.jta.UserTransactionImpl;
+import org.seasar.framework.util.CollectionsUtil;
 import org.seasar.framework.util.OgnlUtil;
 import org.seasar.framework.util.StringUtil;
-import org.seasar.framework.util.tiger.CollectionsUtil;
+
 import nos2jdbc.TransactionManagerRegistry;
 import nos2jdbc.standalone.NoS2JdbcManager;
 
