@@ -15,14 +15,15 @@
  */
 package org.seasar.extension.jdbc.it.auto.select;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Pattern;
 import org.seasar.extension.jdbc.where.SimpleWhere;
+
 import nos2jdbc.core.it.NoS2JdbcExtension;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
@@ -42,9 +43,9 @@ class AutoSelectPatternMachingTest {
     //@DisabledIfSystemProperty(named = "database", matches = "hsqldb")
     void testLike_escape() throws Exception {
         Pattern pattern = new Pattern();
-        pattern.value = "xABCy%z$";
+        pattern.value1 = "xABCy%z$";
         jdbcManager.insert(pattern).execute();
-        pattern = jdbcManager.from(Pattern.class).where(new SimpleWhere().like("value", "x%y$%z$$", '$')).getSingleResult();
+        pattern = jdbcManager.from(Pattern.class).where(new SimpleWhere().like("value1", "x%y$%z$$", '$')).getSingleResult();
         assertNotNull(pattern);
     }
 
@@ -55,9 +56,9 @@ class AutoSelectPatternMachingTest {
     @Test
     void testStarts() throws Exception {
         Pattern pattern = new Pattern();
-        pattern.value = "%$x";
+        pattern.value1 = "%$x";
         jdbcManager.insert(pattern).execute();
-        pattern = jdbcManager.from(Pattern.class).where(new SimpleWhere().starts("value", "%$")).getSingleResult();
+        pattern = jdbcManager.from(Pattern.class).where(new SimpleWhere().starts("value1", "%$")).getSingleResult();
         assertNotNull(pattern);
     }
 
@@ -68,9 +69,9 @@ class AutoSelectPatternMachingTest {
     @Test
     void testEnds() throws Exception {
         Pattern pattern = new Pattern();
-        pattern.value = "x%$";
+        pattern.value1 = "x%$";
         jdbcManager.insert(pattern).execute();
-        pattern = jdbcManager.from(Pattern.class).where(new SimpleWhere().ends("value", "%$")).getSingleResult();
+        pattern = jdbcManager.from(Pattern.class).where(new SimpleWhere().ends("value1", "%$")).getSingleResult();
         assertNotNull(pattern);
     }
 
@@ -81,9 +82,9 @@ class AutoSelectPatternMachingTest {
     @Test
     void testContains() throws Exception {
         Pattern pattern = new Pattern();
-        pattern.value = "x%$y";
+        pattern.value1 = "x%$y";
         jdbcManager.insert(pattern).execute();
-        pattern = jdbcManager.from(Pattern.class).where(new SimpleWhere().contains("value", "%$")).getSingleResult();
+        pattern = jdbcManager.from(Pattern.class).where(new SimpleWhere().contains("value1", "%$")).getSingleResult();
         assertNotNull(pattern);
     }
 }

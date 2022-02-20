@@ -25,5 +25,5 @@ import javax.persistence.Entity;
 public class Pattern {
 
     /** */
-    public String value;
+    public String value1;
 }

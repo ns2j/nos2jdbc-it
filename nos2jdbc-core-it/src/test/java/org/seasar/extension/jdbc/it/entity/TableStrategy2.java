@@ -35,5 +35,5 @@ public class TableStrategy2 {
     public Integer id;
 
     /** */
-    public String value;
+    public String value1;
 }

@@ -32,5 +32,5 @@ public class AutoStrategy {
     public Integer id;
 
     /** */
-    public String value;
+    public String value1;
 }
