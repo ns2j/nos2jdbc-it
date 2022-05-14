@@ -11,9 +11,9 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.compiler.target>11</maven.compiler.target>
     <maven.compiler.source>11</maven.compiler.source>
-    <junit-jupiter.version>5.8.1</junit-jupiter.version>
+    <junit-jupiter.version>5.8.2</junit-jupiter.version>
     <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
-    <nos2jdbc.version>1.8.4</nos2jdbc.version>
+    <nos2jdbc.version>1.8.5-SNAPSHOT</nos2jdbc.version>
   </properties>
   
   <dependencies>
