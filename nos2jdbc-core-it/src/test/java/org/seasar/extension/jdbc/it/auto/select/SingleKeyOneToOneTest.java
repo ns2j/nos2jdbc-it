@@ -15,15 +15,18 @@
  */
 package org.seasar.extension.jdbc.it.auto.select;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.seasar.extension.jdbc.it.name.EmployeeNames.*;
+
 import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Address;
 import org.seasar.extension.jdbc.it.entity.Employee;
+
 import nos2jdbc.core.it.NoS2JdbcExtension;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.seasar.extension.jdbc.it.name.EmployeeNames.*;
 
 /**
  * @author taedium
@@ -34,116 +37,163 @@ class SingleKeyOneToOneTest {
 
     private JdbcManager jdbcManager;
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testLeftOuterJoin_fromOwnerToInverse() throws Exception {
-        List<Employee> list = jdbcManager.from(Employee.class).leftOuterJoin("address").getResultList();
+    void leftOuterJoin_fromOwnerToInverse() throws Exception {
+        List<Employee> list;
+
+        list = jdbcManager.from(Employee.class).leftOuterJoin("address").getResultList();
         assertEquals(14, list.size());
         for (Employee e : list) {
             assertNotNull(e.address);
+            assertNotNull(e.address.employee);
         }
-    }
 
-    /**
-     * 
-     * @throws Exception
-     */
-    @Test
-    void testLeftOuterJoin_fromOwnerToInverse_names() throws Exception {
-        List<Employee> list = jdbcManager.from(Employee.class).leftOuterJoin(address()).getResultList();
+        list = jdbcManager.from(Employee.class).leftOuterJoin("address").getResultListWithoutInverseField();
         assertEquals(14, list.size());
         for (Employee e : list) {
             assertNotNull(e.address);
+            assertNull(e.address.employee);
         }
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testLeftOuterJoin_fromOwnerToInverse_noFetch() throws Exception {
-        List<Employee> list = jdbcManager.from(Employee.class).leftOuterJoin("address", false).getResultList();
+    void leftOuterJoin_fromOwnerToInverse_names() throws Exception {
+        List<Employee> list;
+
+        list = jdbcManager.from(Employee.class).leftOuterJoin(address()).getResultList();
+        assertEquals(14, list.size());
+        for (Employee e : list) {
+            assertNotNull(e.address);
+            assertNotNull(e.address.employee);
+        }
+
+        list = jdbcManager.from(Employee.class).leftOuterJoin(address()).getResultListWithoutInverseField();
+        assertEquals(14, list.size());
+        for (Employee e : list) {
+            assertNotNull(e.address);
+            assertNull(e.address.employee);
+        }
+    }
+
+    /** @throws Exception */
+    @Test
+    void leftOuterJoin_fromOwnerToInverse_noFetch() throws Exception {
+        List<Employee> list;
+
+        list = jdbcManager.from(Employee.class).leftOuterJoin("address", false).getResultList();
+        assertEquals(14, list.size());
+        for (Employee e : list) {
+            assertNull(e.address);
+        }
+
+        list = jdbcManager.from(Employee.class).leftOuterJoin("address", false).getResultListWithoutInverseField();
         assertEquals(14, list.size());
         for (Employee e : list) {
             assertNull(e.address);
         }
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testInnerJoin_fromOwnerToInverse() throws Exception {
-        List<Employee> list = jdbcManager.from(Employee.class).innerJoin("address").getResultList();
+    void innerJoin_fromOwnerToInverse() throws Exception {
+        List<Employee> list;
+
+        list = jdbcManager.from(Employee.class).innerJoin("address").getResultList();
         assertEquals(14, list.size());
         for (Employee e : list) {
             assertNotNull(e.address);
+            assertNotNull(e.address.employee);
+        }
+
+        list = jdbcManager.from(Employee.class).innerJoin("address").getResultListWithoutInverseField();
+        assertEquals(14, list.size());
+        for (Employee e : list) {
+            assertNotNull(e.address);
+            assertNull(e.address.employee);
         }
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testInnerJoin_fromOwnerToInverse_noFetch() throws Exception {
-        List<Employee> list = jdbcManager.from(Employee.class).innerJoin("address", false).getResultList();
+    void innerJoin_fromOwnerToInverse_noFetch() throws Exception {
+        List<Employee> list;
+
+        list = jdbcManager.from(Employee.class).innerJoin("address", false).getResultList();
+        assertEquals(14, list.size());
+        for (Employee e : list) {
+            assertNull(e.address);
+        }
+
+        list = jdbcManager.from(Employee.class).innerJoin("address", false).getResultListWithoutInverseField();
         assertEquals(14, list.size());
         for (Employee e : list) {
             assertNull(e.address);
         }
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testLeftOuterJoin_fromInverseToOwner() throws Exception {
-        List<Address> list = jdbcManager.from(Address.class).leftOuterJoin("employee").getResultList();
+    void leftOuterJoin_fromInverseToOwner() throws Exception {
+        List<Address> list;
+
+        list = jdbcManager.from(Address.class).leftOuterJoin("employee").getResultList();
+        assertEquals(14, list.size());
+        for (Address a : list) {
+            assertNotNull(a.employee);
+            assertNotNull(a.employee.address);
+        }
+
+        list = jdbcManager.from(Address.class).leftOuterJoin("employee").getResultListWithoutInverseField();
+        assertEquals(14, list.size());
+        for (Address a : list) {
+            assertNotNull(a.employee);
+            assertNull(a.employee.address);
+        }
+    }
+
+    /** @throws Exception */
+    @Test
+    void leftOuterJoin_fromInverseToOwner_noFetch() throws Exception {
+        List<Address> list;
+
+        list = jdbcManager.from(Address.class).leftOuterJoin("employee", false).getResultList();
         assertEquals(14, list.size());
         for (Address e : list) {
-            assertNotNull(e.employee);
+            assertNull(e.employee);
         }
-    }
 
-    /**
-     * 
-     * @throws Exception
-     */
-    @Test
-    void testLeftOuterJoin_fromInverseToOwner_noFetch() throws Exception {
-        List<Address> list = jdbcManager.from(Address.class).leftOuterJoin("employee", false).getResultList();
+        list = jdbcManager.from(Address.class).leftOuterJoin("employee", false).getResultListWithoutInverseField();
         assertEquals(14, list.size());
         for (Address e : list) {
             assertNull(e.employee);
         }
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testInnerJoin_fromInverseToOwner() throws Exception {
-        List<Address> list = jdbcManager.from(Address.class).innerJoin("employee").getResultList();
+    void innerJoin_fromInverseToOwner() throws Exception {
+        List<Address> list;
+
+        list = jdbcManager.from(Address.class).innerJoin("employee").getResultList();
         assertEquals(14, list.size());
-        for (Address e : list) {
-            assertNotNull(e.employee);
+        for (Address a : list) {
+            assertNotNull(a.employee);
+            assertNotNull(a.employee.address);
+        }
+
+        list = jdbcManager.from(Address.class).innerJoin("employee").getResultListWithoutInverseField();
+        assertEquals(14, list.size());
+        for (Address a : list) {
+            assertNotNull(a.employee);
+            assertNull(a.employee.address);
         }
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testInnerJoin_fromInverseToOwner_noFetch() throws Exception {
+    void innerJoin_fromInverseToOwner_noFetch() throws Exception {
         List<Address> list = jdbcManager.from(Address.class).innerJoin("employee", false).getResultList();
         assertEquals(14, list.size());
         for (Address e : list) {
