@@ -36,7 +36,10 @@ class SqlSelectWhereTest {
 
     private JdbcManager jdbcManager;
 
-    /** @throws Exception */
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
     void bean_parameter() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE DEPARTMENT_ID = ? AND SALARY = ?";
@@ -44,7 +47,10 @@ class SqlSelectWhereTest {
         assertEquals(2, list.size());
     }
 
-    /** @throws Exception */
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
     void bean_parameter_none() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE";
@@ -52,23 +58,32 @@ class SqlSelectWhereTest {
         assertEquals(14, list.size());
     }
 
-    /** @throws Exception */
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
-    void map_parameter() throws Exception {
+    void testMap_parameter() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE DEPARTMENT_ID = ? AND SALARY = ?";
         @SuppressWarnings("unchecked") List<Map> list = jdbcManager.selectBySql(Map.class, sql, 2, 3000).getResultList();
         assertEquals(2, list.size());
     }
 
-    /** @throws Exception */
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
-    void map_parameter_none() throws Exception {
+    void testMap_parameter_none() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE";
         @SuppressWarnings("unchecked") List<Map> list = jdbcManager.selectBySql(Map.class, sql).getResultList();
         assertEquals(14, list.size());
     }
 
-    /** @throws Exception */
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
     void object_parameter() throws Exception {
         String sql = "SELECT EMPLOYEE_ID FROM EMPLOYEE WHERE DEPARTMENT_ID = ? AND SALARY = ?";
@@ -76,7 +91,10 @@ class SqlSelectWhereTest {
         assertEquals(2, list.size());
     }
 
-    /** @throws Exception */
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
     void object_parameter_none() throws Exception {
         String sql = "SELECT EMPLOYEE_ID FROM EMPLOYEE";

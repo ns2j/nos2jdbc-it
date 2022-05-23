@@ -43,14 +43,11 @@ import nos2jdbc.core.it.NoS2JdbcExtension;
  * 
  */
 @ExtendWith(NoS2JdbcExtension.class)
-class SqlSelectValueTypeWithoutInverseFieldTest {
+class SqlSelectValueTypeTestWithoutInverseField {
 
     private JdbcManager jdbcManager;
 
-    /**
-     * 
-     * @throws ParseException 
-     */
+    /** @throws ParseException */
     @Test
     void bean_temporalType() throws ParseException  {
         String sql = "SELECT * FROM TENSE WHERE ID = 1";
@@ -78,10 +75,7 @@ class SqlSelectValueTypeWithoutInverseFieldTest {
         assertEquals(odt, tense.offsetDateTime);
    }
 
-    /**
-     * 
-     * @throws ParseException 
-     */
+    /** @throws ParseException */
     @Test
     void bean_temporalType_Calendar() throws ParseException  {
         Calendar calendar = Calendar.getInstance();
@@ -96,10 +90,7 @@ class SqlSelectValueTypeWithoutInverseFieldTest {
         assertNotNull(tense);
     }
 
-    /**
-     * 
-     * @throws ParseException 
-     */
+    /** @throws ParseException  */
     @Test
     void bean_temporalType_Date() throws ParseException  {
         Date date = new SimpleDateFormat("yyyy-MM-dd").parse("2005-02-14");
@@ -113,8 +104,7 @@ class SqlSelectValueTypeWithoutInverseFieldTest {
         assertNotNull(tense);
     }
 
-    /**
-     */
+    /**  */
     @Test
     void bean_temporalType_Jdbc42() throws ParseException  {
         Date date = new SimpleDateFormat("yyyy-MM-dd").parse("2005-02-14");
@@ -128,8 +118,7 @@ class SqlSelectValueTypeWithoutInverseFieldTest {
         assertNotNull(tense);
     }
 
-    /**
-     */
+    /**  */
     @Test
     void map_temporalType()  {
         String sql = "SELECT * FROM TENSE WHERE ID = 1";
@@ -150,9 +139,7 @@ class SqlSelectValueTypeWithoutInverseFieldTest {
         assertNotNull(tense.get("offsetDateTime"));
     }
 
-    /**
-     * @throws ParseException 
-    */
+    /** @throws ParseException  */
     @Test
     void object_temporalType() throws ParseException   {
         String sql = "SELECT CAL_TIMESTAMP FROM TENSE WHERE ID = 1";

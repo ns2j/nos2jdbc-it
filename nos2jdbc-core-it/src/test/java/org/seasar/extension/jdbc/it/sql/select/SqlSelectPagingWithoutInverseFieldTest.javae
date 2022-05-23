@@ -32,7 +32,7 @@ import nos2jdbc.core.it.NoS2JdbcExtension;
  * 
  */
 @ExtendWith(NoS2JdbcExtension.class)
-class SqlSelectPagingTest {
+class SqlSelectPagingWithoutInverseFieldTest {
 
     private static String sql = "SELECT * FROM EMPLOYEE ORDER BY EMPLOYEE_NO";
 
@@ -40,186 +40,249 @@ class SqlSelectPagingTest {
 
     private JdbcManager jdbcManager;
 
-    /** @throws Exception */
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
     void bean_paging() throws Exception {
-        List<Employee> list = jdbcManager.selectBySql(Employee.class, sql).getResultList();
+        List<Employee> list = jdbcManager.selectBySql(Employee.class, sql).getResultListWithoutInverseField();
         assertEquals(14, list.size());
     }
 
-    /** @throws Exception */
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
     void bean_paging_limitOnly() throws Exception {
-        List<Employee> list = jdbcManager.selectBySql(Employee.class, sql).limit(3).getResultList();
+        List<Employee> list = jdbcManager.selectBySql(Employee.class, sql).limit(3).getResultListWithoutInverseField();
         assertEquals(3, list.size());
         assertEquals(1, list.get(0).employeeId);
         assertEquals(3, list.get(2).employeeId);
     }
 
-    /** @throws Exception */
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
     void bean_paging_offset_limit() throws Exception {
-        List<Employee> list = jdbcManager.selectBySql(Employee.class, sql).offset(3).limit(5).getResultList();
+        List<Employee> list = jdbcManager.selectBySql(Employee.class, sql).offset(3).limit(5).getResultListWithoutInverseField();
         assertEquals(5, list.size());
         assertEquals(4, list.get(0).employeeId);
         assertEquals(8, list.get(4).employeeId);
     }
 
-    /** @throws Exception */
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
     void bean_paging_offset_limitZero() throws Exception {
-        List<Employee> list = jdbcManager.selectBySql(Employee.class, sql).offset(3).limit(0).getResultList();
+        List<Employee> list = jdbcManager.selectBySql(Employee.class, sql).offset(3).limit(0).getResultListWithoutInverseField();
         assertEquals(11, list.size());
         assertEquals(4, list.get(0).employeeId);
         assertEquals(14, list.get(10).employeeId);
     }
 
-    /** @throws Exception */
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
     void bean_paging_offsetOnly() throws Exception {
-        List<Employee> list = jdbcManager.selectBySql(Employee.class, sql).offset(3).getResultList();
+        List<Employee> list = jdbcManager.selectBySql(Employee.class, sql).offset(3).getResultListWithoutInverseField();
         assertEquals(11, list.size());
         assertEquals(4, list.get(0).employeeId);
         assertEquals(14, list.get(10).employeeId);
     }
 
-    /** @throws Exception */
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
     void bean_paging_offsetZero_limit() throws Exception {
-        List<Employee> list = jdbcManager.selectBySql(Employee.class, sql).offset(0).limit(3).getResultList();
+        List<Employee> list = jdbcManager.selectBySql(Employee.class, sql).offset(0).limit(3).getResultListWithoutInverseField();
         assertEquals(3, list.size());
         assertEquals(1, list.get(0).employeeId);
         assertEquals(3, list.get(2).employeeId);
     }
 
-    /** @throws Exception */
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
     void bean_paging_offsetZero_limitZero() throws Exception {
-        List<Employee> list = jdbcManager.selectBySql(Employee.class, sql).offset(0).limit(0).getResultList();
+        List<Employee> list = jdbcManager.selectBySql(Employee.class, sql).offset(0).limit(0).getResultListWithoutInverseField();
         assertEquals(14, list.size());
     }
 
-    /** @throws Exception */
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
-    void map_paging() throws Exception {
-        @SuppressWarnings("rawtypes") List<Map> list = jdbcManager.selectBySql(Map.class, sql).getResultList();
+    void testMap_paging() throws Exception {
+        @SuppressWarnings("unchecked") List<Map> list = jdbcManager.selectBySql(Map.class, sql).getResultListWithoutInverseField();
         assertEquals(14, list.size());
         assertEquals(9, list.get(0).size());
     }
 
-    /** @throws Exception */
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
-    void map_paging_limitOnly() throws Exception {
-        @SuppressWarnings("rawtypes") List<Map> list = jdbcManager.selectBySql(Map.class, sql).limit(3).getResultList();
+    void testMap_paging_limitOnly() throws Exception {
+        @SuppressWarnings("unchecked") List<Map> list = jdbcManager.selectBySql(Map.class, sql).limit(3).getResultListWithoutInverseField();
         assertEquals(3, list.size());
         assertEquals(9, list.get(0).size());
         assertEquals(1, ((Number) list.get(0).get("employeeId")).intValue());
         assertEquals(3, ((Number) list.get(2).get("employeeId")).intValue());
     }
 
-    /** @throws Exception */
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
-    void map_paging_offset_limit() throws Exception {
-        @SuppressWarnings("rawtypes") List<Map> list = jdbcManager.selectBySql(Map.class, sql).offset(3).limit(5).getResultList();
+    void testMap_paging_offset_limit() throws Exception {
+        @SuppressWarnings("unchecked") List<Map> list = jdbcManager.selectBySql(Map.class, sql).offset(3).limit(5).getResultListWithoutInverseField();
         assertEquals(5, list.size());
         assertEquals(9, list.get(0).size());
         assertEquals(4, ((Number) list.get(0).get("employeeId")).intValue());
         assertEquals(8, ((Number) list.get(4).get("employeeId")).intValue());
     }
 
-    /** @throws Exception */
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
-    void map_paging_offset_limitZero() throws Exception {
-        @SuppressWarnings("rawtypes") List<Map> list = jdbcManager.selectBySql(Map.class, sql).offset(3).limit(0).getResultList();
+    void testMap_paging_offset_limitZero() throws Exception {
+        @SuppressWarnings("unchecked") List<Map> list = jdbcManager.selectBySql(Map.class, sql).offset(3).limit(0).getResultListWithoutInverseField();
         assertEquals(11, list.size());
         assertEquals(9, list.get(0).size());
         assertEquals(4, ((Number) list.get(0).get("employeeId")).intValue());
         assertEquals(14, ((Number) list.get(10).get("employeeId")).intValue());
     }
 
-    /** @throws Exception */
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
-    void map_paging_offsetOnly() throws Exception {
-        @SuppressWarnings("rawtypes") List<Map> list = jdbcManager.selectBySql(Map.class, sql).offset(3).getResultList();
+    void testMap_paging_offsetOnly() throws Exception {
+        @SuppressWarnings("unchecked") List<Map> list = jdbcManager.selectBySql(Map.class, sql).offset(3).getResultListWithoutInverseField();
         assertEquals(11, list.size());
         assertEquals(9, list.get(0).size());
         assertEquals(4, ((Number) list.get(0).get("employeeId")).intValue());
         assertEquals(14, ((Number) list.get(10).get("employeeId")).intValue());
     }
 
-    /** @throws Exception */
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
-    void map_paging_offsetZero_limit() throws Exception {
-        @SuppressWarnings("rawtypes") List<Map> list = jdbcManager.selectBySql(Map.class, sql).offset(0).limit(3).getResultList();
+    void testMap_paging_offsetZero_limit() throws Exception {
+        @SuppressWarnings("unchecked") List<Map> list = jdbcManager.selectBySql(Map.class, sql).offset(0).limit(3).getResultListWithoutInverseField();
         assertEquals(3, list.size());
         assertEquals(9, list.get(0).size());
         assertEquals(1, ((Number) list.get(0).get("employeeId")).intValue());
         assertEquals(3, ((Number) list.get(2).get("employeeId")).intValue());
     }
 
-    /** @throws Exception */
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
-    void map_paging_offsetZero_limitZero() throws Exception {
-        @SuppressWarnings("rawtypes") List<Map> list = jdbcManager.selectBySql(Map.class, sql).offset(0).limit(0).getResultList();
+    void testMap_paging_offsetZero_limitZero() throws Exception {
+        @SuppressWarnings("unchecked") List<Map> list = jdbcManager.selectBySql(Map.class, sql).offset(0).limit(0).getResultListWithoutInverseField();
         assertEquals(14, list.size());
     }
 
-    /** @throws Exception */
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
     void object_paging() throws Exception {
-        List<Integer> list = jdbcManager.selectBySql(Integer.class, sql2).getResultList();
+        List<Integer> list = jdbcManager.selectBySql(Integer.class, sql2).getResultListWithoutInverseField();
         assertEquals(14, list.size());
     }
 
-    /** @throws Exception */
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
     void object_paging_limitOnly() throws Exception {
-        List<Integer> list = jdbcManager.selectBySql(Integer.class, sql2).limit(3).getResultList();
+        List<Integer> list = jdbcManager.selectBySql(Integer.class, sql2).limit(3).getResultListWithoutInverseField();
         assertEquals(3, list.size());
         assertEquals(1, list.get(0).intValue());
         assertEquals(3, list.get(2).intValue());
     }
 
-    /** @throws Exception */
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
     void object_paging_offset_limit() throws Exception {
-        List<Integer> list = jdbcManager.selectBySql(Integer.class, sql2).offset(3).limit(5).getResultList();
+        List<Integer> list = jdbcManager.selectBySql(Integer.class, sql2).offset(3).limit(5).getResultListWithoutInverseField();
         assertEquals(5, list.size());
         assertEquals(4, list.get(0).intValue());
         assertEquals(8, list.get(4).intValue());
     }
 
-    /** @throws Exception */
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
     void object_paging_offset_limitZero() throws Exception {
-        List<Integer> list = jdbcManager.selectBySql(Integer.class, sql2).offset(3).limit(0).getResultList();
+        List<Integer> list = jdbcManager.selectBySql(Integer.class, sql2).offset(3).limit(0).getResultListWithoutInverseField();
         assertEquals(11, list.size());
         assertEquals(4, list.get(0).intValue());
         assertEquals(14, list.get(10).intValue());
     }
 
-    /** @throws Exception */
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
     void object_paging_offsetOnly() throws Exception {
-        List<Integer> list = jdbcManager.selectBySql(Integer.class, sql2).offset(3).getResultList();
+        List<Integer> list = jdbcManager.selectBySql(Integer.class, sql2).offset(3).getResultListWithoutInverseField();
         assertEquals(11, list.size());
         assertEquals(4, list.get(0).intValue());
         assertEquals(14, list.get(10).intValue());
     }
 
-    /** @throws Exception */
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
     void object_paging_offsetZero_limit() throws Exception {
-        List<Employee> list = jdbcManager.selectBySql(Employee.class, sql2).offset(0).limit(3).getResultList();
+        List<Employee> list = jdbcManager.selectBySql(Employee.class, sql2).offset(0).limit(3).getResultListWithoutInverseField();
         assertEquals(3, list.size());
         assertEquals(1, list.get(0).employeeId);
         assertEquals(3, list.get(2).employeeId);
     }
 
-    /** @throws Exception */
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
     void object_paging_offsetZero_limitZero() throws Exception {
-        List<Integer> list = jdbcManager.selectBySql(Integer.class, sql2).offset(0).limit(0).getResultList();
+        List<Integer> list = jdbcManager.selectBySql(Integer.class, sql2).offset(0).limit(0).getResultListWithoutInverseField();
         assertEquals(14, list.size());
     }
 }
