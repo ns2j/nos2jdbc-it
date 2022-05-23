@@ -83,122 +83,86 @@ class SqlFileSelectIterationCallbackTest {
         }
     };
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testBean() throws Exception {
+    void bean() throws Exception {
         BigDecimal sum = jdbcManager.selectBySqlFile(Employee.class, PATH).iterate(beanSalarySumCallBack);
         assertTrue(new BigDecimal(29025).compareTo(sum) == 0);
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testBean_limitOnly() throws Exception {
+    void bean_limitOnly() throws Exception {
         BigDecimal sum = jdbcManager.selectBySqlFile(Employee.class, PATH).limit(3).iterate(beanSalarySumCallBack);
         assertTrue(new BigDecimal(3650).compareTo(sum) == 0);
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testBean_offset_limit() throws Exception {
+    void bean_offset_limit() throws Exception {
         BigDecimal sum = jdbcManager.selectBySqlFile(Employee.class, PATH).offset(3).limit(5).iterate(beanSalarySumCallBack);
         assertTrue(new BigDecimal(12525).compareTo(sum) == 0);
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testBean_offsetOnly() throws Exception {
+    void bean_offsetOnly() throws Exception {
         BigDecimal sum = jdbcManager.selectBySqlFile(Employee.class, PATH).offset(3).iterate(beanSalarySumCallBack);
         assertTrue(new BigDecimal(25375).compareTo(sum) == 0);
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testMap() throws Exception {
+    void map() throws Exception {
         BigDecimal sum = jdbcManager.selectBySqlFile(Map.class, PATH).iterate(mapSalarySumCallBack);
         assertTrue(new BigDecimal(29025).compareTo(sum) == 0);
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testMap_limitOnly() throws Exception {
+    void map_limitOnly() throws Exception {
         BigDecimal sum = jdbcManager.selectBySqlFile(Map.class, PATH).limit(3).iterate(mapSalarySumCallBack);
         assertTrue(new BigDecimal(3650).compareTo(sum) == 0);
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testMap_offset_limit() throws Exception {
+    void map_offset_limit() throws Exception {
         BigDecimal sum = jdbcManager.selectBySqlFile(Map.class, PATH).offset(3).limit(5).iterate(mapSalarySumCallBack);
         assertTrue(new BigDecimal(12525).compareTo(sum) == 0);
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testMap_offsetOnly() throws Exception {
+    void map_offsetOnly() throws Exception {
         BigDecimal sum = jdbcManager.selectBySqlFile(Map.class, PATH).offset(3).iterate(mapSalarySumCallBack);
         assertTrue(new BigDecimal(25375).compareTo(sum) == 0);
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testObject() throws Exception {
+    void object() throws Exception {
         BigDecimal sum = jdbcManager.selectBySqlFile(BigDecimal.class, PATH2).iterate(objectSalarySumCallBack);
         assertTrue(new BigDecimal(29025).compareTo(sum) == 0);
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testObject_limitOnly() throws Exception {
+    void object_limitOnly() throws Exception {
         BigDecimal sum = jdbcManager.selectBySqlFile(BigDecimal.class, PATH2).limit(3).iterate(objectSalarySumCallBack);
         assertTrue(new BigDecimal(3650).compareTo(sum) == 0);
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testObject_offset_limit() throws Exception {
+    void object_offset_limit() throws Exception {
         BigDecimal sum = jdbcManager.selectBySqlFile(BigDecimal.class, PATH2).offset(3).limit(5).iterate(objectSalarySumCallBack);
         assertTrue(new BigDecimal(12525).compareTo(sum) == 0);
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testObject_offsetOnly() throws Exception {
+    void object_offsetOnly() throws Exception {
         BigDecimal sum = jdbcManager.selectBySqlFile(BigDecimal.class, PATH2).offset(3).iterate(objectSalarySumCallBack);
         assertTrue(new BigDecimal(25375).compareTo(sum) == 0);
     }
@@ -208,7 +172,7 @@ class SqlFileSelectIterationCallbackTest {
      * @throws Exception
      */
     @Test
-    void testBean_WithoutInverseField() throws Exception {
+    void bean_WithoutInverseField() throws Exception {
         BigDecimal sum = jdbcManager.selectBySqlFile(Employee.class, PATH).iterateWithoutInverseField(beanSalarySumCallBack);
         assertTrue(new BigDecimal(29025).compareTo(sum) == 0);
     }
@@ -218,7 +182,7 @@ class SqlFileSelectIterationCallbackTest {
      * @throws Exception
      */
     @Test
-    void testBean_WithoutInverseField_limitOnly() throws Exception {
+    void bean_WithoutInverseField_limitOnly() throws Exception {
         BigDecimal sum = jdbcManager.selectBySqlFile(Employee.class, PATH).limit(3).iterateWithoutInverseField(beanSalarySumCallBack);
         assertTrue(new BigDecimal(3650).compareTo(sum) == 0);
     }
@@ -228,7 +192,7 @@ class SqlFileSelectIterationCallbackTest {
      * @throws Exception
      */
     @Test
-    void testBean_WithoutInverseField_offset_limit() throws Exception {
+    void bean_WithoutInverseField_offset_limit() throws Exception {
         BigDecimal sum = jdbcManager.selectBySqlFile(Employee.class, PATH).offset(3).limit(5).iterateWithoutInverseField(beanSalarySumCallBack);
         assertTrue(new BigDecimal(12525).compareTo(sum) == 0);
     }
@@ -238,7 +202,7 @@ class SqlFileSelectIterationCallbackTest {
      * @throws Exception
      */
     @Test
-    void testBean_WithoutInverseField_offsetOnly() throws Exception {
+    void bean_WithoutInverseField_offsetOnly() throws Exception {
         BigDecimal sum = jdbcManager.selectBySqlFile(Employee.class, PATH).offset(3).iterateWithoutInverseField(beanSalarySumCallBack);
         assertTrue(new BigDecimal(25375).compareTo(sum) == 0);
     }
@@ -248,7 +212,7 @@ class SqlFileSelectIterationCallbackTest {
      * @throws Exception
      */
     @Test
-    void testMap_WithoutInverseField() throws Exception {
+    void map_WithoutInverseField() throws Exception {
         BigDecimal sum = jdbcManager.selectBySqlFile(Map.class, PATH).iterateWithoutInverseField(mapSalarySumCallBack);
         assertTrue(new BigDecimal(29025).compareTo(sum) == 0);
     }
@@ -258,7 +222,7 @@ class SqlFileSelectIterationCallbackTest {
      * @throws Exception
      */
     @Test
-    void testMap_WithoutInverseField_limitOnly() throws Exception {
+    void map_WithoutInverseField_limitOnly() throws Exception {
         BigDecimal sum = jdbcManager.selectBySqlFile(Map.class, PATH).limit(3).iterateWithoutInverseField(mapSalarySumCallBack);
         assertTrue(new BigDecimal(3650).compareTo(sum) == 0);
     }
@@ -268,7 +232,7 @@ class SqlFileSelectIterationCallbackTest {
      * @throws Exception
      */
     @Test
-    void testMap_WithoutInverseField_offset_limit() throws Exception {
+    void map_WithoutInverseField_offset_limit() throws Exception {
         BigDecimal sum = jdbcManager.selectBySqlFile(Map.class, PATH).offset(3).limit(5).iterateWithoutInverseField(mapSalarySumCallBack);
         assertTrue(new BigDecimal(12525).compareTo(sum) == 0);
     }
@@ -278,7 +242,7 @@ class SqlFileSelectIterationCallbackTest {
      * @throws Exception
      */
     @Test
-    void testMap_WithoutInverseField_offsetOnly() throws Exception {
+    void map_WithoutInverseField_offsetOnly() throws Exception {
         BigDecimal sum = jdbcManager.selectBySqlFile(Map.class, PATH).offset(3).iterateWithoutInverseField(mapSalarySumCallBack);
         assertTrue(new BigDecimal(25375).compareTo(sum) == 0);
     }
@@ -288,7 +252,7 @@ class SqlFileSelectIterationCallbackTest {
      * @throws Exception
      */
     @Test
-    void testObject_WithoutInverseField() throws Exception {
+    void object_WithoutInverseField() throws Exception {
         BigDecimal sum = jdbcManager.selectBySqlFile(BigDecimal.class, PATH2).iterateWithoutInverseField(objectSalarySumCallBack);
         assertTrue(new BigDecimal(29025).compareTo(sum) == 0);
     }
@@ -298,7 +262,7 @@ class SqlFileSelectIterationCallbackTest {
      * @throws Exception
      */
     @Test
-    void testObject_WithoutInverseField_limitOnly() throws Exception {
+    void object_WithoutInverseField_limitOnly() throws Exception {
         BigDecimal sum = jdbcManager.selectBySqlFile(BigDecimal.class, PATH2).limit(3).iterateWithoutInverseField(objectSalarySumCallBack);
         assertTrue(new BigDecimal(3650).compareTo(sum) == 0);
     }
@@ -308,7 +272,7 @@ class SqlFileSelectIterationCallbackTest {
      * @throws Exception
      */
     @Test
-    void testObject_WithoutInverseField_offset_limit() throws Exception {
+    void object_WithoutInverseField_offset_limit() throws Exception {
         BigDecimal sum = jdbcManager.selectBySqlFile(BigDecimal.class, PATH2).offset(3).limit(5).iterateWithoutInverseField(objectSalarySumCallBack);
         assertTrue(new BigDecimal(12525).compareTo(sum) == 0);
     }
@@ -318,7 +282,7 @@ class SqlFileSelectIterationCallbackTest {
      * @throws Exception
      */
     @Test
-    void testObject_WithoutInverseField_offsetOnly() throws Exception {
+    void object_WithoutInverseField_offsetOnly() throws Exception {
         BigDecimal sum = jdbcManager.selectBySqlFile(BigDecimal.class, PATH2).offset(3).iterateWithoutInverseField(objectSalarySumCallBack);
         assertTrue(new BigDecimal(25375).compareTo(sum) == 0);
     }

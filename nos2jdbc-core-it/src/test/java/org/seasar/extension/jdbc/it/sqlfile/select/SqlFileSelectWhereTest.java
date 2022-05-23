@@ -46,12 +46,9 @@ class SqlFileSelectWhereTest {
 
     private JdbcManager jdbcManager;
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testBean_parameter_dto() throws Exception {
+    void bean_parameter_dto() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_dto.sql";
         Param param = new Param();
         param.departmentId = 3;
@@ -66,23 +63,17 @@ class SqlFileSelectWhereTest {
         assertEquals("TURNER", list.get(2).employeeName);
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testBean_parameter_none() throws Exception {
+    void bean_parameter_none() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_no.sql";
         List<Employee> list = jdbcManager.selectBySqlFile(Employee.class, path).getResultList();
         assertEquals(14, list.size());
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testBean_parameter_simpleType() throws Exception {
+    void bean_parameter_simpleType() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_simpleType.sql";
         List<Employee> list = jdbcManager.selectBySqlFile(Employee.class, path, 3).getResultList();
         assertEquals(6, list.size());
@@ -94,12 +85,9 @@ class SqlFileSelectWhereTest {
         assertEquals("WARD", list.get(5).employeeName);
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testMap_parameter_dto() throws Exception {
+    void map_parameter_dto() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_dto.sql";
         Param param = new Param();
         param.departmentId = 3;
@@ -114,23 +102,17 @@ class SqlFileSelectWhereTest {
         assertEquals("TURNER", list.get(2).get("employeeName"));
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testMap_parameter_none() throws Exception {
+    void map_parameter_none() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_no.sql";
         @SuppressWarnings("unchecked") List<Map> list = jdbcManager.selectBySqlFile(Map.class, path).getResultList();
         assertEquals(14, list.size());
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testMap_parameter_simpleType() throws Exception {
+    void map_parameter_simpleType() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_simpleType.sql";
         @SuppressWarnings("unchecked") List<Map> list = jdbcManager.selectBySqlFile(Map.class, path, 3).getResultList();
         assertEquals(6, list.size());
@@ -142,12 +124,9 @@ class SqlFileSelectWhereTest {
         assertEquals("WARD", list.get(5).get("employeeName"));
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testObject_parameter_dto() throws Exception {
+    void object_parameter_dto() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_dto2.sql";
         Param param = new Param();
         param.departmentId = 3;
@@ -162,23 +141,17 @@ class SqlFileSelectWhereTest {
         assertEquals(10, list.get(2).intValue());
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testObject_parameter_none() throws Exception {
+    void object_parameter_none() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_no2.sql";
         List<Integer> list = jdbcManager.selectBySqlFile(Integer.class, path).getResultList();
         assertEquals(14, list.size());
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testObject_parameter_simpleType() throws Exception {
+    void object_parameter_simpleType() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_simpleType2.sql";
         List<Integer> list = jdbcManager.selectBySqlFile(Integer.class, path, 3).getResultList();
         assertEquals(6, list.size());
@@ -190,12 +163,9 @@ class SqlFileSelectWhereTest {
         assertEquals(3, list.get(5).intValue());
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testBean_WithoutInverseField_parameter_dto() throws Exception {
+    void bean_WithoutInverseField_parameter_dto() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_dto.sql";
         Param param = new Param();
         param.departmentId = 3;
@@ -210,23 +180,17 @@ class SqlFileSelectWhereTest {
         assertEquals("TURNER", list.get(2).employeeName);
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testBean_WithoutInverseField_parameter_none() throws Exception {
+    void bean_WithoutInverseField_parameter_none() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_no.sql";
         List<Employee> list = jdbcManager.selectBySqlFile(Employee.class, path).getResultListWithoutInverseField();
         assertEquals(14, list.size());
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testBean_WithoutInverseField_parameter_simpleType() throws Exception {
+    void bean_WithoutInverseField_parameter_simpleType() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_simpleType.sql";
         List<Employee> list = jdbcManager.selectBySqlFile(Employee.class, path, 3).getResultListWithoutInverseField();
         assertEquals(6, list.size());
@@ -238,12 +202,9 @@ class SqlFileSelectWhereTest {
         assertEquals("WARD", list.get(5).employeeName);
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testMap_WithoutInverseField_parameter_dto() throws Exception {
+    void map_WithoutInverseField_parameter_dto() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_dto.sql";
         Param param = new Param();
         param.departmentId = 3;
@@ -258,23 +219,17 @@ class SqlFileSelectWhereTest {
         assertEquals("TURNER", list.get(2).get("employeeName"));
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testMap_WithoutInverseField_parameter_none() throws Exception {
+    void map_WithoutInverseField_parameter_none() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_no.sql";
         @SuppressWarnings("unchecked") List<Map> list = jdbcManager.selectBySqlFile(Map.class, path).getResultListWithoutInverseField();
         assertEquals(14, list.size());
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testMap_WithoutInverseField_parameter_simpleType() throws Exception {
+    void map_WithoutInverseField_parameter_simpleType() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_simpleType.sql";
         @SuppressWarnings("unchecked") List<Map> list = jdbcManager.selectBySqlFile(Map.class, path, 3).getResultListWithoutInverseField();
         assertEquals(6, list.size());
@@ -286,12 +241,9 @@ class SqlFileSelectWhereTest {
         assertEquals("WARD", list.get(5).get("employeeName"));
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testObject_WithoutInverseField_parameter_dto() throws Exception {
+    void object_WithoutInverseField_parameter_dto() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_dto2.sql";
         Param param = new Param();
         param.departmentId = 3;
@@ -306,23 +258,17 @@ class SqlFileSelectWhereTest {
         assertEquals(10, list.get(2).intValue());
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testObject_WithoutInverseField_parameter_none() throws Exception {
+    void object_WithoutInverseField_parameter_none() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_no2.sql";
         List<Integer> list = jdbcManager.selectBySqlFile(Integer.class, path).getResultListWithoutInverseField();
         assertEquals(14, list.size());
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
+    /** @throws Exception */
     @Test
-    void testObject_WithoutInverseField_parameter_simpleType() throws Exception {
+    void object_WithoutInverseField_parameter_simpleType() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_simpleType2.sql";
         List<Integer> list = jdbcManager.selectBySqlFile(Integer.class, path, 3).getResultListWithoutInverseField();
         assertEquals(6, list.size());

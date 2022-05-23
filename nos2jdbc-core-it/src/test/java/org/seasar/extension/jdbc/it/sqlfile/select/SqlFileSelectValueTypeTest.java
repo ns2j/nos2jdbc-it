@@ -48,9 +48,7 @@ class SqlFileSelectValueTypeTest {
 
     private JdbcManager jdbcManager;
 
-    /**
-     * @throws ParseException 
-     */
+    /** @throws ParseException */
     @Test
     void bean_temporalType() throws ParseException {
         String path = getClass().getName().replace(".", "/") + "_temporalType.sql";
@@ -78,9 +76,7 @@ class SqlFileSelectValueTypeTest {
         assertEquals(odt, tense.offsetDateTime);
     }
 
-    /**
-     * @throws ParseException 
-     */
+    /** @throws ParseException */
     @Test
     void bean_temporalType_Calendar() throws ParseException {
         Param2 param = new Param2();
@@ -101,9 +97,7 @@ class SqlFileSelectValueTypeTest {
         assertNotNull(tense);
     }
 
-    /**
-     * @throws ParseException 
-     */
+    /** @throws ParseException */
     @Test
     void bean_temporalType_Date() throws ParseException {
         Param3 param = new Param3();
@@ -121,9 +115,7 @@ class SqlFileSelectValueTypeTest {
         assertNotNull(tense);
     }
 
-    /**
-     * @throws ParseException 
-     */
+    /** @throws ParseException  */
     @Test
     void bean_temporalType_Jdbc42() throws ParseException {
         Param4 param = new Param4();
@@ -167,9 +159,7 @@ class SqlFileSelectValueTypeTest {
         assertNotNull(tense.get("sqlTimestamp"));
     }
 
-    /**
-     * @throws ParseException 
-     */
+    /** @throws ParseException */
     @Test
     void object_temporalType() throws ParseException {
         String path = getClass().getName().replace(".", "/") + "_Object_temporalType.sql";
@@ -179,9 +169,7 @@ class SqlFileSelectValueTypeTest {
         assertEquals(time, calTimestamp.getTimeInMillis());
     }
 
-    /**
-     * @throws ParseException 
-     */
+    /** @throws ParseException */
     @Test
     void bean_WithoutInverseField_temporalType() throws ParseException {
         String path = getClass().getName().replace(".", "/") + "_temporalType.sql";
@@ -209,9 +197,7 @@ class SqlFileSelectValueTypeTest {
         assertEquals(odt, tense.offsetDateTime);
     }
 
-    /**
-     * @throws ParseException 
-     */
+    /** @throws ParseException */
     @Test
     void bean_WithoutInverseField_temporalType_Calendar() throws ParseException {
         Param2 param = new Param2();
@@ -232,9 +218,7 @@ class SqlFileSelectValueTypeTest {
         assertNotNull(tense);
     }
 
-    /**
-     * @throws ParseException 
-     */
+    /** @throws ParseException */
     @Test
     void bean_WithoutInverseField_temporalType_Date() throws ParseException {
         Param3 param = new Param3();
@@ -252,9 +236,7 @@ class SqlFileSelectValueTypeTest {
         assertNotNull(tense);
     }
 
-    /**
-     * @throws ParseException 
-     */
+    /** @throws ParseException */
     @Test
     void bean_WithoutInverseField_temporalType_Jdbc42() throws ParseException {
         Param4 param = new Param4();
