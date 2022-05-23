@@ -15,15 +15,19 @@
  */
 package org.seasar.extension.jdbc.it.sqlfile.select;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.util.Map;
+
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Employee;
+
 import nos2jdbc.core.it.NoS2JdbcExtension;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
@@ -187,6 +191,161 @@ class SqlFileSelectGetResultTest {
     void testObject_getSingleResult_null() throws Exception {
         String path = getClass().getName().replace(".", "/") + "_getSingleResult_null2.sql";
         Integer employeeId = jdbcManager.selectBySqlFile(Integer.class, path).getSingleResult();
+        assertNull(employeeId);
+    }
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
+    void testBean_getResultListWithoutInverseField_NoResultException() throws Exception {
+        String path = getClass().getName().replace(".", "/") + "_getResultList_NoResultException.sql";
+        assertThrows(NoResultException.class, () -> jdbcManager.selectBySqlFile(Employee.class, path).disallowNoResult().getResultListWithoutInverseField());
+    }
+
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
+    void testBean_getSingleResultWithoutInverseField() throws Exception {
+        String path = getClass().getName().replace(".", "/") + "_getSingleResult.sql";
+        Employee employee = jdbcManager.selectBySqlFile(Employee.class, path).getSingleResultWithoutInverseField();
+        assertNotNull(employee);
+    }
+
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
+    void testBean_getSingleResultWithoutInverseField_NonUniqueResultException() throws Exception {
+        String path = getClass().getName().replace(".", "/") + "_getSingleResult_NonUniqueResultException.sql";
+        assertThrows(NonUniqueResultException.class, () -> jdbcManager.selectBySqlFile(Employee.class, path).getSingleResultWithoutInverseField());
+    }
+
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
+    void testBean_getSingleResultWithoutInverseField_NoResultException() throws Exception {
+        String path = getClass().getName().replace(".", "/") + "_getSingleResult_NoResultException.sql";
+        assertThrows(NoResultException.class, () -> jdbcManager.selectBySqlFile(Employee.class, path).disallowNoResult().getSingleResultWithoutInverseField());
+    }
+
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
+    void testBean_getSingleResultWithoutInverseField_null() throws Exception {
+        String path = getClass().getName().replace(".", "/") + "_getSingleResult_null.sql";
+        Employee employee = jdbcManager.selectBySqlFile(Employee.class, path).getSingleResultWithoutInverseField();
+        assertNull(employee);
+    }
+
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
+    void testMap_getResultListWithoutInverseField_NoResultException() throws Exception {
+        String path = getClass().getName().replace(".", "/") + "_getResultList_NoResultException.sql";
+        assertThrows(NoResultException.class, () -> jdbcManager.selectBySqlFile(Map.class, path).disallowNoResult().getResultListWithoutInverseField());
+    }
+
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
+    void testMap_getSingleResultWithoutInverseField() throws Exception {
+        String path = getClass().getName().replace(".", "/") + "_getSingleResult.sql";
+        Map<?, ?> employee = jdbcManager.selectBySqlFile(Map.class, path).getSingleResultWithoutInverseField();
+        assertNotNull(employee);
+    }
+
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
+    void testMap_getSingleResultWithoutInverseField_NonUniqueResultException() throws Exception {
+        String path = getClass().getName().replace(".", "/") + "_getSingleResult_NonUniqueResultException.sql";
+        assertThrows(NonUniqueResultException.class, () -> jdbcManager.selectBySqlFile(Map.class, path).getSingleResultWithoutInverseField());
+    }
+
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
+    void testMap_getSingleResultWithoutInverseField_NoResultException() throws Exception {
+        String path = getClass().getName().replace(".", "/") + "_getSingleResult_NoResultException.sql";
+        assertThrows(NoResultException.class, () -> jdbcManager.selectBySqlFile(Map.class, path).disallowNoResult().getSingleResultWithoutInverseField());
+    }
+
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
+    void testMap_getSingleResultWithoutInverseField_null() throws Exception {
+        String path = getClass().getName().replace(".", "/") + "_getSingleResult_null.sql";
+        Map<?, ?> employee = jdbcManager.selectBySqlFile(Map.class, path).getSingleResultWithoutInverseField();
+        assertNull(employee);
+    }
+
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
+    void testObject_getResultListWithoutInverseField_NoResultException() throws Exception {
+        String path = getClass().getName().replace(".", "/") + "_getResultList_NoResultException2.sql";
+        assertThrows(NoResultException.class, () -> jdbcManager.selectBySqlFile(Integer.class, path).disallowNoResult().getResultListWithoutInverseField());
+    }
+
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
+    void testObject_getSingleResultWithoutInverseField() throws Exception {
+        String path = getClass().getName().replace(".", "/") + "_getSingleResult2.sql";
+        Integer employeeId = jdbcManager.selectBySqlFile(Integer.class, path).getSingleResultWithoutInverseField();
+        assertNotNull(employeeId);
+    }
+
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
+    void testObject_getSingleResultWithoutInverseField_NonUniqueResultException() throws Exception {
+        String path = getClass().getName().replace(".", "/") + "_getSingleResult_NonUniqueResultException2.sql";
+        assertThrows(NonUniqueResultException.class, () -> jdbcManager.selectBySqlFile(Integer.class, path).getSingleResultWithoutInverseField());
+    }
+
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
+    void testObject_getSingleResultWithoutInverseField_NoResultException() throws Exception {
+        String path = getClass().getName().replace(".", "/") + "_getSingleResult_NoResultException2.sql";
+        assertThrows(NoResultException.class, () -> jdbcManager.selectBySqlFile(Integer.class, path).disallowNoResult().getSingleResultWithoutInverseField());
+    }
+
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
+    void testObject_getSingleResultWithoutInverseField_null() throws Exception {
+        String path = getClass().getName().replace(".", "/") + "_getSingleResult_null2.sql";
+        Integer employeeId = jdbcManager.selectBySqlFile(Integer.class, path).getSingleResultWithoutInverseField();
         assertNull(employeeId);
     }
 }

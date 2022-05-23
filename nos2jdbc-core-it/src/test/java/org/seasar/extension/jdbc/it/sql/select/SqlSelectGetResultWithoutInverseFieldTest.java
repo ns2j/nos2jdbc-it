@@ -44,7 +44,7 @@ import nos2jdbc.core.it.NoS2JdbcExtension;
  * 
  */
 @ExtendWith(NoS2JdbcExtension.class)
-class SqlSelectGetResultTest {
+class SqlSelectGetResultWithoutInverseFieldTest {
 
     private JdbcManager jdbcManager;
 
@@ -55,7 +55,7 @@ class SqlSelectGetResultTest {
     @Test
     void testBean_getResultList_NoResultException() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE EMPLOYEE_ID = 100";
-        assertThrows(NoResultException.class, () -> jdbcManager.selectBySql(Employee.class, sql).disallowNoResult().getResultList());
+        assertThrows(NoResultException.class, () -> jdbcManager.selectBySql(Employee.class, sql).disallowNoResult().getResultListWithoutInverseField());
     }
 
     /**
@@ -65,7 +65,7 @@ class SqlSelectGetResultTest {
     @Test
     void testBean_getSingleResult() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE EMPLOYEE_ID = 1";
-        Employee employee = jdbcManager.selectBySql(Employee.class, sql).getSingleResult();
+        Employee employee = jdbcManager.selectBySql(Employee.class, sql).getSingleResultWithoutInverseField();
         assertNotNull(employee);
     }
 
@@ -76,7 +76,7 @@ class SqlSelectGetResultTest {
     @Test
     void testBean_getSingleResult_NonUniqueResultException() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE DEPARTMENT_ID = 1";
-        assertThrows(NonUniqueResultException.class, () -> jdbcManager.selectBySql(Employee.class, sql).getSingleResult());
+        assertThrows(NonUniqueResultException.class, () -> jdbcManager.selectBySql(Employee.class, sql).getSingleResultWithoutInverseField());
     }
 
     /**
@@ -86,7 +86,7 @@ class SqlSelectGetResultTest {
     @Test
     void testBean_getSingleResult_NoResultException() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE EMPLOYEE_ID = 100";
-        assertThrows(NoResultException.class, () -> jdbcManager.selectBySql(Employee.class, sql).disallowNoResult().getSingleResult());
+        assertThrows(NoResultException.class, () -> jdbcManager.selectBySql(Employee.class, sql).disallowNoResult().getSingleResultWithoutInverseField());
     }
 
     /**
@@ -96,7 +96,7 @@ class SqlSelectGetResultTest {
     @Test
     void testBean_getSingleResult_null() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE EMPLOYEE_ID = 100";
-        Employee employee = jdbcManager.selectBySql(Employee.class, sql).getSingleResult();
+        Employee employee = jdbcManager.selectBySql(Employee.class, sql).getSingleResultWithoutInverseField();
         assertNull(employee);
     }
 
@@ -107,7 +107,7 @@ class SqlSelectGetResultTest {
     @Test
     void testMap_getResultList_NoResultException() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE EMPLOYEE_ID = 100";
-        assertThrows(NoResultException.class, () -> jdbcManager.selectBySql(Map.class, sql).disallowNoResult().getResultList());
+        assertThrows(NoResultException.class, () -> jdbcManager.selectBySql(Map.class, sql).disallowNoResult().getResultListWithoutInverseField());
     }
 
     /**
@@ -117,7 +117,7 @@ class SqlSelectGetResultTest {
     @Test
     void testMap_getSingleResult() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE EMPLOYEE_ID = 1";
-        Map<?, ?> employee = jdbcManager.selectBySql(Map.class, sql).getSingleResult();
+        Map<?, ?> employee = jdbcManager.selectBySql(Map.class, sql).getSingleResultWithoutInverseField();
         assertNotNull(employee);
     }
 
@@ -128,7 +128,7 @@ class SqlSelectGetResultTest {
     @Test
     void testMap_getSingleResult_NonUniqueResultException() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE DEPARTMENT_ID = 1";
-        assertThrows(NonUniqueResultException.class, () -> jdbcManager.selectBySql(Map.class, sql).getSingleResult());
+        assertThrows(NonUniqueResultException.class, () -> jdbcManager.selectBySql(Map.class, sql).getSingleResultWithoutInverseField());
     }
 
     /**
@@ -138,7 +138,7 @@ class SqlSelectGetResultTest {
     @Test
     void testMap_getSingleResult_NoResultException() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE EMPLOYEE_ID = 100";
-        assertThrows(NoResultException.class, () -> jdbcManager.selectBySql(Map.class, sql).disallowNoResult().getSingleResult());
+        assertThrows(NoResultException.class, () -> jdbcManager.selectBySql(Map.class, sql).disallowNoResult().getSingleResultWithoutInverseField());
     }
 
     /**
@@ -148,7 +148,7 @@ class SqlSelectGetResultTest {
     @Test
     void testMap_getSingleResult_null() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE EMPLOYEE_ID = 100";
-        Map<?, ?> employee = jdbcManager.selectBySql(Map.class, sql).getSingleResult();
+        Map<?, ?> employee = jdbcManager.selectBySql(Map.class, sql).getSingleResultWithoutInverseField();
         assertNull(employee);
     }
 
@@ -159,7 +159,7 @@ class SqlSelectGetResultTest {
     @Test
     void testMap_getSingleResult_AsLinkedHashMap() throws Exception {
         String sql = "SELECT VERSION, EMPLOYEE_NAME, EMPLOYEE_ID FROM EMPLOYEE WHERE EMPLOYEE_ID = 1";
-        Map<?, ?> employee = jdbcManager.selectBySql(LinkedHashMap.class, sql).getSingleResult();
+        Map<?, ?> employee = jdbcManager.selectBySql(LinkedHashMap.class, sql).getSingleResultWithoutInverseField();
         Iterator<?> it = employee.keySet().iterator();
         assertEquals("version", it.next());
         assertNotNull(employee.get("version"));
@@ -175,7 +175,7 @@ class SqlSelectGetResultTest {
     @Test
     void testMap_getSingleResult_AsTreeMap() throws Exception {
         String sql = "SELECT VERSION, EMPLOYEE_NAME, EMPLOYEE_ID FROM EMPLOYEE WHERE EMPLOYEE_ID = 1";
-        Map<?, ?> employee = jdbcManager.selectBySql(TreeMap.class, sql).getSingleResult();
+        Map<?, ?> employee = jdbcManager.selectBySql(TreeMap.class, sql).getSingleResultWithoutInverseField();
         Iterator<?> it = employee.keySet().iterator();
         assertEquals("employeeId", it.next());
         assertNotNull(employee.get("employeeId"));
@@ -192,7 +192,7 @@ class SqlSelectGetResultTest {
     @Test
     void testObject_getResultList_NoResultException() throws Exception {
         String sql = "SELECT EMPLOYEE_ID FROM EMPLOYEE WHERE EMPLOYEE_ID = 100";
-        assertThrows(NoResultException.class, () -> jdbcManager.selectBySql(Integer.class, sql).disallowNoResult().getResultList());
+        assertThrows(NoResultException.class, () -> jdbcManager.selectBySql(Integer.class, sql).disallowNoResult().getResultListWithoutInverseField());
     }
 
     /**
@@ -202,7 +202,7 @@ class SqlSelectGetResultTest {
     @Test
     void testObject_getSingleResult() throws Exception {
         String sql = "SELECT EMPLOYEE_ID FROM EMPLOYEE WHERE EMPLOYEE_ID = 1";
-        Integer employeeId = jdbcManager.selectBySql(Integer.class, sql).getSingleResult();
+        Integer employeeId = jdbcManager.selectBySql(Integer.class, sql).getSingleResultWithoutInverseField();
         assertNotNull(employeeId);
     }
 
@@ -213,7 +213,7 @@ class SqlSelectGetResultTest {
     @Test
     void testObject_getSingleResult_NonUniqueResultException() throws Exception {
         String sql = "SELECT EMPLOYEE_ID FROM EMPLOYEE WHERE DEPARTMENT_ID = 1";
-        assertThrows(NonUniqueResultException.class, () -> jdbcManager.selectBySql(Integer.class, sql).getSingleResult());
+        assertThrows(NonUniqueResultException.class, () -> jdbcManager.selectBySql(Integer.class, sql).getSingleResultWithoutInverseField());
     }
 
     /**
@@ -223,7 +223,7 @@ class SqlSelectGetResultTest {
     @Test
     void testObject_getSingleResult_NoResultException() throws Exception {
         String sql = "SELECT EMPLOYEE_ID FROM EMPLOYEE WHERE EMPLOYEE_ID = 100";
-        assertThrows(NoResultException.class, () -> jdbcManager.selectBySql(Integer.class, sql).disallowNoResult().getSingleResult());
+        assertThrows(NoResultException.class, () -> jdbcManager.selectBySql(Integer.class, sql).disallowNoResult().getSingleResultWithoutInverseField());
     }
 
     /**
@@ -233,23 +233,23 @@ class SqlSelectGetResultTest {
     @Test
     void testObject_getSingleResult_null() throws Exception {
         String sql = "SELECT EMPLOYEE_ID FROM EMPLOYEE WHERE EMPLOYEE_ID = 100";
-        Integer employeeId = jdbcManager.selectBySql(Integer.class, sql).getSingleResult();
+        Integer employeeId = jdbcManager.selectBySql(Integer.class, sql).getSingleResultWithoutInverseField();
         assertNull(employeeId);
     }
-    
+
     @Test
     void beanNonAuto() throws Exception {
         String sql = "select d.department_id, department_name, employee_id, employee_name from department d inner join employee e on e.department_id = d.department_id order by d.department_id, employee_id;";
-	List<Dep> deps = jdbcManager.selectBySql(Dep.class, sql).getResultList();
+        List<Dep> deps = jdbcManager.selectBySql(Dep.class, sql).getResultListWithoutInverseField();
         deps.forEach(d -> {
             System.out.println(d.departmentName);
            d.emps.forEach(e -> System.out.println(" " + e.employeeName)); 
         });
-	assertEquals(3, deps.size());
-	assertEquals(3, deps.get(0).emps.size());
+        assertEquals(3, deps.size());
+        assertEquals(3, deps.get(0).emps.size());
         assertEquals(5, deps.get(1).emps.size());
         assertEquals(6, deps.get(2).emps.size());
-        assertNotNull(deps.get(0).emps.get(0).dep);
+        assertNull(deps.get(0).emps.get(0).dep);
     }
     
     @Entity
@@ -271,5 +271,4 @@ class SqlSelectGetResultTest {
         @ManyToOne @NoFk
         Dep dep;
     }
-
 }

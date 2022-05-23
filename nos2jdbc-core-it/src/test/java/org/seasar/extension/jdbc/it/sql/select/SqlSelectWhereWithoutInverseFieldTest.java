@@ -32,7 +32,7 @@ import nos2jdbc.core.it.NoS2JdbcExtension;
  * 
  */
 @ExtendWith(NoS2JdbcExtension.class)
-class SqlSelectWhereTest {
+class SqlSelectWhereWithoutInverseFieldTest {
 
     private JdbcManager jdbcManager;
 
@@ -43,7 +43,7 @@ class SqlSelectWhereTest {
     @Test
     void testBean_parameter() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE DEPARTMENT_ID = ? AND SALARY = ?";
-        List<Employee> list = jdbcManager.selectBySql(Employee.class, sql, 2, 3000).getResultList();
+        List<Employee> list = jdbcManager.selectBySql(Employee.class, sql, 2, 3000).getResultListWithoutInverseField();
         assertEquals(2, list.size());
     }
 
@@ -54,7 +54,7 @@ class SqlSelectWhereTest {
     @Test
     void testBean_parameter_none() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE";
-        List<Employee> list = jdbcManager.selectBySql(Employee.class, sql).getResultList();
+        List<Employee> list = jdbcManager.selectBySql(Employee.class, sql).getResultListWithoutInverseField();
         assertEquals(14, list.size());
     }
 
@@ -65,7 +65,7 @@ class SqlSelectWhereTest {
     @Test
     void testMap_parameter() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE WHERE DEPARTMENT_ID = ? AND SALARY = ?";
-        @SuppressWarnings("unchecked") List<Map> list = jdbcManager.selectBySql(Map.class, sql, 2, 3000).getResultList();
+        @SuppressWarnings("unchecked") List<Map> list = jdbcManager.selectBySql(Map.class, sql, 2, 3000).getResultListWithoutInverseField();
         assertEquals(2, list.size());
     }
 
@@ -76,7 +76,7 @@ class SqlSelectWhereTest {
     @Test
     void testMap_parameter_none() throws Exception {
         String sql = "SELECT * FROM EMPLOYEE";
-        @SuppressWarnings("unchecked") List<Map> list = jdbcManager.selectBySql(Map.class, sql).getResultList();
+        @SuppressWarnings("unchecked") List<Map> list = jdbcManager.selectBySql(Map.class, sql).getResultListWithoutInverseField();
         assertEquals(14, list.size());
     }
 
@@ -87,7 +87,7 @@ class SqlSelectWhereTest {
     @Test
     void testObject_parameter() throws Exception {
         String sql = "SELECT EMPLOYEE_ID FROM EMPLOYEE WHERE DEPARTMENT_ID = ? AND SALARY = ?";
-        List<Integer> list = jdbcManager.selectBySql(Integer.class, sql, 2, 3000).getResultList();
+        List<Integer> list = jdbcManager.selectBySql(Integer.class, sql, 2, 3000).getResultListWithoutInverseField();
         assertEquals(2, list.size());
     }
 
@@ -98,7 +98,7 @@ class SqlSelectWhereTest {
     @Test
     void testObject_parameter_none() throws Exception {
         String sql = "SELECT EMPLOYEE_ID FROM EMPLOYEE";
-        List<Integer> list = jdbcManager.selectBySql(Integer.class, sql).getResultList();
+        List<Integer> list = jdbcManager.selectBySql(Integer.class, sql).getResultListWithoutInverseField();
         assertEquals(14, list.size());
     }
 }

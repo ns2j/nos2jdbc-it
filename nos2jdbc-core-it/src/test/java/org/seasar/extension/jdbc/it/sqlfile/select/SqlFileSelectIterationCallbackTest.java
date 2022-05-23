@@ -15,16 +15,19 @@
  */
 package org.seasar.extension.jdbc.it.sqlfile.select;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.math.BigDecimal;
 import java.util.Map;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.IterationCallback;
 import org.seasar.extension.jdbc.IterationContext;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Employee;
+
 import nos2jdbc.core.it.NoS2JdbcExtension;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium
@@ -43,6 +46,7 @@ class SqlFileSelectIterationCallbackTest {
 
         BigDecimal temp = BigDecimal.ZERO;
 
+        @Override
         public BigDecimal iterate(Employee entity, IterationContext context) {
             if (entity.salary != null) {
                 temp = temp.add(entity.salary);
@@ -56,6 +60,7 @@ class SqlFileSelectIterationCallbackTest {
 
         BigDecimal temp = BigDecimal.ZERO;
 
+        @Override
         public BigDecimal iterate(Map entity, IterationContext context) {
             BigDecimal salary = (BigDecimal) entity.get("salary");
             if (salary != null) {
@@ -69,6 +74,7 @@ class SqlFileSelectIterationCallbackTest {
 
         BigDecimal temp = BigDecimal.ZERO;
 
+        @Override
         public BigDecimal iterate(BigDecimal salary, IterationContext context) {
             if (salary != null) {
                 temp = temp.add(salary);
@@ -194,6 +200,126 @@ class SqlFileSelectIterationCallbackTest {
     @Test
     void testObject_offsetOnly() throws Exception {
         BigDecimal sum = jdbcManager.selectBySqlFile(BigDecimal.class, PATH2).offset(3).iterate(objectSalarySumCallBack);
+        assertTrue(new BigDecimal(25375).compareTo(sum) == 0);
+    }
+
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
+    void testBean_WithoutInverseField() throws Exception {
+        BigDecimal sum = jdbcManager.selectBySqlFile(Employee.class, PATH).iterateWithoutInverseField(beanSalarySumCallBack);
+        assertTrue(new BigDecimal(29025).compareTo(sum) == 0);
+    }
+
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
+    void testBean_WithoutInverseField_limitOnly() throws Exception {
+        BigDecimal sum = jdbcManager.selectBySqlFile(Employee.class, PATH).limit(3).iterateWithoutInverseField(beanSalarySumCallBack);
+        assertTrue(new BigDecimal(3650).compareTo(sum) == 0);
+    }
+
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
+    void testBean_WithoutInverseField_offset_limit() throws Exception {
+        BigDecimal sum = jdbcManager.selectBySqlFile(Employee.class, PATH).offset(3).limit(5).iterateWithoutInverseField(beanSalarySumCallBack);
+        assertTrue(new BigDecimal(12525).compareTo(sum) == 0);
+    }
+
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
+    void testBean_WithoutInverseField_offsetOnly() throws Exception {
+        BigDecimal sum = jdbcManager.selectBySqlFile(Employee.class, PATH).offset(3).iterateWithoutInverseField(beanSalarySumCallBack);
+        assertTrue(new BigDecimal(25375).compareTo(sum) == 0);
+    }
+
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
+    void testMap_WithoutInverseField() throws Exception {
+        BigDecimal sum = jdbcManager.selectBySqlFile(Map.class, PATH).iterateWithoutInverseField(mapSalarySumCallBack);
+        assertTrue(new BigDecimal(29025).compareTo(sum) == 0);
+    }
+
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
+    void testMap_WithoutInverseField_limitOnly() throws Exception {
+        BigDecimal sum = jdbcManager.selectBySqlFile(Map.class, PATH).limit(3).iterateWithoutInverseField(mapSalarySumCallBack);
+        assertTrue(new BigDecimal(3650).compareTo(sum) == 0);
+    }
+
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
+    void testMap_WithoutInverseField_offset_limit() throws Exception {
+        BigDecimal sum = jdbcManager.selectBySqlFile(Map.class, PATH).offset(3).limit(5).iterateWithoutInverseField(mapSalarySumCallBack);
+        assertTrue(new BigDecimal(12525).compareTo(sum) == 0);
+    }
+
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
+    void testMap_WithoutInverseField_offsetOnly() throws Exception {
+        BigDecimal sum = jdbcManager.selectBySqlFile(Map.class, PATH).offset(3).iterateWithoutInverseField(mapSalarySumCallBack);
+        assertTrue(new BigDecimal(25375).compareTo(sum) == 0);
+    }
+
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
+    void testObject_WithoutInverseField() throws Exception {
+        BigDecimal sum = jdbcManager.selectBySqlFile(BigDecimal.class, PATH2).iterateWithoutInverseField(objectSalarySumCallBack);
+        assertTrue(new BigDecimal(29025).compareTo(sum) == 0);
+    }
+
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
+    void testObject_WithoutInverseField_limitOnly() throws Exception {
+        BigDecimal sum = jdbcManager.selectBySqlFile(BigDecimal.class, PATH2).limit(3).iterateWithoutInverseField(objectSalarySumCallBack);
+        assertTrue(new BigDecimal(3650).compareTo(sum) == 0);
+    }
+
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
+    void testObject_WithoutInverseField_offset_limit() throws Exception {
+        BigDecimal sum = jdbcManager.selectBySqlFile(BigDecimal.class, PATH2).offset(3).limit(5).iterateWithoutInverseField(objectSalarySumCallBack);
+        assertTrue(new BigDecimal(12525).compareTo(sum) == 0);
+    }
+
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
+    void testObject_WithoutInverseField_offsetOnly() throws Exception {
+        BigDecimal sum = jdbcManager.selectBySqlFile(BigDecimal.class, PATH2).offset(3).iterateWithoutInverseField(objectSalarySumCallBack);
         assertTrue(new BigDecimal(25375).compareTo(sum) == 0);
     }
 }

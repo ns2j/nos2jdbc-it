@@ -34,7 +34,7 @@ import nos2jdbc.core.it.NoS2JdbcExtension;
  * 
  */
 @ExtendWith(NoS2JdbcExtension.class)
-class SqlSelectIterationCallbackTest {
+class SqlSelectIterationCallbackWithoutInverseFieldTest {
 
     private static final String SQL = "SELECT * FROM EMPLOYEE ORDER BY EMPLOYEE_ID";
 
@@ -89,7 +89,7 @@ class SqlSelectIterationCallbackTest {
      */
     @Test
     void testBean() throws Exception {
-        BigDecimal sum = jdbcManager.selectBySql(Employee.class, SQL).iterate(beanSalarySumCallBack);
+        BigDecimal sum = jdbcManager.selectBySql(Employee.class, SQL).iterateWithoutInverseField(beanSalarySumCallBack);
         assertTrue(new BigDecimal(29025).compareTo(sum) == 0);
     }
 
@@ -99,7 +99,7 @@ class SqlSelectIterationCallbackTest {
      */
     @Test
     void testBean_limitOnly() throws Exception {
-        BigDecimal sum = jdbcManager.selectBySql(Employee.class, SQL).limit(3).iterate(beanSalarySumCallBack);
+        BigDecimal sum = jdbcManager.selectBySql(Employee.class, SQL).limit(3).iterateWithoutInverseField(beanSalarySumCallBack);
         assertTrue(new BigDecimal(3650).compareTo(sum) == 0);
     }
 
@@ -109,7 +109,7 @@ class SqlSelectIterationCallbackTest {
      */
     @Test
     void testBean_offset_limit() throws Exception {
-        BigDecimal sum = jdbcManager.selectBySql(Employee.class, SQL).offset(3).limit(5).iterate(beanSalarySumCallBack);
+        BigDecimal sum = jdbcManager.selectBySql(Employee.class, SQL).offset(3).limit(5).iterateWithoutInverseField(beanSalarySumCallBack);
         assertTrue(new BigDecimal(12525).compareTo(sum) == 0);
     }
 
@@ -119,7 +119,7 @@ class SqlSelectIterationCallbackTest {
      */
     @Test
     void testBean_offsetOnly() throws Exception {
-        BigDecimal sum = jdbcManager.selectBySql(Employee.class, SQL).offset(3).iterate(beanSalarySumCallBack);
+        BigDecimal sum = jdbcManager.selectBySql(Employee.class, SQL).offset(3).iterateWithoutInverseField(beanSalarySumCallBack);
         assertTrue(new BigDecimal(25375).compareTo(sum) == 0);
     }
 
@@ -129,7 +129,7 @@ class SqlSelectIterationCallbackTest {
      */
     @Test
     void testMap() throws Exception {
-        BigDecimal sum = jdbcManager.selectBySql(Map.class, SQL).iterate(mapSalarySumCallBack);
+        BigDecimal sum = jdbcManager.selectBySql(Map.class, SQL).iterateWithoutInverseField(mapSalarySumCallBack);
         assertTrue(new BigDecimal(29025).compareTo(sum) == 0);
     }
 
@@ -139,7 +139,7 @@ class SqlSelectIterationCallbackTest {
      */
     @Test
     void testMap_limitOnly() throws Exception {
-        BigDecimal sum = jdbcManager.selectBySql(Map.class, SQL).limit(3).iterate(mapSalarySumCallBack);
+        BigDecimal sum = jdbcManager.selectBySql(Map.class, SQL).limit(3).iterateWithoutInverseField(mapSalarySumCallBack);
         assertTrue(new BigDecimal(3650).compareTo(sum) == 0);
     }
 
@@ -149,7 +149,7 @@ class SqlSelectIterationCallbackTest {
      */
     @Test
     void testMap_offset_limit() throws Exception {
-        BigDecimal sum = jdbcManager.selectBySql(Map.class, SQL).offset(3).limit(5).iterate(mapSalarySumCallBack);
+        BigDecimal sum = jdbcManager.selectBySql(Map.class, SQL).offset(3).limit(5).iterateWithoutInverseField(mapSalarySumCallBack);
         assertTrue(new BigDecimal(12525).compareTo(sum) == 0);
     }
 
@@ -159,7 +159,7 @@ class SqlSelectIterationCallbackTest {
      */
     @Test
     void testMap_offsetOnly() throws Exception {
-        BigDecimal sum = jdbcManager.selectBySql(Map.class, SQL).offset(3).iterate(mapSalarySumCallBack);
+        BigDecimal sum = jdbcManager.selectBySql(Map.class, SQL).offset(3).iterateWithoutInverseField(mapSalarySumCallBack);
         assertTrue(new BigDecimal(25375).compareTo(sum) == 0);
     }
 
@@ -169,7 +169,7 @@ class SqlSelectIterationCallbackTest {
      */
     @Test
     void testObject() throws Exception {
-        BigDecimal sum = jdbcManager.selectBySql(BigDecimal.class, SQL2).iterate(objectSalarySumCallBack);
+        BigDecimal sum = jdbcManager.selectBySql(BigDecimal.class, SQL2).iterateWithoutInverseField(objectSalarySumCallBack);
         assertTrue(new BigDecimal(29025).compareTo(sum) == 0);
     }
 
@@ -179,7 +179,7 @@ class SqlSelectIterationCallbackTest {
      */
     @Test
     void testObject_limitOnly() throws Exception {
-        BigDecimal sum = jdbcManager.selectBySql(BigDecimal.class, SQL2).limit(3).iterate(objectSalarySumCallBack);
+        BigDecimal sum = jdbcManager.selectBySql(BigDecimal.class, SQL2).limit(3).iterateWithoutInverseField(objectSalarySumCallBack);
         assertTrue(new BigDecimal(3650).compareTo(sum) == 0);
     }
 
@@ -189,7 +189,7 @@ class SqlSelectIterationCallbackTest {
      */
     @Test
     void testObject_offset_limit() throws Exception {
-        BigDecimal sum = jdbcManager.selectBySql(BigDecimal.class, SQL2).offset(3).limit(5).iterate(objectSalarySumCallBack);
+        BigDecimal sum = jdbcManager.selectBySql(BigDecimal.class, SQL2).offset(3).limit(5).iterateWithoutInverseField(objectSalarySumCallBack);
         assertTrue(new BigDecimal(12525).compareTo(sum) == 0);
     }
 
@@ -199,7 +199,7 @@ class SqlSelectIterationCallbackTest {
      */
     @Test
     void testObject_offsetOnly() throws Exception {
-        BigDecimal sum = jdbcManager.selectBySql(BigDecimal.class, SQL2).offset(3).iterate(objectSalarySumCallBack);
+        BigDecimal sum = jdbcManager.selectBySql(BigDecimal.class, SQL2).offset(3).iterateWithoutInverseField(objectSalarySumCallBack);
         assertTrue(new BigDecimal(25375).compareTo(sum) == 0);
     }
 }
