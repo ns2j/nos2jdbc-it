@@ -189,7 +189,7 @@ class SqlSelectGetResultWithoutInverseFieldTest {
     /** @throws Exception */
     @Test
     void beanNonAuto() throws Exception {
-        String sql = "select d.department_id, department_name, employee_id, employee_name from department d inner join employee e on e.department_id = d.department_id order by d.department_id, employee_id;";
+        String sql = "select d.department_id, department_name, employee_id, employee_name from department d inner join employee e on e.department_id = d.department_id order by d.department_id, employee_id";
         List<Dep> deps = jdbcManager.selectBySql(Dep.class, sql).getResultListWithoutInverseField();
         deps.forEach(d -> {
             System.out.println(d.departmentName);
