@@ -231,6 +231,10 @@ class AutoInsertTest {
                     fail();
                 }
                 assertNotNull(entity.id);
+                //var e2 = jdbcManager.from(IdentityStrategy.class).where(new SimpleWhere().eq("id", 1)).getSingleResult();
+                //assertEquals(1, e2.id);
+
+                assertNotEquals(0, entity.id);
             }
         } catch (IdentityGeneratorNotSupportedRuntimeException e) {
             if (jdbcManagerImplementor.getDialect().supportsIdentity()) {
@@ -253,6 +257,7 @@ class AutoInsertTest {
                     fail();
                 }
                 assertNotNull(entity.id);
+                assertNotEquals(0, entity.id);
             }
         } catch (SequenceGeneratorNotSupportedRuntimeException e) {
             if (jdbcManagerImplementor.getDialect().supportsSequence()) {
@@ -275,6 +280,7 @@ class AutoInsertTest {
                     fail();
                 }
                 assertNotNull(entity.id);
+                assertNotEquals(0, entity.id);
             }
         } catch (SequenceGeneratorNotSupportedRuntimeException e) {
             if (jdbcManagerImplementor.getDialect().supportsSequence()) {
@@ -302,6 +308,7 @@ class AutoInsertTest {
             TableStrategy entity = new TableStrategy();
             jdbcManager.insert(entity).execute();
             assertNotNull(entity.id);
+            assertNotEquals(0, entity.id);
         }
     }
 
@@ -315,6 +322,7 @@ class AutoInsertTest {
             TableStrategy2 entity = new TableStrategy2();
             jdbcManager.insert(entity).execute();
             assertNotNull(entity.id);
+            assertNotEquals(0, entity.id);
         }
     }
 
@@ -330,6 +338,7 @@ class AutoInsertTest {
             TableStrategy5 entity = new TableStrategy5();
             jdbcManager.insert(entity).execute();
             assertNotNull(entity.id);
+            assertNotEquals(0, entity.id);
         }
     }
 
