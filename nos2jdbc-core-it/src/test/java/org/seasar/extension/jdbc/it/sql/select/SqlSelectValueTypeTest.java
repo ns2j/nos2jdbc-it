@@ -15,6 +15,9 @@
  */
 package org.seasar.extension.jdbc.it.sql.select;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.seasar.extension.jdbc.parameter.Parameter.*;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -25,14 +28,14 @@ import java.time.ZoneOffset;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
-import javax.persistence.TemporalType;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Tense;
+
+import jakarta.persistence.TemporalType;
 import nos2jdbc.core.it.NoS2JdbcExtension;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.seasar.extension.jdbc.parameter.Parameter.*;
 
 /**
  * @author taedium

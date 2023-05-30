@@ -27,8 +27,6 @@ import java.time.ZoneOffset;
 import java.util.Calendar;
 import java.util.Map;
 
-import javax.persistence.TemporalType;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
@@ -37,6 +35,7 @@ import org.seasar.extension.jdbc.it.sqlfile.select.SqlFileSelectWhereTest.Param2
 import org.seasar.extension.jdbc.it.sqlfile.select.SqlFileSelectWhereTest.Param3;
 import org.seasar.extension.jdbc.it.sqlfile.select.SqlFileSelectWhereTest.Param4;
 
+import jakarta.persistence.TemporalType;
 import nos2jdbc.core.it.NoS2JdbcExtension;
 
 /**

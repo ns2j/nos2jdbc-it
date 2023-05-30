@@ -23,18 +23,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.NoResultException;
-import javax.persistence.NonUniqueResultException;
-import javax.persistence.OneToMany;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Employee;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.NonUniqueResultException;
+import jakarta.persistence.OneToMany;
 import nos2jdbc.annotation.NoFk;
 import nos2jdbc.annotation.NonAuto;
 import nos2jdbc.core.it.NoS2JdbcExtension;

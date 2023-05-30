@@ -15,9 +15,9 @@
  */
 package org.seasar.extension.jdbc.it.entity;
 
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToOne;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.OneToOne;
 
 /**
  * @author taedium

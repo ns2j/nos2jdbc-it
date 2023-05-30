@@ -15,12 +15,14 @@
  */
 package org.seasar.extension.jdbc.it.sql;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.seasar.extension.jdbc.parameter.Parameter.*;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,9 +33,10 @@ import org.seasar.extension.jdbc.annotation.ResultSet;
 import org.seasar.extension.jdbc.it.entity.Department;
 import org.seasar.extension.jdbc.it.entity.Employee;
 import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
+
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import nos2jdbc.core.it.NoS2JdbcExtension;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.seasar.extension.jdbc.parameter.Parameter.*;
 
 /**
  * @author taedium

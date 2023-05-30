@@ -23,9 +23,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,6 +33,8 @@ import org.seasar.extension.jdbc.annotation.ResultSet;
 import org.seasar.extension.jdbc.it.entity.Department;
 import org.seasar.extension.jdbc.it.entity.Employee;
 
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import nos2jdbc.core.it.NoS2JdbcExtension;
 
 /**

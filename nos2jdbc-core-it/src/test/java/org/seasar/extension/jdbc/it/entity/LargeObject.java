@@ -17,9 +17,9 @@ package org.seasar.extension.jdbc.it.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Lob;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 
 /**
  * @author taedium

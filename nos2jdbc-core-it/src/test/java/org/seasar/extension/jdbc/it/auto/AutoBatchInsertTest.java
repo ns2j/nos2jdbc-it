@@ -15,9 +15,11 @@ v * Copyright 2004-2015 the Seasar Foundation and the Others.
  */
 package org.seasar.extension.jdbc.it.auto;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.EntityExistsException;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
@@ -38,8 +40,9 @@ import org.seasar.extension.jdbc.it.entity.TableStrategy;
 import org.seasar.extension.jdbc.it.entity.TableStrategy2;
 import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
 import org.seasar.extension.jdbc.where.SimpleWhere;
+
+import jakarta.persistence.EntityExistsException;
 import nos2jdbc.core.it.NoS2JdbcExtension;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium

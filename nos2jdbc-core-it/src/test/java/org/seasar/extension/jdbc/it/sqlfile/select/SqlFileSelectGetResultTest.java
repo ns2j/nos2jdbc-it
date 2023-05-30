@@ -19,14 +19,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Map;
 
-import javax.persistence.NoResultException;
-import javax.persistence.NonUniqueResultException;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Employee;
 
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.NonUniqueResultException;
 import nos2jdbc.core.it.NoS2JdbcExtension;
 
 /**

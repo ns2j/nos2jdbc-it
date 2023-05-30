@@ -15,10 +15,11 @@
  */
 package org.seasar.extension.jdbc.it.auto;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.EntityExistsException;
-import javax.persistence.OptimisticLockException;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
@@ -32,8 +33,10 @@ import org.seasar.extension.jdbc.it.entity.Department4;
 import org.seasar.extension.jdbc.it.entity.Employee;
 import org.seasar.extension.jdbc.it.entity.NoId;
 import org.seasar.extension.jdbc.where.SimpleWhere;
+
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.OptimisticLockException;
 import nos2jdbc.core.it.NoS2JdbcExtension;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium

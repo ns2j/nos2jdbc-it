@@ -15,16 +15,18 @@
  */
 package org.seasar.extension.jdbc.it.auto.select;
 
-import javax.persistence.NoResultException;
-import javax.persistence.NonUniqueResultException;
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Department;
 import org.seasar.extension.jdbc.it.entity.Employee;
 import org.seasar.extension.jdbc.where.SimpleWhere;
+
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.NonUniqueResultException;
 import nos2jdbc.core.it.NoS2JdbcExtension;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium

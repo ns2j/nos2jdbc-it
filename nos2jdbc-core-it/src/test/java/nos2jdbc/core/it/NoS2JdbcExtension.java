@@ -1,29 +1,16 @@
 package nos2jdbc.core.it;
 
 import java.lang.reflect.Field;
-import java.util.Map;
-import javax.transaction.UserTransaction;
 
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
-/*
-import org.junit.jupiter.api.runner.internal.runners.statements.InvokeMethod;
-import org.junit.jupiter.api.runner.runners.BlockJUnit4ClassRunner;
-import org.junit.jupiter.api.runner.runners.model.FrameworkMethod;
-import org.junit.jupiter.api.runner.runners.model.InitializationError;
-import org.junit.jupiter.api.runner.runners.model.Statement;
-*/
-import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.BeforeTestExecutionCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
-import org.junit.jupiter.api.extension.TestExecutionExceptionHandler;
 import org.seasar.extension.jdbc.JdbcManager;
-import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
 import org.seasar.extension.jta.UserTransactionImpl;
-import org.seasar.framework.util.CollectionsUtil;
-import org.seasar.framework.util.OgnlUtil;
 import org.seasar.framework.util.StringUtil;
 
+import jakarta.transaction.UserTransaction;
 import nos2jdbc.TransactionManagerRegistry;
 import nos2jdbc.standalone.NoS2JdbcManager;
 
@@ -56,7 +43,7 @@ public class NoS2JdbcExtension implements BeforeAllCallback, BeforeTestExecution
             Field field = clazz.getDeclaredField("jdbcManagerImplementor");
 
             field.setAccessible(true);
-            field.set(instance, (JdbcManagerImplementor)jdbcManager);
+            field.set(instance, jdbcManager);
         } catch (ReflectiveOperationException e) {
         }
         

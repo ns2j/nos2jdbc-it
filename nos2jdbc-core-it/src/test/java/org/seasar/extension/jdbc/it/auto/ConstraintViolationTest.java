@@ -15,7 +15,8 @@
  */
 package org.seasar.extension.jdbc.it.auto;
 
-import javax.persistence.EntityExistsException;
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,8 +24,9 @@ import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.exception.IdPropertyNotAssignedRuntimeException;
 import org.seasar.extension.jdbc.it.entity.ConstraintChecking;
 import org.seasar.framework.exception.SQLRuntimeException;
+
+import jakarta.persistence.EntityExistsException;
 import nos2jdbc.core.it.NoS2JdbcExtension;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium

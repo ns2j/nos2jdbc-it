@@ -15,6 +15,8 @@
  */
 package org.seasar.extension.jdbc.it.sqlfile;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -26,14 +28,15 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.Calendar;
 import java.util.Date;
-import javax.persistence.EntityExistsException;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.it.entity.Department;
 import org.seasar.extension.jdbc.it.entity.Tense;
+
+import jakarta.persistence.EntityExistsException;
 import nos2jdbc.core.it.NoS2JdbcExtension;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author taedium

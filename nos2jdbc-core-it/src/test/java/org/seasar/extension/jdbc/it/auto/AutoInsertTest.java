@@ -17,8 +17,6 @@ package org.seasar.extension.jdbc.it.auto;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import javax.persistence.EntityExistsException;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -54,6 +52,7 @@ import org.seasar.extension.jdbc.it.entity.TableStrategy5;
 import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
 import org.seasar.extension.jdbc.where.SimpleWhere;
 
+import jakarta.persistence.EntityExistsException;
 import nos2jdbc.core.it.NoS2JdbcExtension;
 
 /**
